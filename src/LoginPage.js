@@ -34,7 +34,9 @@ class LoginPage extends React.Component {
     })
     .then(resp => resp.json())
     .then(data => {
+      // take the token back from the data
       localStorage.setItem('token', data.token)
+      // redirect the user to the index
       this.props.redirect("index")
     })
   } // END SAVING

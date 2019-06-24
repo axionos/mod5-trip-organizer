@@ -1,4 +1,5 @@
 import React from 'react';
+import IndexPage from './IndexPage'
 import LoginPage from './LoginPage'
 import SignupPage from './SignupPage'
 
@@ -17,7 +18,7 @@ class App extends React.Component {
 
   render(){
     if(this.state.page === 'index'){
-      return "Hello from INDEX"
+      return <IndexPage />
     } else if(this.state.page === 'signup'){
       return <SignupPage redirect={this.redirect} />
     } else if(this.state.page === 'login'){
