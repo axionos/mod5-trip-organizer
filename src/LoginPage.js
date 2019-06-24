@@ -43,7 +43,7 @@ class LoginPage extends React.Component {
 
   render(){
     // console.log(this.state)
-    // console.log('Login Page Props', this.props)
+    console.log('Login Page Props', this.props)
 
     return(
       <div>
