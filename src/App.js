@@ -2,6 +2,7 @@ import React from 'react';
 import IndexPage from './IndexPage'
 import LoginPage from './LoginPage'
 import SignupPage from './SignupPage'
+import { Switch, Route } from 'react-router-dom'
 
 class App extends React.Component {
   state = {
@@ -17,13 +18,15 @@ class App extends React.Component {
 
 
   render(){
-    if(this.state.page === 'index'){
-      return <IndexPage />
-    } else if(this.state.page === 'signup'){
-      return <SignupPage redirect={this.redirect} />
-    } else if(this.state.page === 'login'){
-      return <LoginPage redirect={this.redirect} />
-    }
+    console.log('App Props', this.props)
+  
+    return(
+      <Switch>
+        <Route exact path="/" component={IndexPage} />
+        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/signup" component={SignupPage} />
+      </Switch>
+    )
   }
 }
 
