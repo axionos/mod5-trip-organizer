@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from './components/Navbar'
-import ItineraryList from './containers/ItineraryList'
+import TripList from './containers/TripList'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import NoMatch from './NoMatch'
@@ -12,6 +12,7 @@ class App extends React.Component {
     user: {}
   }
 
+  // FETCHING USER INFO
   componentDidMount(){
     if(!!localStorage.token){
       fetch('http://localhost:3000/profile', {
@@ -21,17 +22,16 @@ class App extends React.Component {
       })
       .then(resp => resp.json())
       .then(user => {
-        console.log('im here2', user)
         this.setState({
           user
-        },() => { console.log('here',this.state)})
+        }/*,() => { console.log('here',this.state)}*/)
       })
     }
-  }
+  } // END FETCHING
 
   render(){
     // console.log('App Props', this.props)
-    console.log('App state', this.state)
+    // console.log('App state', this.state)
 
     return(
       <div>
@@ -41,7 +41,7 @@ class App extends React.Component {
           <Route exact path="/signup" component={SignupPage} />
           <Route exect
             path="/"
-            render={props => <ItineraryList {...props} user={this.state.user}/>}
+            render={props => <TripList {...props} user={this.state.user}/>}
           />
           <Route component={NoMatch} />
         </Switch>
