@@ -9,7 +9,7 @@ class LoginPage extends React.Component {
   componentDidMount(){
     // IF THERE IS A TOKEN REDIRECT TO THE INDEX
     if(!!localStorage.getItem("token")) {
-      this.props.redirect("index")
+      this.props.history.push("/")
     }
   }
 
@@ -37,7 +37,7 @@ class LoginPage extends React.Component {
       // take the token back from the data
       localStorage.setItem('token', data.token)
       // redirect the user to the index
-      this.props.redirect("index")
+      this.props.history.push("/")
     })
   } // END SAVING
 
