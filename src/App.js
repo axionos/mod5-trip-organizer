@@ -1,6 +1,10 @@
 import React from 'react';
-import Navbar from './Navbar'
-
+import Navbar from './components/Navbar'
+import ItineraryList from './containers/ItineraryList'
+import LoginPage from './pages/LoginPage'
+import SignupPage from './pages/SignupPage'
+import NoMatch from './NoMatch'
+import { Switch, Route } from 'react-router-dom'
 
 
 class App extends React.Component {
@@ -17,7 +21,10 @@ class App extends React.Component {
       })
       .then(resp => resp.json())
       .then(user => {
-        this.setState({ user })
+        console.log('im here2', user)
+        this.setState({
+          user
+        },() => { console.log('here',this.state)})
       })
     }
   }
@@ -29,6 +36,15 @@ class App extends React.Component {
     return(
       <div>
         <Navbar user={this.state.user}/>
+        <Switch>
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/signup" component={SignupPage} />
+          <Route exect
+            path="/"
+            render={props => <ItineraryList {...props} user={this.state.user}/>}
+          />
+          <Route component={NoMatch} />
+        </Switch>
       </div>
     )
   }
