@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
 class IndexPage extends React.Component {
 
@@ -14,7 +15,13 @@ class IndexPage extends React.Component {
   } // END SENDING
 
   render() {
-    return "Hello from Index Page"
+    console.log('Index Props', this.props)
+    return (
+      <div>
+        Hello {this.props.user.username} from IndexPage
+        <Link to="/messages">See Messages</Link>
+      </div>
+    )
   }
 }
 export default IndexPage
