@@ -1,8 +1,8 @@
 import React from 'react';
 import Trip from '../components/Trip'
-// import Trip from '../components/Trip'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { addTrip } from '../actions'
+import { getTrip, addTrip } from '../actions'
 
 class TripList extends React.Component {
 
@@ -20,7 +20,8 @@ class TripList extends React.Component {
     })
     .then(resp => resp.json())
     .then(trip => {
-      this.props.addTrip(trip)
+      // console.log("trip is",trip);
+      this.props.getTrip(trip)
     })
   } // END FETCHING
 
@@ -30,12 +31,21 @@ class TripList extends React.Component {
     })
   }
 
+  // handleAddTrip = () => {
+  //   this.props.addTrip()
+  // }
+
   render() {
     console.log('Trip List Props', this.props)
-    console.log('Trip List Props trips', this.props.trips)
+    // console.log('Trip List Props trips', this.props.trips)
     return (
       <div>
         Hello {this.props.user.username} from ItineraryList
+
+        { this.props.trips.length > 1 ? <h1>My Trips</h1> : <h1>My Trip</h1> }
+
+        
+        <Link to="/add_trip">Add Trip</Link>
         {this.props.trips ? this.genTrip() : null}
       </div>
     )
@@ -43,14 +53,18 @@ class TripList extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return { addTrip: trip => {
-    dispatch(addTrip(trip))
-  }}
+  return {
+    getTrip: trip => {
+      dispatch(getTrip(trip))
+    },
+    addTrip: trip => {
+      dispatch(addTrip(trip))
+    }
+  }
 }
 
 const mapStateToProps = state => {
-  console.log("props in TripList", state.trips[0]);
-  return { trips: state.trips[0] }
+  return { trips: state.trips }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TripList)
