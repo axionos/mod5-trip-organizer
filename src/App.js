@@ -3,6 +3,7 @@ import Navbar from './components/Navbar'
 import TripList from './containers/TripList'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
+import AddTrip from './components/AddTrip'
 import NoMatch from './NoMatch'
 import { Switch, Route } from 'react-router-dom'
 
@@ -39,6 +40,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/signup" component={SignupPage} />
+          <Route exact path="/add_trip" component={AddTrip}/>
           <Route exect
             path="/"
             render={props => <TripList {...props} user={this.state.user}/>}
