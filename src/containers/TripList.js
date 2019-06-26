@@ -1,6 +1,7 @@
 import React from 'react';
 // import Trip from '../components/Trip'
-// import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { addTrip } from '../actions'
 
 class ItineraryList extends React.Component {
 
@@ -17,21 +18,30 @@ class ItineraryList extends React.Component {
       }
     })
     .then(resp => resp.json())
-    .then(console.log)
+    .then(trip => {
+      this.props.addTrip(trip)
+    })
   } // END FETCHING
 
-  genTrip = () => {
-
-  }
 
   render() {
-    console.log('Index Props', this.props)
+    console.log('TripList Props', this.props)
     return (
       <div>
         Hello {this.props.user.username} from ItineraryList
-        { this.genTrip() }
       </div>
     )
   }
 }
-export default ItineraryList
+
+const mapDispatchToProps = dispatch => {
+  return { addTrip: trip => {
+    dispatch(addTrip(trip))
+  }}
+}
+
+const mapStateToProps = store => {
+  return { trips: store.trips[0] }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ItineraryList)
