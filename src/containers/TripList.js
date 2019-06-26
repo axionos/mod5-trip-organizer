@@ -1,9 +1,10 @@
 import React from 'react';
+import Trip from '../components/Trip'
 // import Trip from '../components/Trip'
 import { connect } from 'react-redux'
 import { addTrip } from '../actions'
 
-class ItineraryList extends React.Component {
+class TripList extends React.Component {
 
   // SEND A GET REQUEST TO THE TRIP PAGE WITH THE TOKEN
   componentDidMount(){
@@ -23,12 +24,19 @@ class ItineraryList extends React.Component {
     })
   } // END FETCHING
 
+  genTrip = () => {
+    return this.props.trips.map(trip => {
+      return <Trip ***REMOVED***={trip.id} trip={trip} />
+    })
+  }
 
   render() {
-    console.log('TripList Props', this.props)
+    console.log('Trip List Props', this.props)
+    console.log('Trip List Props trips', this.props.trips)
     return (
       <div>
         Hello {this.props.user.username} from ItineraryList
+        {this.props.trips ? this.genTrip() : null}
       </div>
     )
   }
@@ -40,8 +48,9 @@ const mapDispatchToProps = dispatch => {
   }}
 }
 
-const mapStateToProps = store => {
-  return { trips: store.trips[0] }
+const mapStateToProps = state => {
+  console.log("props in TripList", state.trips[0]);
+  return { trips: state.trips[0] }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ItineraryList)
+export default connect(mapStateToProps, mapDispatchToProps)(TripList)

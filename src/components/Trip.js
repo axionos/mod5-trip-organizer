@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
 
 class Trip extends React.Component {
@@ -12,4 +13,9 @@ class Trip extends React.Component {
     )
   }
 }
-export default Trip
+
+const mapStateToProps = store => {
+  return { trips: store.trips[0] }
+}
+
+export default connect(mapStateToProps)(Trip)
