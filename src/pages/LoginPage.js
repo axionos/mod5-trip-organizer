@@ -53,8 +53,14 @@ class LoginPage extends React.Component {
       <div>
         Please Log In!!
         <form onSubmit={this.handleLogin}>
-          <input type="text" name="username" onChange={this.handleChange}/>
-          <input type="password" name="password" onChange={this.handleChange}/>
+          <div>
+            Username
+            <input type="text" name="username" onChange={this.handleChange}/>
+          </div>
+          <div>
+            Password
+            <input type="password" name="password" onChange={this.handleChange}/>
+          </div>
           <input type="submit" value="Log In" />
         </form>
         <a href="/signup">Sign Up</a>

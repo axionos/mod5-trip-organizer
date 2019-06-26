@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 class AddTrip extends React.Component {
 
@@ -7,7 +8,26 @@ class AddTrip extends React.Component {
     // console.log('AddTrip Props', this.props)
     return(
       <div>
-        Hello from ADD TRIP
+        <form onSubmit={this.handleLogin}>
+          <div>
+            Title
+            <input type="text" name="title" />
+          </div>
+          <div>
+            Start Date
+            <input type="text" name="start" />
+          </div>
+          <div>
+            End Date
+            <input type="text" name="end" />
+          </div>
+          <div>
+            Country
+            <input type="text" name="country" />
+          </div>
+          <input type="submit" value="Done" />
+        </form>
+      <Link to="/">Go back</Link>
       </div>
     )
   }
