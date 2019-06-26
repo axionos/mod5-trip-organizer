@@ -28,7 +28,7 @@ class Navbar extends React.Component {
   } // END LOG OUT
 
   render(){
-    console.log('Navbar props', this.props);
+    // console.log('Navbar props', this.props);
     return(
       <div className="navbar">
       {this.myTrip()}

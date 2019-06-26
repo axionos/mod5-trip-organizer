@@ -26,7 +26,7 @@ class SignupPage extends React.Component {
     .then( res => res.json() )
     .then( data => {
       // if successful, token will be recieved
-      localStorage.setItem('token', data.token)
+      // localStorage.setItem('token', data.token)
       window.location.replace(`http://localhost:3001/login`)
       // this.props.history.push('/')
       //after sign up pushed to the login page
