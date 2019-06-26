@@ -1,13 +1,42 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 class AddTrip extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      startDate: new Date()
+    };
+    this.state = {
+      endDate: new Date()
+    }
+    this.handleChangeStartDate = this.handleChangeStartDate.bind(this);
+
+    this.handleChangeEndDate = this.handleChangeEndDate.bind(this);
+  }
+
+  handleChangeStartDate(date) {
+    this.setState({
+      startDate: date
+    });
+  }
+
+  handleChangeEndDate(date) {
+    this.setState({
+      endDate: date
+    });
+  }
 
   render(){
     // console.log('AddTrip Props', this.props)
+    console.log('AddTrip state', this.state)
     return(
       <div>
+
         <form onSubmit={this.handleLogin}>
           <div>
             Title
@@ -15,11 +44,13 @@ class AddTrip extends React.Component {
           </div>
           <div>
             Start Date
-            <input type="text" name="start" />
+            <DatePicker selected={this.state.startDate}
+            onChange={this.handleChangeStartDate} />
           </div>
           <div>
             End Date
-            <input type="text" name="end" />
+            <DatePicker selected={this.state.EndDate}
+            onChange={this.handleChangeEndDate} />
           </div>
           <div>
             Country
