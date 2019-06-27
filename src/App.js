@@ -27,9 +27,7 @@ class App extends React.Component {
       .then(user => {
         console.log('user info:', user);
         this.props.getUser(user)
-        // this.setState({
-        //   user
-        // }/*,() => { console.log('here',this.state)}*/)
+        
       })
     }
   } // END FETCHING

@@ -14,8 +14,8 @@ class AddTrip extends React.Component {
     super(props);
     this.state = {
       title: "",
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: "",
+      endDate: "",
       destination: ""
     };
   }
@@ -52,12 +52,13 @@ class AddTrip extends React.Component {
   handleAddTrip = event => {
     event.preventDefault()
     // this.props.addTrip(this.state)
-    debugger
+
     fetch('http://localhost:3000/new_trip', {
       method: "POST",
       headers: {
         'Authorization': localStorage.getItem("token"),
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
       body: JSON.stringify({
           trip: {
@@ -70,16 +71,23 @@ class AddTrip extends React.Component {
         // store_id:e.target.id
         })
     })
-    .then(resp => console.log("I AM RESP", resp))
-    .then(trip => {
-      this.props.addTrip(trip)
-    })
+    .then(resp => resp.json())
+    .then(trip =>
+      this.setState({
+        title: "",
+        startDate: "",
+        endDate: "",
+        destination: {
+          value: countryOptions[0]
+        }
+      })
+    )
   }
 
   render(){
     console.log('AddTrip Props', this.props)
     // console.log('Store status:', this.store)
-    // console.log('AddTrip state', this.state)
+    console.log('AddTrip state', this.state)
 
     const {isSearchable} = this.state;
     return(
@@ -87,7 +95,7 @@ class AddTrip extends React.Component {
         <form onSubmit={this.handleAddTrip}>
           <div>
             Title
-            <input type="text" name="title" onChange={this.handleChangeTitle}/>
+            <input type="text" name="title" value={this.state.title} onChange={this.handleChangeTitle}/>
           </div>
           <div>
             Start Date
@@ -105,7 +113,7 @@ class AddTrip extends React.Component {
             <Select
               className="basic-single"
               classNamePrefix="select"
-              // defaultValue={colourOptions[0]}
+              defaultValue={this.state.destination}
 
               isSearchable={isSearchable}
               name="color"
@@ -121,16 +129,15 @@ class AddTrip extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addTrip: trip => {
-      dispatch(addTrip(trip))
-    }
-  }
-}
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     addTrip: trip => {
+//       dispatch(addTrip(trip))
+//     }
+//   }
+// }
 
 const mapStateToProps = state => {
-  console.log('is this state?')
   return {
     trips: state.trips,
     user: state.user
@@ -138,4 +145,4 @@ const mapStateToProps = state => {
 }
 
 // export default AddTrip
-export default connect(mapStateToProps, mapDispatchToProps)(AddTrip)
+export default connect(mapStateToProps)(AddTrip)
