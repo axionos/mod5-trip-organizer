@@ -2,6 +2,7 @@ import { combineReducers } from "redux"
 
 const rootReducer = combineReducers({
   trips: tripReducer
+
 })
 
 export default rootReducer;
@@ -17,12 +18,12 @@ function tripReducer(state = [], action) {
       // return [...state, action.payload]
       return state
 
-    // case "START_DATE":
-
 
     default:
       return state
   }
 }
+
+
 
 // making a post request

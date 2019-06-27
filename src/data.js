@@ -5,7 +5,7 @@ export const countryOptions =
   {value: 'Albania'	, label: 'Albania'	, code: 'AL'},
   {value: 'Algeria'	, label: 'Algeria'	, code: 'DZ'},
   {value: 'American Samoa'	, label: 'American Samoa'	, code: 'AS'},
-  {value: 'AndorrA'	, label: 'AndorrA'	, code: 'AD'},
+  {value: 'Andorra'	, label: 'AndorrA'	, code: 'AD'},
   {value: 'Angola'	, label: 'Angola'	, code: 'AO'},
   {value: 'Anguilla'	, label: 'Anguilla'	, code: 'AI'},
   {value: 'Antarctica'	, label: 'Antarctica'	, code: 'AQ'},

@@ -1,8 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux'
+import { addTrip } from '../actions'
 import { Link } from 'react-router-dom'
+
 import Select from 'react-select'
-import makeAnimated from 'react-select/animated';
+// import makeAnimated from 'react-select/animated';
+// import { Note } from '../styled-components';
 import { countryOptions } from '../data';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -12,10 +15,18 @@ class AddTrip extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      title: "",
       startDate: new Date(),
       endDate: new Date(),
-      destination: []
+      destination: ""
     };
+  }
+
+  // UPDATE TRIP TITLE
+  handleChangeTitle = event => {
+    this.setState({
+      title: event.target.value
+    })
   }
 
   // UPDATE START DATE
@@ -33,28 +44,27 @@ class AddTrip extends React.Component {
   }
 
   // UPDATE DESTINATION
-  handleDestinationSelector = (destinations) => {
-    // console.log(countries); // array of objects
-    return destinations.map(destination => {
-      return this.setState({
-        destination: [...this.state.destination, destination.value]
-      })
+  handleDestinationSelector = event => {
+    this.setState({
+      destination: event.value
     })
   }
-  // console.log(theCountries)
+
+  handleAddTrip = trip => {
+
+  }
 
   render(){
     // console.log('AddTrip Props', this.props)
     console.log('AddTrip state', this.state)
 
-    const animatedComponents = makeAnimated();
+    const {isSearchable} = this.state;
     return(
       <div>
-
-        <form onSubmit={this.handleLogin}>
+        <form onSubmit={this.handleAddTrip}>
           <div>
             Title
-            <input type="text" name="title" />
+            <input type="text" name="title" onChange={this.handleChangeTitle}/>
           </div>
           <div>
             Start Date
@@ -70,10 +80,12 @@ class AddTrip extends React.Component {
             Destination
 
             <Select
-              closeMenuOnSelect={false}
-              components={animatedComponents}
-              // defaultValue={countryOptions[4]}
-              isMulti
+              className="basic-single"
+              classNamePrefix="select"
+              // defaultValue={colourOptions[0]}
+
+              isSearchable={isSearchable}
+              name="color"
               options={countryOptions}
               onChange={this.handleDestinationSelector}
             />
@@ -86,8 +98,19 @@ class AddTrip extends React.Component {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    addTrip: trip => {
+      dispatch(addTrip(trip))
+    }
+
+
+  }
+}
+
 const mapStateToProps = store => {
   return { trips: store.trips }
 }
 
-export default connect(mapStateToProps)(AddTrip)
+// export default AddTrip
+export default connect(mapDispatchToProps, mapStateToProps)(AddTrip)

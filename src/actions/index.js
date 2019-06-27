@@ -12,16 +12,16 @@ export const addTrip = trip => {
   }
 }
 
-export const startDate = date => {
-  return {
-    type: 'START_DATE',
-    payload: date
-  }
-}
-
-export const endDate = date => {
-  return {
-    type: 'END_DATE',
-    payload: date
-  }
-}
+// export const addStartDate = date => {
+//   return {
+//     type: 'ADD_START_DATE',
+//     payload: date
+//   }
+// }
+//
+// export const addEndDate = date => {
+//   return {
+//     type: 'ADD_END_DATE',
+//     payload: date
+//   }
+// }
