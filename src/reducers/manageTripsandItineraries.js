@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
 export default rootReducer;
 
 function userReducer(state = [], action) {
-  
+
   switch(action.type){
     case "GET_USER":
       return action.user
@@ -22,10 +22,11 @@ function tripReducer(state = [], action) {
   switch(action.type){
 
     case "GET_TRIP":
+      console.log(action);
       return [...action.trip]
 
     case "ADD_TRIP":
-      // console.log(action)
+      console.log(action)
       return [...state, action.trip]
 
 

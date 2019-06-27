@@ -31,10 +31,6 @@ class TripList extends React.Component {
     })
   }
 
-  // handleAddTrip = () => {
-  //   this.props.addTrip()
-  // }
-
   render() {
     console.log('Trip List Props', this.props)
     // console.log('Trip List Props trips', this.props.trips)
@@ -44,7 +40,7 @@ class TripList extends React.Component {
 
         { this.props.trips.length > 1 ? <h1>My Trips</h1> : <h1>My Trip</h1> }
 
-        
+
         <Link to="/add_trip">Add Trip</Link>
         {this.props.trips ? this.genTrip() : null}
       </div>
