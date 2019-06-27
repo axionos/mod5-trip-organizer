@@ -12,22 +12,22 @@ class AddTrip extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: new Date()
-    };
-    this.state = {
+      startDate: new Date(),
       endDate: new Date()
-    }
+    };
     this.handleChangeStartDate = this.handleChangeStartDate.bind(this);
 
     this.handleChangeEndDate = this.handleChangeEndDate.bind(this);
   }
 
+  // UPDATE START DATE
   handleChangeStartDate(date) {
     this.setState({
       startDate: date
     });
   }
 
+  // UPDATE END DATE
   handleChangeEndDate(date) {
     this.setState({
       endDate: date
@@ -54,7 +54,7 @@ class AddTrip extends React.Component {
           </div>
           <div>
             End Date
-            <DatePicker selected={this.state.EndDate}
+            <DatePicker selected={this.state.endDate}
             onChange={this.handleChangeEndDate} />
           </div>
           <div>
