@@ -4,8 +4,6 @@ import { addTrip } from '../actions'
 import { Link } from 'react-router-dom'
 
 import Select from 'react-select'
-// import makeAnimated from 'react-select/animated';
-// import { Note } from '../styled-components';
 import { countryOptions } from '../data';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -50,13 +48,38 @@ class AddTrip extends React.Component {
     })
   }
 
-  handleAddTrip = trip => {
-
+  // SEND THE CURRENT STATE TO MAPDISPATCHTOSTATE TO PROPS
+  handleAddTrip = event => {
+    event.preventDefault()
+    // this.props.addTrip(this.state)
+    debugger
+    fetch('http://localhost:3000/new_trip', {
+      method: "POST",
+      headers: {
+        'Authorization': localStorage.getItem("token"),
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          trip: {
+            title: this.state.title,
+            startDate: this.state.startDate,
+            endDate: this.state.endDate,
+            destination: this.state.destination,
+            user_id: this.props.user.id
+          }
+        // store_id:e.target.id
+        })
+    })
+    .then(resp => console.log("I AM RESP", resp))
+    .then(trip => {
+      this.props.addTrip(trip)
+    })
   }
 
   render(){
-    // console.log('AddTrip Props', this.props)
-    console.log('AddTrip state', this.state)
+    console.log('AddTrip Props', this.props)
+    // console.log('Store status:', this.store)
+    // console.log('AddTrip state', this.state)
 
     const {isSearchable} = this.state;
     return(
@@ -103,14 +126,16 @@ const mapDispatchToProps = dispatch => {
     addTrip: trip => {
       dispatch(addTrip(trip))
     }
-
-
   }
 }
 
-const mapStateToProps = store => {
-  return { trips: store.trips }
+const mapStateToProps = state => {
+  console.log('is this state?')
+  return {
+    trips: state.trips,
+    user: state.user
+  }
 }
 
 // export default AddTrip
-export default connect(mapDispatchToProps, mapStateToProps)(AddTrip)
+export default connect(mapStateToProps, mapDispatchToProps)(AddTrip)

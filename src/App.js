@@ -4,14 +4,16 @@ import TripList from './containers/TripList'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import AddTrip from './components/AddTrip'
+import { getUser } from './actions'
 import NoMatch from './NoMatch'
+import { connect } from 'react-redux'
 import { Switch, Route } from 'react-router-dom'
 
 
 class App extends React.Component {
-  state = {
-    user: {}
-  }
+  // state = {
+  //   user: {}
+  // }
 
   // FETCHING USER INFO
   componentDidMount(){
@@ -23,27 +25,30 @@ class App extends React.Component {
       })
       .then(resp => resp.json())
       .then(user => {
-        this.setState({
-          user
-        }/*,() => { console.log('here',this.state)}*/)
+        console.log('user info:', user);
+        this.props.getUser(user)
+        // this.setState({
+        //   user
+        // }/*,() => { console.log('here',this.state)}*/)
       })
     }
   } // END FETCHING
 
   render(){
-    // console.log('App Props', this.props)
+    console.log('App Props', this.props)
     // console.log('App state', this.state)
 
     return(
       <div>
-        <Navbar user={this.state.user}/>
+        <Navbar user={this.props.user}/>
         <Switch>
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/signup" component={SignupPage} />
           <Route exact path="/add_trip" component={AddTrip}/>
           <Route exect
             path="/"
-            render={props => <TripList {...props} user={this.state.user}/>}
+            render={props => <TripList {...props}
+              user={this.props.user} />}
           />
           <Route component={NoMatch} />
         </Switch>
@@ -52,4 +57,17 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    getUser: user => {
+      dispatch(getUser(user))
+    }
+  }
+}
+
+const mapStateToProps = state => {
+  return { user: state.user }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
+// export default App;
