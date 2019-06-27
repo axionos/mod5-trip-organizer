@@ -1,14 +1,20 @@
 export const getTrip = trip => {
   return {
     type: 'GET_TRIP',
-    payload: trip
+    trip
   }
 }
 
 export const addTrip = trip => {
   return {
     type: 'ADD_TRIP',
-    payload: trip
+    trip
+  }
+}
+export const getUser = user => {
+  return {
+    type: 'GET_USER',
+    user
   }
 }
 
