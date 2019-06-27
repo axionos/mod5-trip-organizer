@@ -17,6 +17,9 @@ function tripReducer(state = [], action) {
       // return [...state, action.payload]
       return state
 
+    // case "START_DATE":
+
+
     default:
       return state
   }

@@ -13,32 +13,41 @@ class AddTrip extends React.Component {
     super(props);
     this.state = {
       startDate: new Date(),
-      endDate: new Date()
+      endDate: new Date(),
+      destination: []
     };
-    this.handleChangeStartDate = this.handleChangeStartDate.bind(this);
-
-    this.handleChangeEndDate = this.handleChangeEndDate.bind(this);
   }
 
   // UPDATE START DATE
-  handleChangeStartDate(date) {
+  handleChangeStartDate = (date) => {
     this.setState({
       startDate: date
     });
   }
 
   // UPDATE END DATE
-  handleChangeEndDate(date) {
+  handleChangeEndDate = (date) => {
     this.setState({
       endDate: date
     });
   }
 
+  // UPDATE DESTINATION
+  handleDestinationSelector = (destinations) => {
+    // console.log(countries); // array of objects
+    return destinations.map(destination => {
+      return this.setState({
+        destination: [...this.state.destination, destination.value]
+      })
+    })
+  }
+  // console.log(theCountries)
+
   render(){
     // console.log('AddTrip Props', this.props)
+    console.log('AddTrip state', this.state)
 
     const animatedComponents = makeAnimated();
-    console.log('AddTrip state', this.state)
     return(
       <div>
 
@@ -58,7 +67,7 @@ class AddTrip extends React.Component {
             onChange={this.handleChangeEndDate} />
           </div>
           <div>
-            Country
+            Destination
 
             <Select
               closeMenuOnSelect={false}
@@ -66,6 +75,7 @@ class AddTrip extends React.Component {
               // defaultValue={countryOptions[4]}
               isMulti
               options={countryOptions}
+              onChange={this.handleDestinationSelector}
             />
           </div>
           <input type="submit" value="Done" />
