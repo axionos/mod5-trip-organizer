@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated';
+import { countryOptions } from '../data';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -33,6 +36,8 @@ class AddTrip extends React.Component {
 
   render(){
     // console.log('AddTrip Props', this.props)
+
+    const animatedComponents = makeAnimated();
     console.log('AddTrip state', this.state)
     return(
       <div>
@@ -54,7 +59,14 @@ class AddTrip extends React.Component {
           </div>
           <div>
             Country
-            <input type="text" name="country" />
+
+            <Select
+              closeMenuOnSelect={false}
+              components={animatedComponents}
+              // defaultValue={countryOptions[4]}
+              isMulti
+              options={countryOptions}
+            />
           </div>
           <input type="submit" value="Done" />
         </form>
