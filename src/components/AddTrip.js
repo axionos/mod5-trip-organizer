@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { addTrip } from '../actions'
+// import { addTrip } from '../actions'
 import { Link } from 'react-router-dom'
 
 import Select from 'react-select'
@@ -72,22 +72,13 @@ class AddTrip extends React.Component {
         })
     })
     .then(resp => resp.json())
-    .then(trip =>
-      this.setState({
-        title: "",
-        startDate: "",
-        endDate: "",
-        destination: {
-          value: countryOptions[0]
-        }
-      })
-    )
+    .then(alert("New Trip is Successfully Added!"))
+    window.location.replace(`http://localhost:3001/`)
   }
 
   render(){
-    console.log('AddTrip Props', this.props)
-    // console.log('Store status:', this.store)
-    console.log('AddTrip state', this.state)
+    // console.log('AddTrip Props', this.props)
+    // console.log('AddTrip state', this.state)
 
     const {isSearchable} = this.state;
     return(
@@ -114,7 +105,6 @@ class AddTrip extends React.Component {
               className="basic-single"
               classNamePrefix="select"
               defaultValue={this.state.destination}
-
               isSearchable={isSearchable}
               name="color"
               options={countryOptions}
