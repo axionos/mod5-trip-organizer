@@ -1,4 +1,12 @@
 
+.trip-list {
+  text-decoration: none;
+}
+
 .trip-container {
   border: 1px solid #aaa;
+}
+
+.trip-container:hover {
+  background-color: #aaa;
 }

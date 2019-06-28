@@ -27,22 +27,29 @@ class Trip extends React.Component {
     })
   } // END DELETING
 
+
   render(){
     console.log('Trip Props', this.props)
     return(
       <div className="trip-container">
-        <div className="trip-conts">
-          <h3>{this.props.trip.title}</h3>
-          <p>{this.props.trip.startDate} ~ {this.props.trip.endDate}</p>
-          <p>{this.props.trip.destination}</p>
-          <div>
-            <Link
-              to="/edit"
-              onClick={this.handleClickEdit}
-            >Edit Trip</Link>
+        <a
+          href="/itinerary"
+          className="trip-list"
+
+        >
+          <div className="trip-conts">
+            <h3>{this.props.trip.title}</h3>
+            <p>{this.props.trip.startDate} ~ {this.props.trip.endDate}</p>
+            <p>{this.props.trip.destination}</p>
+            <div>
+              <Link
+                to="/edit"
+                onClick={this.handleClickEdit}
+              >Edit Trip</Link>
+            </div>
+            <button onClick={this.handleClickDelete}>Delete</button>
           </div>
-          <button onClick={this.handleClickDelete}>Delete</button>
-        </div>
+        </a>
       </div>
     )
   }
