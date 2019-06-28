@@ -27,7 +27,10 @@ class TripList extends React.Component {
 
   genTrip = () => {
     return this.props.trips.map(trip => {
-      return <Trip key={trip.id} trip={trip} />
+      return <Trip
+        key={trip.id}
+        trip={trip}
+      />
     })
   }
 
