@@ -51,8 +51,6 @@ class AddTrip extends React.Component {
   // SEND THE CURRENT STATE TO MAPDISPATCHTOSTATE TO PROPS
   handleAddTrip = event => {
     event.preventDefault()
-    // this.props.addTrip(this.state)
-
     fetch('http://localhost:3000/new_trip', {
       method: "POST",
       headers: {
@@ -74,7 +72,7 @@ class AddTrip extends React.Component {
     .then(resp => resp.json())
     .then(alert("New Trip is Successfully Added!"))
     window.location.replace(`http://localhost:3001/`)
-  }
+  } // END FETCHING
 
   render(){
     // console.log('AddTrip Props', this.props)

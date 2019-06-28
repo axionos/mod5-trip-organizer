@@ -4,6 +4,7 @@ import TripList from './containers/TripList'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import AddTrip from './components/AddTrip'
+import EditTrip from './components/EditTrip'
 import { getUser } from './actions'
 import NoMatch from './NoMatch'
 import { connect } from 'react-redux'
@@ -27,7 +28,7 @@ class App extends React.Component {
       .then(user => {
         console.log('user info:', user);
         this.props.getUser(user)
-        
+
       })
     }
   } // END FETCHING
@@ -42,7 +43,8 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/signup" component={SignupPage} />
-          <Route exact path="/add_trip" component={AddTrip}/>
+          <Route exact path="/add" component={AddTrip}/>
+          <Route exact path="/edit" component={EditTrip}/>
           <Route exect
             path="/"
             render={props => <TripList {...props}

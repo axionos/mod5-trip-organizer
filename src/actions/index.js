@@ -4,11 +4,22 @@ export const getTrip = trip => {
     trip
   }
 }
-
 export const addTrip = trip => {
   return {
     type: 'ADD_TRIP',
     trip
+  }
+}
+export const getTheTrip = trip => {
+  return {
+    type: 'GET_THE_TRIP',
+    trip
+  }
+}
+export const deleteTheTrip = tripId => {
+  return {
+    type: 'DELETE_THE_TRIP',
+    tripId
   }
 }
 export const getUser = user => {
