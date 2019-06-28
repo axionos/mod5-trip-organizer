@@ -3,15 +3,20 @@ import { connect } from 'react-redux'
 import Select from 'react-select'
 import { countryOptions } from '../data';
 import DatePicker from "react-datepicker";
+import Moment from 'moment'
+
 
 class EditTrip extends React.Component {
   constructor(props) {
     super(props);
+    const startDate = Moment(this.props.theTrip.startDate, "YYYY-MM-DD")
+    const endDate = Moment(this.props.theTrip.endDate, "YYYY-MM-DD")
+
     this.state = {
-      title: "",
-      startDate: "",
-      endDate: "",
-      destination: ""
+      title: this.props.theTrip.title,
+      startDate: startDate._d,
+      endDate: endDate._d,
+      destination: this.props.theTrip.destination
     };
   }
   // CONVERTS COUNTRY NAME STRING TO AN OBJECT
@@ -22,7 +27,7 @@ class EditTrip extends React.Component {
   // UPDATE TRIP TITLE
   handleChangeTitle = event => {
     this.setState({
-      title: event.target.value
+      [event.target.name]: event.target.value
     })
   }
 
@@ -74,9 +79,18 @@ class EditTrip extends React.Component {
     window.location.replace(`http://localhost:3001/`)
   }
 
+
   render(){
-    console.log(this.props.theTrip.id)
+    // "2019-06-03" -> MM/DD/YYYY
+
+    // .format("MM-DD-YYYY")
+    // console.log("startDate", startDate);
+    // console.log(startDate.format("MM/DD/YYYY"))
+    // const time = Moment(this.props.theTrip.startDate, "MM-DD-YYYY")
+    // console.log(time)
+    // console.log(this.props.theTrip.id)
     console.log('Edit Trip Props', this.props);
+    console.log('Edit Trip State', this.state);
 
     const {isSearchable} = this.props;
     return(
@@ -90,7 +104,7 @@ class EditTrip extends React.Component {
           <div>
             Start Date
             <DatePicker selected={this.state.startDate}
-            onChange={this.handleChangeStartDate} />
+            onChange={this.handleChangeStartDate}/>
           </div>
           <div>
             End Date
