@@ -26,7 +26,7 @@ class App extends React.Component {
       })
       .then(resp => resp.json())
       .then(user => {
-        console.log('user info:', user);
+        // console.log('user info:', user);
         this.props.getUser(user)
 
       })
