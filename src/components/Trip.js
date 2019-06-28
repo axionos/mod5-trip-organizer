@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getTheTrip, deleteTheTrip } from '../actions'
-
+import { withRouter } from 'react-router-dom'
 
 class Trip extends React.Component {
 
@@ -28,28 +28,40 @@ class Trip extends React.Component {
   } // END DELETING
 
 
+  // SEND TRIP INFO TO STORE
+  handleClickTripDiv = e => {
+    console.log('clicking', e.target);
+    // if click target has class name of two-btns
+    if (e.target.className === 'two-btns') {
+      return null
+    } else {
+      this.props.history.push("/itinerary")
+      this.props.getTheTrip(this.props.trip)
+    }
+  } // END SENDING
+
   render(){
     console.log('Trip Props', this.props)
     return(
       <div className="trip-container">
-        <a
-          href="/itinerary"
-          className="trip-list"
-
-        >
-          <div className="trip-conts">
+          <div
+            className="trip-conts" onClick={this.handleClickTripDiv}
+          >
             <h3>{this.props.trip.title}</h3>
             <p>{this.props.trip.startDate} ~ {this.props.trip.endDate}</p>
             <p>{this.props.trip.destination}</p>
-            <div>
+            <div className="btn-container">
               <Link
+                className="two-btns"
                 to="/edit"
                 onClick={this.handleClickEdit}
               >Edit Trip</Link>
+              <button
+                onClick={this.handleClickDelete}
+                className="two-btns"
+              >Delete</button>
             </div>
-            <button onClick={this.handleClickDelete}>Delete</button>
           </div>
-        </a>
       </div>
     )
   }
@@ -70,4 +82,4 @@ const mapStateToProps = store => {
   return { trips: store.trips }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Trip)
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Trip))

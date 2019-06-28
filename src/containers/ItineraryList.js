@@ -1,13 +1,22 @@
 import React from 'react';
-// import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 class ItineraryList extends React.Component {
   render(){
+    console.log('Itinerary List Props', this.props)
     return(
       <div>
-        
+        <h2>{this.props.theTrip.title}</h2>
+        <p>{this.props.theTrip.startDate}</p>
+        <p>{this.props.theTrip.endDate}</p>
+        <p>{this.props.theTrip.destination}</p>
       </div>
     )
   }
 }
-export default ItineraryList
+
+const mapStateToProps = (state) => {
+  return { theTrip: state.theTrip[0] }
+}
+
+export default connect(mapStateToProps)(ItineraryList)
