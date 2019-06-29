@@ -5,7 +5,8 @@ import { Button, Form, Grid, Header, Image, Segment, Message, Icon } from 'seman
 class SignupPage extends React.Component {
   state = {
     username: '',
-    password: ''
+    password: '',
+    error: false
   }
 
   handleChange = (e) => {
@@ -36,10 +37,7 @@ class SignupPage extends React.Component {
         window.location.replace(`http://localhost:3001/login`)
       } else {
         // alert('Username and password cannot be blank')
-        return <Message negative>
-          <Message.Header>We're sorry we can't apply that discount</Message.Header>
-          <p>That offer has expired</p>
-        </Message>
+        this.setState({error: true})
       }
       // alert
       // or push them back to login
@@ -56,6 +54,11 @@ class SignupPage extends React.Component {
               <Image src='/logo.png' / > Sign Up
             </Header>
             <Form size='large' onSubmit={this.handleSignUp} className='attached fluid segment'>
+              {
+                this.state.error ? <Message negative>
+                  <p>Username and password cannot be left blank</p>
+                </Message> : null
+              }
               <Segment stacked>
                 <Form.Input
                   fluid icon='user'

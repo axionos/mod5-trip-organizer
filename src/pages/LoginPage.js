@@ -4,7 +4,8 @@ import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui
 class LoginPage extends React.Component {
   state = {
     username: '',
-    password: ''
+    password: '',
+    error: false
   }
 
   componentDidMount(){
@@ -33,17 +34,27 @@ class LoginPage extends React.Component {
       },
       body: JSON.stringify(this.state)
     })
-    .then(resp => resp.json())
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Please check your username and password.');
+      }
+    })
     .then(data => {
       // take the token back from the data
       localStorage.setItem('token', data.token)
 
       if (localStorage.getItem("token") === "undefined") {
         localStorage.clear()
-      } else if (!!localStorage.getItem("token")) {
+      }else if (!!localStorage.getItem("token")) {
         window.location.replace(`http://localhost:3001/`)
       }
     })
+    .catch((error) => {
+      this.setState({error: true})
+    });
+
   } // END SAVING
 
 
@@ -58,7 +69,14 @@ class LoginPage extends React.Component {
             <Header as='h2' color='teal' textAlign='center'>
               <Image src='/logo.png' / > Log-in to your account
             </Header>
-            <Form size='large' onSubmit={this.handleLogin} className='attached fluid segment'>
+            <Form error size='large' onSubmit={this.handleLogin} className='attached fluid segment'>
+
+              { this.state.error ? <Message
+              error
+              header='Something went wrong!'
+              content='Please check your username and password.'
+              /> : null }
+
               <Segment stacked>
                 <Form.Input
                   fluid icon='user'
@@ -81,6 +99,7 @@ class LoginPage extends React.Component {
                   Login
                 </Button>
               </Segment>
+
             </Form>
             <Message attached='bottom'>
               New to us? <a href='/signup'>Sign Up</a>

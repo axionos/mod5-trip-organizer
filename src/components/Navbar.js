@@ -1,10 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import {
-  Container,
-  Image,
-  Menu,
-} from 'semantic-ui-react'
+import { Container, Menu } from 'semantic-ui-react'
 
 class Navbar extends React.Component {
   // CONDITIONALLY RENDER MY TRIP
@@ -42,11 +38,10 @@ class Navbar extends React.Component {
       <div className="navbar">
         <Menu fixed='top' inverted>
           <Container>
-            <Menu.Item as='a' position='center' header>
-              <NavLink to="/" exact>
-                
-                Trip Planner
-              </NavLink>
+            <Menu.Item as='a' header>
+
+                My Trip Planner
+
             </Menu.Item>
             <Menu.Menu position='right'>
               {this.myTrip()}
