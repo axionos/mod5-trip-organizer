@@ -6,12 +6,12 @@ class ItineraryList extends React.Component {
   render(){
     console.log('Itinerary List Props', this.props)
 
-    // CALCULATE HOW MANY DAYS THERE ARE IN BETWEEN TWO DATES
-    const startDate = Moment(this.props.theTrip.startDate, "YYYY-MM-DD")
-    const endDate = Moment(this.props.theTrip.endDate, "YYYY-MM-DD")
-    const answer = endDate.diff(startDate, 'days')
-    console.log(answer)
-    // END CALCULATING
+    // // CALCULATE HOW MANY DAYS THERE ARE IN BETWEEN TWO DATES
+    // const startDate = Moment(this.props.theTrip.startDate, "YYYY-MM-DD")
+    // const endDate = Moment(this.props.theTrip.endDate, "YYYY-MM-DD")
+    // const answer = endDate.diff(startDate, 'days')
+    // console.log(answer)
+    // // END CALCULATING
 
     return(
       <div>
