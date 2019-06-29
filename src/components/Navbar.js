@@ -1,11 +1,16 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-
+import {
+  Container,
+  Image,
+  Menu,
+} from 'semantic-ui-react'
 
 class Navbar extends React.Component {
   // CONDITIONALLY RENDER MY TRIP
   myTrip = () => {
     if (localStorage.getItem('token')){
+      // return <NavLink to="/" exact>My Trips</NavLink>
       return <NavLink to="/" exact>My Trips</NavLink>
     } else {
       return
@@ -15,7 +20,7 @@ class Navbar extends React.Component {
   // CONDITIONALLY RENDER MY SIGNOUT BUTTON
   signOut = () => {
     if (localStorage.getItem('token')){
-      return <button onClick={this.handleLogOut}>SignOut</button>
+      return <p onClick={this.handleLogOut}>SignOut</p>
     } else {
       return
     }
@@ -31,10 +36,19 @@ class Navbar extends React.Component {
     // console.log('Navbar props', this.props);
     return(
       <div className="navbar">
-      {this.myTrip()}
-      {this.signOut()}
 
-    </div>
+
+        <Menu fixed='top' inverted>
+          <Container>
+            <Menu.Item as='a' header>
+              <Image size='mini' src='/logo.png' style={{ marginRight: '1.5em' }} />
+              Trip Planner
+            </Menu.Item>
+            <Menu.Item as='a'>{this.myTrip()}</Menu.Item>
+            <Menu.Item as='a'>{this.signOut()}</Menu.Item>
+          </Container>
+        </Menu>
+      </div>
     )
   }
 }
