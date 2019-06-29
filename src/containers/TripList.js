@@ -3,6 +3,8 @@ import Trip from '../components/Trip'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getTrip, addTrip } from '../actions'
+import { Container, Icon, Button } from 'semantic-ui-react'
+
 
 class TripList extends React.Component {
 
@@ -38,15 +40,25 @@ class TripList extends React.Component {
     // console.log('Trip List Props', this.props)
     console.log('number of trips: ', this.props.trips.length);
     return (
-      <div>
-        Hello {this.props.user.username} from ItineraryList
+      <React.Fragment>
+        <Container className="page-header">
+          <div className="flex-container">
+            { this.props.trips.length > 1 ? <h1>My Trips</h1> : <h1>My Trip</h1> }
+            <Link to="/add" className="add-trip">
+              <Button primary><Icon name='plus' size='small' />Add a Trip</Button>
+            </Link>
+          </div>
+        </Container>
+        <Container>
 
-        { this.props.trips.length > 1 ? <h1>My Trips</h1> : <h1>My Trip</h1> }
 
 
-        <Link to="/add">Add Trip</Link>
-        {this.props.trips ? this.genTrip() : null}
-      </div>
+
+
+
+          {this.props.trips ? this.genTrip() : null}
+        </Container>
+      </React.Fragment>
     )
   }
 }

@@ -1,3 +1,16 @@
+.page-header {
+  padding-top: 80px;
+  min-height: 100px;
+}
+
+.flex-container {
+  display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 
 .trip-list {
   text-decoration: none;
@@ -9,4 +22,8 @@
 
 .trip-container:hover {
   background-color: #aaa;
+}
+
+.trip-conts {
+  padding: 20px;
 }

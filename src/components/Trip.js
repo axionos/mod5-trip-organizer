@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { getTheTrip, deleteTheTrip } from '../actions'
 import { withRouter } from 'react-router-dom'
 
+
+
 class Trip extends React.Component {
 
   // CALL DISPATCH TO PROPS ON CLICK
@@ -45,7 +47,8 @@ class Trip extends React.Component {
     return(
       <div className="trip-container">
           <div
-            className="trip-conts" onClick={this.handleClickTripDiv}
+            className="trip-conts" 
+            onClick={this.handleClickTripDiv}
           >
             <h3>{this.props.trip.title}</h3>
             <p>{this.props.trip.startDate} ~ {this.props.trip.endDate}</p>
