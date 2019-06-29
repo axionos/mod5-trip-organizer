@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 
 class LoginPage extends React.Component {
   state = {
@@ -45,28 +46,66 @@ class LoginPage extends React.Component {
     })
   } // END SAVING
 
+
   render(){
-    // console.log(this.state)
-    console.log('Login Page Props', this.props)
+    // console.log('Login Page State', this.state)
+    // console.log('Login Page Props', this.props)
 
     return(
       <div>
-        Please Log In!!
-        <form onSubmit={this.handleLogin}>
-          <div>
-            Username
-            <input type="text" name="username" onChange={this.handleChange}/>
-          </div>
-          <div>
-            Password
-            <input type="password" name="password" onChange={this.handleChange}/>
-          </div>
-          <input type="submit" value="Log In" />
-        </form>
-        <a href="/signup">Sign Up</a>
+        <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+          <Grid.Column style={{ maxWidth: 450 }}>
+            <Header as='h2' color='teal' textAlign='center'>
+              <Image src='/logo.png' /> Log-in to your account
+            </Header>
+            <Form size='large' onSubmit={this.handleLogin}>
+              <Segment stacked>
+                <Form.Input
+                  fluid icon='user'
+                  iconPosition='left'
+                  placeholder='Username'
+                  name='username'
+                  onChange={this.handleChange}
+                />
+                <Form.Input
+                  fluid
+                  icon='lock'
+                  iconPosition='left'
+                  placeholder='Password'
+                  type='password'
+                  name='password'
+                  onChange={this.handleChange}
+                />
+
+                <Button color='teal' fluid size='large'>
+                  Login
+                </Button>
+              </Segment>
+            </Form>
+            <Message>
+              New to us? <a href='/signup'>Sign Up</a>
+            </Message>
+          </Grid.Column>
+        </Grid>
       </div>
     )
   }
 }
-
 export default LoginPage
+
+// OLD FORM
+// <div>
+//   Please Log In!!
+//   <form onSubmit={this.handleLogin}>
+//     <div>
+//       Username
+//       <input type="text" name="username" onChange={this.handleChange}/>
+//     </div>
+//     <div>
+//       Password
+//       <input type="password" name="password" onChange={this.handleChange}/>
+//     </div>
+//     <input type="submit" value="Log In" />
+//   </form>
+//   <a href="/signup">Sign Up</a>
+// </div>

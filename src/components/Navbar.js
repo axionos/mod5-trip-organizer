@@ -11,7 +11,9 @@ class Navbar extends React.Component {
   myTrip = () => {
     if (localStorage.getItem('token')){
       // return <NavLink to="/" exact>My Trips</NavLink>
-      return <NavLink to="/" exact>My Trips</NavLink>
+      return <Menu.Item as='a'>
+          <NavLink to="/" exact>My Trips</NavLink>
+        </Menu.Item>
     } else {
       return
     }
@@ -20,7 +22,7 @@ class Navbar extends React.Component {
   // CONDITIONALLY RENDER MY SIGNOUT BUTTON
   signOut = () => {
     if (localStorage.getItem('token')){
-      return <p onClick={this.handleLogOut}>SignOut</p>
+      return <Menu.Item as='a'><p onClick={this.handleLogOut}>SignOut</p></Menu.Item>
     } else {
       return
     }
@@ -44,8 +46,8 @@ class Navbar extends React.Component {
               <Image size='mini' src='/logo.png' style={{ marginRight: '1.5em' }} />
               Trip Planner
             </Menu.Item>
-            <Menu.Item as='a'>{this.myTrip()}</Menu.Item>
-            <Menu.Item as='a'>{this.signOut()}</Menu.Item>
+            {this.myTrip()}
+            {this.signOut()}
           </Container>
         </Menu>
       </div>
