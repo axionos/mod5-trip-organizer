@@ -34,7 +34,9 @@ class SignupPage extends React.Component {
 
       // if username or password are NOT empty, redirect to login
       if (this.state.username.length !== 0 && this.state.password.length !== 0) {
+        alert('Thanks for signing up!')
         window.location.replace(`http://localhost:3001/login`)
+        // this.props.history.push('http://localhost:3001/login')
       } else {
         // alert('Username and password cannot be blank')
         this.setState({error: true})
