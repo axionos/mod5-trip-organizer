@@ -56,9 +56,9 @@ class LoginPage extends React.Component {
         <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 450 }}>
             <Header as='h2' color='teal' textAlign='center'>
-              <Image src='/logo.png' /> Log-in to your account
+              <Image src='/logo.png' / > Log-in to your account
             </Header>
-            <Form size='large' onSubmit={this.handleLogin}>
+            <Form size='large' onSubmit={this.handleLogin} className='attached fluid segment'>
               <Segment stacked>
                 <Form.Input
                   fluid icon='user'
@@ -82,7 +82,7 @@ class LoginPage extends React.Component {
                 </Button>
               </Segment>
             </Form>
-            <Message>
+            <Message attached='bottom'>
               New to us? <a href='/signup'>Sign Up</a>
             </Message>
           </Grid.Column>
