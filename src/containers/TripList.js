@@ -2,7 +2,7 @@ import React from 'react';
 import Trip from '../components/Trip'
 import { connect } from 'react-redux'
 import { getTrip, addTrip } from '../actions'
-import { Container, Icon, Button, Modal, Header } from 'semantic-ui-react'
+import { Container, Icon, Button, Modal, Form } from 'semantic-ui-react'
 // BELOW ARE FOR THE ADD TRIP FORM
 import Select from 'react-select'
 import { countryOptions } from '../data';
@@ -113,30 +113,32 @@ class TripList extends React.Component {
           <div className="flex-container">
             { this.props.trips.length > 1 ? <h1>My Trips</h1> : <h1>My Trip</h1> }
 
-
-
-            <Modal trigger={<Button primary><Icon name='plus' size='small' />Add a Trip</Button>}>
-            <Modal.Header>Select a Photo</Modal.Header>
+            <Modal
+            closeIcon
+            size="tiny"
+            trigger={<Button primary><Icon name='plus' size='small' />Add a Trip</Button>}>
+            <Modal.Header>Add a Trip</Modal.Header>
             <Modal.Content>
               <Modal.Description>
-                <Header>Default Profile Image</Header>
-                <form onSubmit={this.handleAddTrip}>
-                  <div>
-                    Title
-                    <input type="text" name="title" value={this.state.title} onChange={this.handleChangeTitle}/>
-                  </div>
-                  <div>
-                    Start Date
+
+                <Form onSubmit={this.handleAddTrip}>
+                  <Form.Field>
+                    <label>Title</label>
+                    <input type="text" name="title" value={this.state.title}
+                    placeholder="Enter a Trip Title" onChange={this.handleChangeTitle}/>
+                  </Form.Field>
+                  <Form.Field className="start-date">
+                    <label>Start Date</label>
                     <DatePicker selected={this.state.startDate}
                     onChange={this.handleChangeStartDate} />
-                  </div>
-                  <div>
-                    End Date
+                  </Form.Field>
+                  <Form.Field className="end-date">
+                    <label>End Date</label>
                     <DatePicker selected={this.state.endDate}
                     onChange={this.handleChangeEndDate} />
-                  </div>
-                  <div>
-                    Destination
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Destination</label>
 
                     <Select
                       className="basic-single"
@@ -147,14 +149,19 @@ class TripList extends React.Component {
                       options={countryOptions}
                       onChange={this.handleDestinationSelector}
                     />
+                  </Form.Field>
+                  <div className='form-btn-container'>
+                    <Button
+                      type='submit'
+                      positive icon='checkmark'
+                      labelPosition='right'
+                      content='Submit'>
+                    </Button>
                   </div>
-                  <input type="submit" value="Done" />
-                </form>
+                </Form>
               </Modal.Description>
             </Modal.Content>
           </Modal>
-
-
           </div>
         </Container>
         <Container>

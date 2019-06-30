@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 // import { addTrip } from '../actions'
 import { Link } from 'react-router-dom'
+import { Container, Form } from 'semantic-ui-react'
 
 import Select from 'react-select'
 import { countryOptions } from '../data';
@@ -80,23 +81,23 @@ class AddTrip extends React.Component {
 
     const {isSearchable} = this.state;
     return(
-      <div>
+      <Container>
         <form onSubmit={this.handleAddTrip}>
-          <div>
+          <Form.Field>
             Title
             <input type="text" name="title" value={this.state.title} onChange={this.handleChangeTitle}/>
-          </div>
-          <div>
+          </Form.Field>
+          <Form.Field>
             Start Date
             <DatePicker selected={this.state.startDate}
             onChange={this.handleChangeStartDate} />
-          </div>
-          <div>
+          </Form.Field>
+          <Form.Field>
             End Date
             <DatePicker selected={this.state.endDate}
             onChange={this.handleChangeEndDate} />
-          </div>
-          <div>
+          </Form.Field>
+          <Form.Field>
             Destination
 
             <Select
@@ -108,11 +109,11 @@ class AddTrip extends React.Component {
               options={countryOptions}
               onChange={this.handleDestinationSelector}
             />
-          </div>
+          </Form.Field>
           <input type="submit" value="Done" />
         </form>
-      <Link to="/">Go back</Link>
-      </div>
+        <Link to="/">Go back</Link>
+      </Container>
     )
   }
 }
