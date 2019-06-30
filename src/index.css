@@ -27,3 +27,17 @@
 .trip-conts {
   padding: 20px;
 }
+
+.field.start-date {
+  display: inline-block;
+  padding-right: 30px;
+}
+
+.field.end-date {
+  display: inline-block;
+}
+
+.form-btn-container {
+  padding: 10px 0;
+  text-align: center;
+}
