@@ -1,6 +1,7 @@
 import React from 'react';
 import Moment from 'moment'
 import { connect } from 'react-redux'
+import { Container } from 'semantic-ui-react'
 
 class ItineraryList extends React.Component {
   render(){
@@ -14,12 +15,12 @@ class ItineraryList extends React.Component {
     // // END CALCULATING
 
     return(
-      <div>
+      <Container className='page-container'>
         <h2>{this.props.theTrip.title}</h2>
         <p>{this.props.theTrip.startDate}</p>
         <p>{this.props.theTrip.endDate}</p>
         <p>{this.props.theTrip.destination}</p>
-      </div>
+      </Container>
     )
   }
 }
