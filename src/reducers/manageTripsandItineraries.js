@@ -3,7 +3,8 @@ import { combineReducers } from "redux"
 const rootReducer = combineReducers({
   user: userReducer,
   trips: tripReducer,
-  theTrip: theTripReducer
+  theTrip: theTripReducer,
+  days: theDaysReducer
 })
 
 export default rootReducer;
@@ -51,6 +52,16 @@ function theTripReducer(state = [], action) {
   }
 }
 
+function theDaysReducer(state = [], action) {
+  switch(action.type){
+    case "GET_DAYS":
+      console.log(action)
+      return action.days
+
+    default:
+      return state
+  }
+}
 
 
 // making a post request
