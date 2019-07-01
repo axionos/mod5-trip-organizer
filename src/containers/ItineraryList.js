@@ -1,4 +1,5 @@
 import React from 'react';
+import ItineraryItem from '../components/ItineraryItem'
 // import Moment from 'moment'
 import { connect } from 'react-redux'
 import { Container } from 'semantic-ui-react'
@@ -17,6 +18,12 @@ class ItineraryList extends React.Component {
     .then(data => this.props.getDays(data))
   }
 
+  // GENERATE DAY COMPONENT
+  genDays = () => {
+    return this.props.days.map(trip => {
+      return <ItineraryItem trip={trip} key={trip.id}/>
+    })
+  }
 
   render(){
     console.log('Itinerary List Props', this.props)
@@ -27,6 +34,9 @@ class ItineraryList extends React.Component {
         <p>{this.props.theTrip.startDate}</p>
         <p>{this.props.theTrip.endDate}</p>
         <p>{this.props.theTrip.destination}</p>
+        <div>
+          { this.genDays() }
+        </div>
       </Container>
     )
   }
