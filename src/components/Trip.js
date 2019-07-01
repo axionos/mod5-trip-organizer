@@ -107,7 +107,7 @@ class Trip extends React.Component {
 
   // SEND TRIP INFO TO STORE
   handleClickTripDiv = e => {
-    console.log('clicking', e.target.className);
+    // console.log('clicking', e.target.className);
 
     // if click target has class name of two-btns
     if (e.target.className.includes('two-btns')) {
@@ -120,7 +120,7 @@ class Trip extends React.Component {
 
 
   render(){
-    console.log('Trip Props', this.props)
+    // console.log('Trip Props', this.props)
     // console.log('Trip State', this.state)
     const {isSearchable} = this.state;
     return(
