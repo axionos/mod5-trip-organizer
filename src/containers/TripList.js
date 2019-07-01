@@ -88,9 +88,12 @@ class TripList extends React.Component {
         })
     })
     .then(resp => resp.json())
-    .then(alert("New Trip is Successfully Added!"))
+    .then(data =>
+      alert("New Trip is Successfully Added!"))
     window.location.replace(`http://localhost:3001/`)
-  } // END FETCHING
+   // END FIRST FETCH
+
+ }
 
   // GENERATE TRIPS
   genTrip = () => {

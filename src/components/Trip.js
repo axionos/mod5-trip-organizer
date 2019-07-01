@@ -80,8 +80,8 @@ class Trip extends React.Component {
         })
     })
     .then(resp => resp.json())
-    .then(data => console.log(data))
-      alert("The Trip is Successfully Edited!")
+    .then(data =>
+      alert("The Trip is Successfully Edited!"))
     window.location.replace(`http://localhost:3001/`)
   }
 
@@ -121,7 +121,7 @@ class Trip extends React.Component {
 
 
   render(){
-    console.log('Trip Props', this.props)
+    // console.log('Trip Props', this.props)
     // console.log('Trip State', this.state)
     const {isSearchable} = this.state;
     return(
