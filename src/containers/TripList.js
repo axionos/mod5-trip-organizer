@@ -109,14 +109,14 @@ class TripList extends React.Component {
     const {isSearchable} = this.state;
     return (
       <React.Fragment>
-        <Container className="page-header">
+        <Container className="page-container">
           <div className="flex-container">
             { this.props.trips.length > 1 ? <h1>My Trips</h1> : <h1>My Trip</h1> }
 
             <Modal
             closeIcon
             size="tiny"
-            trigger={<Button primary><Icon name='plus' size='small' />Add a Trip</Button>}>
+            trigger={<Button positive><Icon name='plus' size='small' />Add a Trip</Button>}>
             <Modal.Header>Add a Trip</Modal.Header>
             <Modal.Content>
               <Modal.Description>

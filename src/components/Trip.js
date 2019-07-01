@@ -108,15 +108,14 @@ class Trip extends React.Component {
 
   // SEND TRIP INFO TO STORE
   handleClickTripDiv = e => {
-    // console.log('clicking', e.target.id);
+    console.log('clicking', e.target.className);
 
     // if click target has class name of two-btns
-    if (e.target.className === 'two-btns') {
+    if (e.target.className.includes('two-btns')) {
       return null
     } else {
-      // this.props.history.push("/itinerary")
+      this.props.history.push("/itinerary")
       this.props.getTheTrip(this.props.trip)
-      // return null
     }
   } // END SENDING
 
@@ -129,7 +128,7 @@ class Trip extends React.Component {
       <div className="trip-container">
           <div
             className="trip-conts"
-            onClick={this.props.handleClickTripDiv}
+            onClick={this.handleClickTripDiv}
           >
             <h3>{this.props.trip.title}</h3>
             <p>{this.props.trip.startDate} ~ {this.props.trip.endDate}</p>
@@ -195,12 +194,14 @@ class Trip extends React.Component {
               </Modal.Content>
             </Modal>
 
-
-
-              <button
+              <Button negative
                 onClick={this.handleClickDelete}
                 className="two-btns"
-              >Delete</button>
+                size='tiny'
+              >
+                <Icon name='edit' size='small' />
+                Delete
+              </Button>
             </div>
           </div>
       </div>
