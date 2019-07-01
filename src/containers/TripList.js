@@ -98,13 +98,13 @@ class TripList extends React.Component {
       return <Trip
         key={trip.id}
         trip={trip}
+        handleClickEditBtn={this.handleClickEditBtn}
       />
     })
   } // END GENERATING
 
-
   render() {
-    // console.log('Trip List Props', this.props)
+    console.log('Trip List Props', this.props)
     // console.log('number of trips: ', this.props.trips.length);
     const {isSearchable} = this.state;
     return (
