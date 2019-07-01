@@ -2,6 +2,7 @@ import React from 'react';
 // import Moment from 'moment'
 import { connect } from 'react-redux'
 import { Container } from 'semantic-ui-react'
+import { getDays } from '../actions/index.js'
 
 class ItineraryList extends React.Component {
 
@@ -13,7 +14,7 @@ class ItineraryList extends React.Component {
       }
     })
     .then(res => res.json())
-    .then(data => console.log(data))
+    .then(data => this.props.getDays(data))
   }
 
 
@@ -31,19 +32,22 @@ class ItineraryList extends React.Component {
   }
 }
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     getTrip: trip => {
-//       dispatch(getTrip(trip))
-//     }
-//   }
-// }
-
-const mapStateToProps = (state) => {
-  return { theTrip: state.theTrip[0] }
+const mapDispatchToProps = dispatch => {
+  return {
+    getDays: days => {
+      dispatch(getDays(days))
+    }
+  }
 }
 
-export default connect(mapStateToProps)(ItineraryList)
+const mapStateToProps = (state) => {
+  return {
+    theTrip: state.theTrip[0],
+    days: state.days
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ItineraryList)
 
 // // CALCULATE HOW MANY DAYS THERE ARE IN BETWEEN TWO DATES
 // const startDate = Moment(this.props.theTrip.startDate, "YYYY-MM-DD")

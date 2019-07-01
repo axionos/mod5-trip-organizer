@@ -28,6 +28,12 @@ export const getUser = user => {
     user
   }
 }
+export const getDays = days => {
+  return {
+    type: 'GET_DAYS',
+    days
+  }
+}
 
 // export const addStartDate = date => {
 //   return {
