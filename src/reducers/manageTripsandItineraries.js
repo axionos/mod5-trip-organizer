@@ -44,7 +44,7 @@ function theTripReducer(state = [], action) {
   switch(action.type){
     case "GET_THE_TRIP":
       console.log(action)
-      return action.trip
+      return [action.trip]
 
     default:
       return state

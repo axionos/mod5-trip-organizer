@@ -14,14 +14,14 @@ import Moment from 'moment'
 class Trip extends React.Component {
   constructor(props) {
     super(props);
-    // const startDate = Moment(this.props.theTrip.startDate, "YYYY-MM-DD")
-    // const endDate = Moment(this.props.theTrip.endDate, "YYYY-MM-DD")
+    const startDate = Moment(this.props.trip.startDate, "YYYY-MM-DD")
+    const endDate = Moment(this.props.trip.endDate, "YYYY-MM-DD")
 
     this.state = {
-      // title: this.props.theTrip.title,
-      // startDate: startDate._d,
-      // endDate: endDate._d,
-      // destination: this.props.theTrip.destination
+      title: this.props.trip.title,
+      startDate: startDate._d,
+      endDate: endDate._d,
+      destination: this.props.trip.destination
     };
   }
 
@@ -29,6 +29,61 @@ class Trip extends React.Component {
   converter = countryNameStr => {
     return {value: countryNameStr, label: countryNameStr}
   } // END CONVERTING
+
+  // UPDATE TRIP TITLE
+  handleChangeTitle = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
+  // UPDATE START DATE
+  handleChangeStartDate = (date) => {
+    this.setState({
+      startDate: date
+    });
+  }
+
+  // UPDATE END DATE
+  handleChangeEndDate = (date) => {
+    this.setState({
+      endDate: date
+    });
+  }
+
+  // UPDATE DESTINATION
+  handleDestinationSelector = event => {
+    this.setState({
+      destination: event.value
+    })
+  }
+
+  handleSubmitEditTrip = event => {
+    event.preventDefault()
+    const tripId = this.props.trip.id
+    fetch(`http://localhost:3000/trips/${tripId}`, {
+      method: "PATCH",
+      headers: {
+        'Authorization': localStorage.getItem("token"),
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+          trip: {
+            title: this.state.title,
+            startDate: this.state.startDate,
+            endDate: this.state.endDate,
+            destination: this.state.destination,
+            user_id: this.props.user.id
+          }
+        // store_id:e.target.id
+        })
+    })
+    .then(resp => resp.json())
+    .then(data => console.log(data))
+      alert("The Trip is Successfully Edited!")
+    window.location.replace(`http://localhost:3001/`)
+  }
 
   // CALL DISPATCH TO PROPS ON CLICK
   handleClickEdit = (e) => {
@@ -40,7 +95,6 @@ class Trip extends React.Component {
   // DELETE THE TRIP
   handleClickDelete = () => {
     // console.log('selected trip id:',this.props.trip.id);
-
     // optimistically update the redux store
     this.props.deleteTheTrip(this.props.trip.id)
 
@@ -61,14 +115,15 @@ class Trip extends React.Component {
       return null
     } else {
       // this.props.history.push("/itinerary")
-      // this.props.getTheTrip(this.props.trip)
-      return null
+      this.props.getTheTrip(this.props.trip)
+      // return null
     }
   } // END SENDING
 
 
   render(){
     console.log('Trip Props', this.props)
+    // console.log('Trip State', this.state)
     const {isSearchable} = this.state;
     return(
       <div className="trip-container">
@@ -80,11 +135,6 @@ class Trip extends React.Component {
             <p>{this.props.trip.startDate} ~ {this.props.trip.endDate}</p>
             <p>{this.props.trip.destination}</p>
             <div className="btn-container">
-              <Link
-                className="two-btns"
-                to="/edit"
-                onClick={this.handleClickEdit}
-              >Edit Trip</Link>
 
               <Modal
               closeIcon
@@ -103,7 +153,7 @@ class Trip extends React.Component {
               <Modal.Content>
                 <Modal.Description>
 
-                  <Form onSubmit={this.handleEditTrip}>
+                  <Form onSubmit={this.handleSubmitEditTrip}>
                     <Form.Field>
                       <label>Title</label>
                       <input type="text" name="title" defaultValue={this.props.trip.title}
@@ -125,11 +175,11 @@ class Trip extends React.Component {
                       <Select
                         className="basic-single"
                         classNamePrefix="select"
-                        defaultValue={this.state.destination}
                         isSearchable={isSearchable}
                         name="color"
                         options={countryOptions}
                         onChange={this.handleDestinationSelector}
+                        defaultValue={this.converter(this.state.destination)}
                       />
                     </Form.Field>
                     <div className='form-btn-container'>
