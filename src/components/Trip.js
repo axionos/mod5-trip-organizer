@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getTheTrip, deleteTheTrip } from '../actions'
 import { withRouter } from 'react-router-dom'
@@ -121,7 +120,7 @@ class Trip extends React.Component {
 
 
   render(){
-    // console.log('Trip Props', this.props)
+    console.log('Trip Props', this.props)
     // console.log('Trip State', this.state)
     const {isSearchable} = this.state;
     return(
