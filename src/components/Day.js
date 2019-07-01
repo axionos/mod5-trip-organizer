@@ -41,6 +41,8 @@ class Day extends React.Component {
       <div>
         <h3>Day {this.props.day.day}</h3>
         {this.genItem()}
+
+      
       </div>
     )
   }
