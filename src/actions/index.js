@@ -34,6 +34,12 @@ export const getDays = days => {
     days
   }
 }
+export const getItems = items => {
+  return {
+    type: 'GET_ITEMS',
+    items
+  }
+}
 
 // export const addStartDate = date => {
 //   return {

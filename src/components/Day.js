@@ -1,4 +1,5 @@
 import React from 'react';
+// import ItemContainer from '../containers/Item';
 import Item from './Item';
 import { connect } from 'react-redux'
 // import Moment from 'moment'
@@ -40,7 +41,7 @@ class Day extends React.Component {
 
       <div>
         <h3>Day {this.props.day.day}</h3>
-        {null/*this.genItem()*/}
+        {this.genItem()}
 
 
       </div>

@@ -118,11 +118,11 @@ class Trip extends React.Component {
     const {isSearchable} = this.state;
     return(
       <div className="trip-container">
-          <div
-            className="trip-conts"
-
-          >
-            <Link to='/itinerary' onClick={this.handleClickTripDiv}>
+          <div className="trip-conts">
+            <Link
+              to='/itinerary'
+              onClick={this.handleClickTripDiv}
+            >
             <h3 className="trip-title">{this.props.trip.title}</h3>
             <p className="trip-period">{this.props.trip.startDate} ~ {this.props.trip.endDate}</p>
             <p className="trip-destination">{this.props.trip.destination}</p>
