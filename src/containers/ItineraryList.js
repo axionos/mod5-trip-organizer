@@ -4,16 +4,18 @@ import Item from '../components/Item';
 
 // import Moment from 'moment'
 import { connect } from 'react-redux'
-import { Container, Grid, Menu, Segment, Icon } from 'semantic-ui-react'
+import { Container, Grid, Menu, Segment, Icon, Modal, Button, Form } from 'semantic-ui-react'
 import { getDays, getItems } from '../actions/index.js'
 
 class ItineraryList extends React.Component {
-
   state = {
     activeItem: "1",
-    items: []
+    items: [],
+    destination: '',
+    memo: ''
   }
 
+  // SETTING INITIAL STATE
   componentDidMount(){
     const id = this.props.theTrip.id
     fetch(`http://localhost:3000/days/${id}`, {
@@ -30,15 +32,19 @@ class ItineraryList extends React.Component {
         items: data.items[0]
       })
     })
-  }
+  } // END SETTING
 
   // GENERATE DAYS
   genDays = () => {
     return this.props.days.map(day => {
-      // return <Day day={trip} key={trip.day}/>
       const { activeItem } = this.state
       return (
-        <Menu.Item name={day.day} active={activeItem === day.day}  onClick={this.handleItemClick} id={day.id} key={day.id}>
+        <Menu.Item
+          name={day.day}
+          active={activeItem === day.day}
+          onClick={this.handleItemClick}
+          id={day.id}
+          key={day.id}>
           Day {day.day}
         </Menu.Item>
       )
@@ -48,15 +54,13 @@ class ItineraryList extends React.Component {
   // GENERATE ITEMS
   genItems = () => {
     return this.state.items.map(item => {
-      // debugger
-      return  <div className="item-container">
+      return  <div className="item-container" key={item.id}>
                 <Item key={item.id} item={item} />
               </div>
-
     })
   } // END GENERATING ITEMS
 
-  // FETCH THE ITEM INFO
+  // FETCH THE ITEM INFO ON CLICK
   handleItemClick = (e, { name }) => {
     console.log(e.target)
     const dayId = e.target.id
@@ -77,10 +81,20 @@ class ItineraryList extends React.Component {
     })
   } // END FETCHING
 
-  render(){
-    // console.log('Itinerary List State', this.state)
-    // console.log('Itinerary List Props', this.props)
+  // UPDATE STATE FROM THE FORM INPUT
+  handleChangeInput = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  } // END UPDATING
 
+  handleAddPlan = () => {
+
+  }
+
+  render(){
+    console.log('Itinerary List State', this.state)
+    // console.log('Itinerary List Props', this.props)
     return(
       <React.Fragment>
         <div className='itinerary-header'>
@@ -101,8 +115,45 @@ class ItineraryList extends React.Component {
               Back
             </Grid.Column>
             <Grid.Column floated='right' width={5}>
-              <Icon name='add' size='small' />
-              Add a Plan
+              {/* ADD A PLAN */}
+              <Modal
+              closeIcon
+              size="tiny"
+              trigger={<Button positive><Icon name='plus' size='small' />Add a Plan</Button>}>
+                <Modal.Header>Add a Plan</Modal.Header>
+                <Modal.Content>
+                  <Modal.Description>
+                    <Form onSubmit={this.handleAddPlan}>
+                      <Form.Field>
+                        <label>Destination</label>
+                        <input
+                          type="text"
+                          name="destination"
+                          value={this.state.title}
+                          placeholder="Enter Your Itinerary"
+                          onChange={this.handleChangeInput}/>
+                      </Form.Field>
+                      <Form.Field>
+                        <label>Memo</label>
+                        <Form.TextArea
+                          name='memo'
+                          onChange={this.handleChangeInput}
+                          placeholder='Memo about this Itinerary' />
+                      </Form.Field>
+                      <div className='form-btn-container'>
+                        <Button
+                        type='submit'
+                        positive icon='checkmark'
+                        labelPosition='right'
+                        content='Submit'>
+                        </Button>
+                      </div>
+                    </Form>
+                  </Modal.Description>
+                </Modal.Content>
+              </Modal>
+              {/* ENDING ADD A PLAN */}
+
             </Grid.Column>
           </Grid>
           <Grid>
