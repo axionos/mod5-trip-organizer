@@ -10,7 +10,7 @@ class Day extends React.Component {
 
 
   render(){
-    // console.log('Day State', this.state)
+    // console.log('Item State', this.state)
     console.log('Item Props', this.props)
 
     return(
@@ -33,8 +33,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    trips: state.trips,
-    days: state.days
+    // days: state.days
   }
 }
 

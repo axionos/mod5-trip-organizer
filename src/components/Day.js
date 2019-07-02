@@ -33,8 +33,8 @@ class Day extends React.Component {
   }
 
   render(){
-    console.log('Day State', this.state)
-    console.log('Day Props', this.props)
+    // console.log('Day State', this.state)
+    // console.log('Day Props', this.props)
 
     return(
 
