@@ -4,7 +4,7 @@ import Item from '../components/Item';
 
 // import Moment from 'moment'
 import { connect } from 'react-redux'
-import { Container, Grid, Menu, Segment } from 'semantic-ui-react'
+import { Container, Grid, Menu, Segment, Icon } from 'semantic-ui-react'
 import { getDays, getItems } from '../actions/index.js'
 
 class ItineraryList extends React.Component {
@@ -82,29 +82,45 @@ class ItineraryList extends React.Component {
     // console.log('Itinerary List Props', this.props)
 
     return(
-      <Container className='page-container'>
-        <h2>{this.props.theTrip.title}</h2>
-        <p>{this.props.theTrip.startDate}</p>
-        <p>{this.props.theTrip.endDate}</p>
-        <p>{this.props.theTrip.destination}</p>
+      <React.Fragment>
+        <div className='itinerary-header'>
+          <Container className='flex-container'>
+              <div>
+                <h2>{this.props.theTrip.title}</h2>
+              </div>
+              <div className='itinerary-h-right'>
+                <p>{this.props.theTrip.startDate} ~ {this.props.theTrip.endDate}</p>
+                <p>{this.props.theTrip.destination}</p>
+              </div>
+          </Container>
+        </div>
+        <Container className='itinerary page-container'>
+          <Grid>
+            <Grid.Column floated='left' width={5}>
+              <Icon name='arrow left' size='small'/>
+              Back
+            </Grid.Column>
+            <Grid.Column floated='right' width={5}>
+              <Icon name='add' size='small' />
+              Add a Plan
+            </Grid.Column>
+          </Grid>
+          <Grid>
+            <Grid.Column width={3}>
+              <Menu fluid vertical tabular>
+                { this.genDays() }
+              </Menu>
+            </Grid.Column>
 
-        <Grid>
-          <Grid.Column width={3}>
-            <Menu fluid vertical tabular>
-              { this.genDays() }
-            </Menu>
-          </Grid.Column>
-
-          <Grid.Column stretched width={12}>
-            <Segment>
-              <div className="map-container">Render Map</div>
-              { this.genItems() }
-            </Segment>
-          </Grid.Column>
-        </Grid>
-
-
-      </Container>
+            <Grid.Column stretched width={13}>
+              <Segment>
+                <div className="map-container">Render Map</div>
+                { this.genItems() }
+              </Segment>
+            </Grid.Column>
+          </Grid>
+        </Container>
+    </React.Fragment>
     )
   }
 }
