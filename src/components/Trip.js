@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { getTheTrip, deleteTheTrip } from '../actions'
 import { withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Icon, Button, Modal, Form } from 'semantic-ui-react'
 import Select from 'react-select'
 import { countryOptions } from '../data';
@@ -107,15 +108,7 @@ class Trip extends React.Component {
 
   // SEND TRIP INFO TO STORE
   handleClickTripDiv = e => {
-    // console.log('clicking', e.target.className);
-
-    // if click target has class name of two-btns
-    if (e.target.className.includes('two-btns')) {
-      return null
-    } else {
-      this.props.history.push("/itinerary")
-      this.props.getTheTrip(this.props.trip)
-    }
+    this.props.getTheTrip(this.props.trip)
   } // END SENDING
 
 
@@ -127,12 +120,14 @@ class Trip extends React.Component {
       <div className="trip-container">
           <div
             className="trip-conts"
-            onClick={this.handleClickTripDiv}
+
           >
-            <h3>{this.props.trip.title}</h3>
-            <p>{this.props.trip.startDate} ~ {this.props.trip.endDate}</p>
-            <p>{this.props.trip.destination}</p>
-            <div className="btn-container">
+            <Link to='/itinerary' onClick={this.handleClickTripDiv}>
+            <h3 className="trip-title">{this.props.trip.title}</h3>
+            <p className="trip-period">{this.props.trip.startDate} ~ {this.props.trip.endDate}</p>
+            <p className="trip-destination">{this.props.trip.destination}</p>
+            </Link>
+            <div className="btn-container ">
 
               <Modal
               closeIcon
@@ -140,7 +135,7 @@ class Trip extends React.Component {
               trigger={
                 <Button
                   primary size='tiny'
-                  className='two-btns'
+                  className=''
                   id={this.props.trip.id}
                   onClick={this.props.handleClickEditBtn}
                 >
@@ -151,27 +146,30 @@ class Trip extends React.Component {
               <Modal.Content>
                 <Modal.Description>
 
-                  <Form onSubmit={this.handleSubmitEditTrip}>
-                    <Form.Field>
+                  <Form
+                    onSubmit={this.handleSubmitEditTrip}
+                    className=''>
+                    <Form.Field className=''>
                       <label>Title</label>
                       <input type="text" name="title" defaultValue={this.props.trip.title}
-                      placeholder="Enter a Trip Title" onChange={this.handleChangeTitle}/>
+                      placeholder="Enter a Trip Title" onChange={this.handleChangeTitle}
+                      className=''/>
                     </Form.Field>
-                    <Form.Field className="start-date">
+                    <Form.Field className="start-date ">
                       <label>Start Date</label>
-                      <DatePicker selected={this.state.startDate}
+                      <DatePicker className='' selected={this.state.startDate}
                       onChange={this.handleChangeStartDate} />
                     </Form.Field>
-                    <Form.Field className="end-date">
+                    <Form.Field className="end-date ">
                       <label>End Date</label>
-                      <DatePicker selected={this.state.endDate}
+                      <DatePicker className='' selected={this.state.endDate}
                       onChange={this.handleChangeEndDate} />
                     </Form.Field>
                     <Form.Field>
                       <label>Destination</label>
 
                       <Select
-                        className="basic-single"
+                        className="basic-single "
                         classNamePrefix="select"
                         isSearchable={isSearchable}
                         name="color"
@@ -185,7 +183,8 @@ class Trip extends React.Component {
                         type='submit'
                         positive icon='checkmark'
                         labelPosition='right'
-                        content='Submit'>
+                        content='Submit'
+                      >
                       </Button>
                     </div>
                   </Form>
@@ -195,7 +194,7 @@ class Trip extends React.Component {
 
               <Button negative
                 onClick={this.handleClickDelete}
-                className="two-btns"
+                className=""
                 size='tiny'
               >
                 <Icon name='edit' size='small' />
