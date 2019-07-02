@@ -45,6 +45,7 @@ class ItineraryList extends React.Component {
     })
   } // END GENERATING ITEMS
 
+  // FETCH THE ITEM INFO
   handleItemClick = (e, { name }) => {
     // console.log(e.target)
     const id = e.target.id
@@ -55,16 +56,12 @@ class ItineraryList extends React.Component {
     })
     .then(res => res.json())
     .then(data => {
-      // console.log('items', data)
-      // this.setState({
-      //   items: data
-      // })
       this.setState({
         activeItem: name,
         items: data
       })
     })
-  }
+  } // END FETCHING
 
   render(){
     // console.log('Itinerary List State', this.state)
