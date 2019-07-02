@@ -7,7 +7,7 @@ import { getDays } from '../actions/index.js'
 
 class ItineraryList extends React.Component {
 
-  state = { activeItem: 'bio' }
+  state = { activeItem: "1" }
 
   componentDidMount(){
     const id = this.props.theTrip.id
@@ -22,15 +22,23 @@ class ItineraryList extends React.Component {
 
   // GENERATE DAY COMPONENT
   genDays = () => {
-    return this.props.days.map(trip => {
-      return <Day day={trip} key={trip.day}/>
-
+    return this.props.days.map(day => {
+      // return <Day day={trip} key={trip.day}/>
+      const { activeItem } = this.state
+      return (
+        <Menu.Item name={day.day} active={activeItem === day.day}  onClick={this.handleItemClick} key={day.id}>
+          Day {day.day}
+        </Menu.Item>
+      )
     })
   } // END GENERATING
 
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
   render(){
-    // console.log('Itinerary List Props', this.props)
-    const { activeItem } = this.state
+    console.log('Itinerary List State', this.state)
+    console.log('Itinerary List Props', this.props)
+
     return(
       <Container className='page-container'>
         <h2>{this.props.theTrip.title}</h2>
@@ -38,25 +46,13 @@ class ItineraryList extends React.Component {
         <p>{this.props.theTrip.endDate}</p>
         <p>{this.props.theTrip.destination}</p>
         <div>
-
-          { this.genDays() }
+          {/* this.genDays()*/ null }
         </div>
 
         <Grid>
           <Grid.Column width={4}>
             <Menu fluid vertical tabular>
-              <Menu.Item name='bio' active={activeItem === 'bio'} onClick={this.handleItemClick} />
-              <Menu.Item name='pics' active={activeItem === 'pics'} onClick={this.handleItemClick} />
-              <Menu.Item
-                name='companies'
-                active={activeItem === 'companies'}
-                onClick={this.handleItemClick}
-              />
-              <Menu.Item
-                name='links'
-                active={activeItem === 'links'}
-                onClick={this.handleItemClick}
-              />
+              { this.genDays() }
             </Menu>
           </Grid.Column>
 
