@@ -1,5 +1,5 @@
 import React from 'react';
-import Day from '../components/Day'
+import Item from '../components/Item'
 // import Moment from 'moment'
 import { connect } from 'react-redux'
 import { Container, Grid, Menu, Segment } from 'semantic-ui-react'
@@ -7,7 +7,10 @@ import { getDays } from '../actions/index.js'
 
 class ItineraryList extends React.Component {
 
-  state = { activeItem: "1" }
+  state = {
+    activeItem: "1",
+    items: []
+  }
 
   componentDidMount(){
     const id = this.props.theTrip.id
@@ -20,24 +23,52 @@ class ItineraryList extends React.Component {
     .then(data => this.props.getDays(data))
   }
 
-  // GENERATE DAY COMPONENT
+  // GENERATE DAYS
   genDays = () => {
     return this.props.days.map(day => {
       // return <Day day={trip} key={trip.day}/>
       const { activeItem } = this.state
       return (
-        <Menu.Item name={day.day} active={activeItem === day.day}  onClick={this.handleItemClick} key={day.id}>
+        <Menu.Item name={day.day} active={activeItem === day.day}  onClick={this.handleItemClick} id={day.id} key={day.id}>
           Day {day.day}
         </Menu.Item>
       )
     })
-  } // END GENERATING
+  } // END GENERATING DAYS
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  // GENERATE ITEMS
+  genItems = () => {
+    return this.state.items.map(item => {
+      return <div className="item-container">
+                <Item key={item.id} item={item} />
+              </div>
+    })
+  } // END GENERATING ITEMS
+
+  handleItemClick = (e, { name }) => {
+    // console.log(e.target)
+    const id = e.target.id
+    fetch(`http://localhost:3000/items/${id}`, {
+      headers: {
+        'Authorization': localStorage.getItem("token")
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      // console.log('items', data)
+      // this.setState({
+      //   items: data
+      // })
+      this.setState({
+        activeItem: name,
+        items: data
+      })
+    })
+  }
 
   render(){
-    console.log('Itinerary List State', this.state)
-    console.log('Itinerary List Props', this.props)
+    // console.log('Itinerary List State', this.state)
+    // console.log('Itinerary List Props', this.props)
 
     return(
       <Container className='page-container'>
@@ -50,7 +81,7 @@ class ItineraryList extends React.Component {
         </div>
 
         <Grid>
-          <Grid.Column width={4}>
+          <Grid.Column width={3}>
             <Menu fluid vertical tabular>
               { this.genDays() }
             </Menu>
@@ -58,7 +89,8 @@ class ItineraryList extends React.Component {
 
           <Grid.Column stretched width={12}>
             <Segment>
-              This is an stretched grid column. This segment will always match the tab height
+              <div className="map-container">Render Map</div>
+              { this.genItems() }
             </Segment>
           </Grid.Column>
         </Grid>
