@@ -1,9 +1,11 @@
 import React from 'react';
-import Item from '../components/Item'
+// import ItemContainer from './ItemContainer'
+import Item from '../components/Item';
+
 // import Moment from 'moment'
 import { connect } from 'react-redux'
 import { Container, Grid, Menu, Segment } from 'semantic-ui-react'
-import { getDays } from '../actions/index.js'
+import { getDays, getItems } from '../actions/index.js'
 
 class ItineraryList extends React.Component {
 
@@ -20,7 +22,14 @@ class ItineraryList extends React.Component {
       }
     })
     .then(res => res.json())
-    .then(data => this.props.getDays(data))
+    .then(data => {
+      console.log('returning data', data)
+      this.props.getDays(data.days)
+      this.props.getItems(data.items)
+      this.setState({
+        items: data.items[0]
+      })
+    })
   }
 
   // GENERATE DAYS
@@ -39,27 +48,32 @@ class ItineraryList extends React.Component {
   // GENERATE ITEMS
   genItems = () => {
     return this.state.items.map(item => {
-      return <div className="item-container">
+      // debugger
+      return  <div className="item-container">
                 <Item ***REMOVED***={item.id} item={item} />
               </div>
+
     })
   } // END GENERATING ITEMS
 
   // FETCH THE ITEM INFO
   handleItemClick = (e, { name }) => {
-    // console.log(e.target)
-    const id = e.target.id
-    fetch(`http://localhost:3000/items/${id}`, {
+    console.log(e.target)
+    const dayId = e.target.id
+    fetch(`http://localhost:3000/items/${dayId}`, {
       headers: {
         'Authorization': localStorage.getItem("token")
       }
     })
     .then(res => res.json())
-    .then(data => {
+    .then(data =>
+      {
+      // console.log('getting this data', data)
       this.setState({
         activeItem: name,
         items: data
-      })
+      }
+    )
     })
   } // END FETCHING
 
@@ -73,9 +87,6 @@ class ItineraryList extends React.Component {
         <p>{this.props.theTrip.startDate}</p>
         <p>{this.props.theTrip.endDate}</p>
         <p>{this.props.theTrip.destination}</p>
-        <div>
-          {/* this.genDays()*/ null }
-        </div>
 
         <Grid>
           <Grid.Column width={3}>
@@ -102,6 +113,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getDays: days => {
       dispatch(getDays(days))
+    },
+    getItems: items => {
+      dispatch(getItems(items))
     }
   }
 }
@@ -109,7 +123,8 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = (state) => {
   return {
     theTrip: state.theTrip[0],
-    days: state.days
+    days: state.days,
+    items: state.items
   }
 }
 

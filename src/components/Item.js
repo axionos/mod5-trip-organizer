@@ -4,9 +4,7 @@ import { connect } from 'react-redux'
 // import Moment from 'moment'
 
 
-class Day extends React.Component {
-
-
+class Item extends React.Component {
 
 
   render(){
@@ -37,4 +35,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Day)
+export default connect(mapStateToProps, mapDispatchToProps)(Item)

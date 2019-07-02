@@ -11,6 +11,9 @@
   justify-content: space-between;
 }
 
+.my-trip {
+  font-size: 30px;
+}
 
 .trip-list {
   text-decoration: none;
@@ -28,6 +31,16 @@
   padding: 20px;
 }
 
+.trip-title {
+  font-size: 22px;
+}
+
+.btn-container {
+  padding: 20px 0 5px 0;
+}
+
+/*/// TRIP FORM ///*/
+
 .field.start-date {
   display: inline-block;
   padding-right: 30px;
@@ -38,15 +51,15 @@
 }
 
 .form-btn-container {
-  padding: 10px 0;
+  padding: 15px 0;
   text-align: center;
 }
 
 /*/// Itineraries ///*/
 
 .map-container {
-  max-width: 400px;
-  height: 400px;
+  max-width: 350px;
+  height: 350px;
   background-color: goldenrod;
   float: left;
 }

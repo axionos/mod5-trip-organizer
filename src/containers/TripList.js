@@ -107,14 +107,14 @@ class TripList extends React.Component {
   } // END GENERATING
 
   render() {
-    console.log('Trip List Props', this.props)
+    // console.log('Trip List Props', this.props)
     // console.log('number of trips: ', this.props.trips.length);
     const {isSearchable} = this.state;
     return (
       <React.Fragment>
         <Container className="page-container">
           <div className="flex-container">
-            { this.props.trips.length > 1 ? <h1>My Trips</h1> : <h1>My Trip</h1> }
+            { this.props.trips.length > 1 ? <h1>My Trips</h1> : <h1 className="my-trip">My Trip</h1> }
 
             <Modal
             closeIcon

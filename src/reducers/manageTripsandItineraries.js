@@ -4,7 +4,8 @@ const rootReducer = combineReducers({
   user: userReducer,
   trips: tripReducer,
   theTrip: theTripReducer,
-  days: theDaysReducer
+  days: theDaysReducer,
+  items: theItemsReducer
 })
 
 export default rootReducer;
@@ -57,6 +58,17 @@ function theDaysReducer(state = [], action) {
     case "GET_DAYS":
       console.log(action)
       return action.days
+
+    default:
+      return state
+  }
+}
+
+function theItemsReducer(state = [], action) {
+  switch(action.type){
+    case 'GET_ITEMS':
+      console.log(action)
+      return action.items
 
     default:
       return state
