@@ -123,83 +123,83 @@ class Trip extends React.Component {
               to='/itinerary'
               onClick={this.handleClickTripDiv}
             >
-            <h3 className="trip-title">{this.props.trip.title}</h3>
-            <p className="trip-period">{this.props.trip.startDate} ~ {this.props.trip.endDate}</p>
-            <p className="trip-destination">{this.props.trip.destination}</p>
+              <h3 className="trip-title">{this.props.trip.title}</h3>
+              <p className="trip-period">{this.props.trip.startDate} ~ {this.props.trip.endDate}</p>
+              <p className="trip-destination">{this.props.trip.destination}</p>
             </Link>
-            <div className="btn-container ">
+          <div className="btn-container ">
 
-              <Modal
-              closeIcon
-              size="tiny"
-              trigger={
-                <Button
-                  primary size='tiny'
-                  className=''
-                  id={this.props.trip.id}
-                  onClick={this.props.handleClickEditBtn}
-                >
-                  <Icon name='edit' size='small' />Edit
-                </Button>
-              }>
-              <Modal.Header>Edit a Trip</Modal.Header>
-              <Modal.Content>
-                <Modal.Description>
-
-                  <Form
-                    onSubmit={this.handleSubmitEditTrip}
-                    className=''>
-                    <Form.Field className=''>
-                      <label>Title</label>
-                      <input type="text" name="title" defaultValue={this.props.trip.title}
-                      placeholder="Enter a Trip Title" onChange={this.handleChangeTitle}
-                      className=''/>
-                    </Form.Field>
-                    <Form.Field className="start-date ">
-                      <label>Start Date</label>
-                      <DatePicker className='' selected={this.state.startDate}
-                      onChange={this.handleChangeStartDate} />
-                    </Form.Field>
-                    <Form.Field className="end-date ">
-                      <label>End Date</label>
-                      <DatePicker className='' selected={this.state.endDate}
-                      onChange={this.handleChangeEndDate} />
-                    </Form.Field>
-                    <Form.Field>
-                      <label>Destination</label>
-
-                      <Select
-                        className="basic-single "
-                        classNamePrefix="select"
-                        isSearchable={isSearchable}
-                        name="color"
-                        options={countryOptions}
-                        onChange={this.handleDestinationSelector}
-                        defaultValue={this.converter(this.state.destination)}
-                      />
-                    </Form.Field>
-                    <div className='form-btn-container'>
-                      <Button
-                        type='submit'
-                        positive icon='checkmark'
-                        labelPosition='right'
-                        content='Submit'
-                      >
-                      </Button>
-                    </div>
-                  </Form>
-                </Modal.Description>
-              </Modal.Content>
-            </Modal>
-
-              <Button negative
-                onClick={this.handleClickDelete}
-                className=""
-                size='tiny'
+          <Modal
+            closeIcon
+            size="tiny"
+            trigger={
+              <Button
+                primary size='tiny'
+                className=''
+                id={this.props.trip.id}
+                onClick={this.props.handleClickEditBtn}
               >
-                <Icon name='edit' size='small' />
-                Delete
+                <Icon name='edit' size='small' />Edit
               </Button>
+            }>
+            <Modal.Header>Edit a Trip</Modal.Header>
+            <Modal.Content>
+              <Modal.Description>
+
+                <Form
+                  onSubmit={this.handleSubmitEditTrip}
+                  className=''>
+                  <Form.Field className=''>
+                    <label>Title</label>
+                    <input type="text" name="title" defaultValue={this.props.trip.title}
+                    placeholder="Enter a Trip Title" onChange={this.handleChangeTitle}
+                    className=''/>
+                  </Form.Field>
+                  <Form.Field className="start-date ">
+                    <label>Start Date</label>
+                    <DatePicker className='' selected={this.state.startDate}
+                    onChange={this.handleChangeStartDate} />
+                  </Form.Field>
+                  <Form.Field className="end-date ">
+                    <label>End Date</label>
+                    <DatePicker className='' selected={this.state.endDate}
+                    onChange={this.handleChangeEndDate} />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Destination</label>
+
+                    <Select
+                      className="basic-single "
+                      classNamePrefix="select"
+                      isSearchable={isSearchable}
+                      name="color"
+                      options={countryOptions}
+                      onChange={this.handleDestinationSelector}
+                      defaultValue={this.converter(this.state.destination)}
+                    />
+                  </Form.Field>
+                  <div className='form-btn-container'>
+                    <Button
+                      type='submit'
+                      positive icon='checkmark'
+                      labelPosition='right'
+                      content='Submit'
+                    >
+                    </Button>
+                  </div>
+                </Form>
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
+
+            <Button negative
+              onClick={this.handleClickDelete}
+              className=""
+              size='tiny'
+            >
+              <Icon name='edit' size='small' />
+              Delete
+            </Button>
             </div>
           </div>
       </div>

@@ -70,6 +70,10 @@ function theItemsReducer(state = [], action) {
       console.log(action)
       return action.items
 
+    case 'ADD_ITEM':
+      console.log(action)
+      return [...state, action.trip]
+
     default:
       return state
   }

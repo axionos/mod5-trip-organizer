@@ -4,16 +4,22 @@ import Item from '../components/Item';
 
 // import Moment from 'moment'
 import { connect } from 'react-redux'
-import { Container, Grid, Menu, Segment, Icon, Modal, Button, Form } from 'semantic-ui-react'
-import { getDays, getItems } from '../actions/index.js'
+import { Link } from 'react-router-dom'
+import { Container, Grid, Menu, Segment, Icon, Modal, Button, Select, Form } from 'semantic-ui-react'
+import { getDays, getItems, addItem } from '../actions/index.js'
+
+
+
 
 class ItineraryList extends React.Component {
   state = {
     activeItem: "1",
     items: [],
-    destination: '',
-    memo: ''
+    place: '',
+    memo: '',
+    dayId: ''
   }
+
 
   // SETTING INITIAL STATE
   componentDidMount(){
@@ -44,7 +50,9 @@ class ItineraryList extends React.Component {
           active={activeItem === day.day}
           onClick={this.handleItemClick}
           id={day.id}
-          ***REMOVED***={day.id}>
+          ***REMOVED***={day.id}
+          day={day}
+        >
           Day {day.day}
         </Menu.Item>
       )
@@ -74,12 +82,18 @@ class ItineraryList extends React.Component {
       {
       // console.log('getting this data', data)
       this.setState({
+        // dayId: this.state.items[0].day_id,
         activeItem: name,
         items: data
       }
     )
     })
   } // END FETCHING
+
+  // UPDATE DAY
+
+
+  handleChangeDropdown = (e, { value }) => this.setState({ value })
 
   // UPDATE STATE FROM THE FORM INPUT
   handleChangeInput = event => {
@@ -88,13 +102,53 @@ class ItineraryList extends React.Component {
     })
   } // END UPDATING
 
-  handleAddPlan = () => {
+  handleDayIdChange = () => {
+    this.setState({
+      dayId: this.props.items[0].day_id
+    })
+  }
 
+  handleSubmitAddPlan = event => {
+    event.preventDefault()
+    fetch('http://localhost:3000/new_item', {
+      method: "POST",
+      headers: {
+        'Authorization': localStorage.getItem("token"),
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+          item: {
+            place: this.state.place,
+            memo: this.state.memo,
+            day_id: this.state.value
+          }
+        })
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      console.log('added this plan:', data)
+      this.props.addItem(data)
+    })
+    //   alert("New Trip is Successfully Added!"))
+    // window.location.replace(`http://localhost:3001/itinerary`)
   }
 
   render(){
     console.log('Itinerary List State', this.state)
-    // console.log('Itinerary List Props', this.props)
+    console.log('Itinerary List Props', this.props)
+    const { value } = this.state
+    // const options = [
+    //   { ***REMOVED***: 1, text: 'Day 1', value: this.props.days.id },
+    //   { ***REMOVED***: 2, text: 'Day 2', value: 2 },
+    //   { ***REMOVED***: 3, text: 'Day 3', value: 3 },
+    // ]
+
+    const options = this.props.days.map(day => {
+      // debugger
+      return  {***REMOVED***: day.day, text: day.day, value: day.id}
+    })
+
     return(
       <React.Fragment>
         <div className='itinerary-header'>
@@ -109,53 +163,59 @@ class ItineraryList extends React.Component {
           </Container>
         </div>
         <Container className='itinerary page-container'>
-          <Grid>
-            <Grid.Column floated='left' width={5}>
+        <Grid>
+          <Grid.Column floated='left' width={5}>
+            <Link to='/'>
               <Icon name='arrow left' size='small'/>
               Back
-            </Grid.Column>
-            <Grid.Column floated='right' width={5}>
-              {/* ADD A PLAN */}
-              <Modal
-              closeIcon
-              size="tiny"
-              trigger={<Button positive><Icon name='plus' size='small' />Add a Plan</Button>}>
-                <Modal.Header>Add a Plan</Modal.Header>
-                <Modal.Content>
-                  <Modal.Description>
-                    <Form onSubmit={this.handleAddPlan}>
-                      <Form.Field>
-                        <label>Destination</label>
-                        <input
-                          type="text"
-                          name="destination"
-                          value={this.state.title}
-                          placeholder="Enter Your Itinerary"
-                          onChange={this.handleChangeInput}/>
-                      </Form.Field>
-                      <Form.Field>
-                        <label>Memo</label>
-                        <Form.TextArea
-                          name='memo'
-                          onChange={this.handleChangeInput}
-                          placeholder='Memo about this Itinerary' />
-                      </Form.Field>
-                      <div className='form-btn-container'>
-                        <Button
-                        type='submit'
-                        positive icon='checkmark'
-                        labelPosition='right'
-                        content='Submit'>
-                        </Button>
-                      </div>
-                    </Form>
-                  </Modal.Description>
-                </Modal.Content>
-              </Modal>
-              {/* ENDING ADD A PLAN */}
+            </Link>
+          </Grid.Column>
+          <Grid.Column floated='right' width={5}>
+            {/* ADD A PLAN */}
+            <Modal
+            closeIcon
+            size="tiny"
 
-            </Grid.Column>
-          </Grid>
+            trigger={<Button positive onClick={this.handleDayIdChange}><Icon name='plus' size='small' />Add</Button>}>
+              <Modal.Header>Add a Plan</Modal.Header>
+              <Modal.Content>
+                <Modal.Description>
+                  <Form onSubmit={this.handleSubmitAddPlan}>
+
+                    <Form.Field control={Select} label='Day' options={options} placeholder='Select a Day' onChange={this.handleChangeDropdown} />
+
+                    <Form.Field>
+                      <label>Destination</label>
+                      <input
+                        type="text"
+                        name="place"
+                        value={this.state.title}
+                        placeholder="Enter Your Itinerary"
+                        onChange={this.handleChangeInput}/>
+                    </Form.Field>
+                    <Form.Field>
+                      <label>Memo</label>
+                      <Form.TextArea
+                        name='memo'
+                        onChange={this.handleChangeInput}
+                        placeholder='Memo about this Itinerary' />
+                    </Form.Field>
+                    <div className='form-btn-container'>
+                      <Button
+                      type='submit'
+                      positive icon='checkmark'
+                      labelPosition='right'
+                      content='Submit'>
+                      </Button>
+                    </div>
+                  </Form>
+                </Modal.Description>
+              </Modal.Content>
+            </Modal>
+            {/* ENDING ADD A PLAN */}
+
+          </Grid.Column>
+        </Grid>
           <Grid>
             <Grid.Column width={3}>
               <Menu fluid vertical tabular>
@@ -165,6 +225,7 @@ class ItineraryList extends React.Component {
 
             <Grid.Column stretched width={13}>
               <Segment>
+
                 <div className="map-container">Render Map</div>
                 { this.genItems() }
               </Segment>
@@ -183,6 +244,9 @@ const mapDispatchToProps = dispatch => {
     },
     getItems: items => {
       dispatch(getItems(items))
+    },
+    addItem: item => {
+      dispatch(addItem(item))
     }
   }
 }

@@ -1,11 +1,19 @@
 import React from 'react';
-
 import { connect } from 'react-redux'
+import { Icon, Button } from 'semantic-ui-react'
+
 // import Moment from 'moment'
 
 
 class Item extends React.Component {
 
+  handleClickDelete = () => {
+    const itemId = this.props.item.id
+    fetch(`http://localhost:3000/items/${itemId}`, {
+      method: "DELETE"
+    })
+
+  }
 
   render(){
     // console.log('Item State', this.state)
@@ -14,8 +22,13 @@ class Item extends React.Component {
     return(
 
       <div>
-        <h4>{this.props.item.place}</h4>
+        <h3>{this.props.item.place}</h3>
         <p>{this.props.item.memo}</p>
+        <Button onClick={this.handleClickDelete}>
+          <Icon
+            name='trash alternate outline'
+            size='small' />
+        </Button>
       </div>
     )
   }
