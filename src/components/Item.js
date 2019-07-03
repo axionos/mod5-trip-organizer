@@ -17,7 +17,7 @@ class Item extends React.Component {
 
   render(){
     // console.log('Item State', this.state)
-    console.log('Item Props', this.props)
+    // console.log('Item Props', this.props)
 
     return(
 
