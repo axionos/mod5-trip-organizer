@@ -1,13 +1,10 @@
 import React from 'react';
 import Item from '../components/Item';
-import Map from '../components/DoctorsMapContainer';
+import MapContainer from '../components/map/MapContainer';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getDays, getItems, addItem } from '../actions/index.js'
-
 import { Container, Grid, Menu, Segment, Icon, Modal, Button, Select, Form } from 'semantic-ui-react'
-
-
 
 
 class ItineraryList extends React.Component {
@@ -16,7 +13,9 @@ class ItineraryList extends React.Component {
     items: [],
     place: '',
     memo: '',
-    dayId: ''
+    // dayId: '',
+    latitude:'',
+    longitude: ''
   }
 
 
@@ -38,6 +37,50 @@ class ItineraryList extends React.Component {
       })
     })
   } // END SETTING
+
+  // FIND THE PLACE INFO FROM API WHEN FORM SUBMITTED
+  handleSubmitAddPlan = event => {
+    event.preventDefault()
+    const ***REMOVED*** = 'AIzaSyBaGD-h-zdNd5SLcDto3jevpeaHXCNRpz4'
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    const place = this.state.place
+    fetch(`${proxyurl}https://maps.googleapis.com/maps/api/place/findplacefromtext/json?***REMOVED***=${***REMOVED***}&input=${place}&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry`)
+    .then(res => res.json())
+    .then(data => {
+      this.setState({
+        latitude: data.candidates[0].geometry.location.lat,
+        longitude: data.candidates[0].geometry.location.lng
+        }, () => this.postTheItem()
+      )
+    }) // end then
+  } // END FINDING THE PLACE
+
+  // SAVING ITEM IN THE BACKEND
+  postTheItem = () => {
+    fetch('http://localhost:3000/new_item', {
+      method: "POST",
+      headers: {
+        'Authorization': localStorage.getItem("token"),
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        item: {
+          place: this.state.place,
+          memo: this.state.memo,
+          latitude: this.state.latitude,
+          longitude: this.state.longitude,
+          day_id: this.state.value
+        }
+      })
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      // console.log('added this plan:', data)
+      this.props.addItem(data)
+    })
+  } // END SAVING
+
 
   // GENERATE DAYS
   genDays = () => {
@@ -71,6 +114,13 @@ class ItineraryList extends React.Component {
   handleItemClick = (e, { name }) => {
     console.log(e.target)
     const dayId = e.target.id
+
+    // don't need update day because i'm using 'value' as day_id
+    // 'value' is set in the 'add form' dropdown
+    // // UPDATE DAY
+    // this.setState({
+    //   dayId: dayId
+    // })
     fetch(`http://localhost:3000/items/${dayId}`, {
       headers: {
         'Authorization': localStorage.getItem("token")
@@ -78,19 +128,12 @@ class ItineraryList extends React.Component {
     })
     .then(res => res.json())
     .then(data =>
-      {
-      // console.log('getting this data', data)
-      this.setState({
-        // dayId: this.state.items[0].day_id,
-        activeItem: name,
-        items: data
-      }
-    )
-    })
+      { this.setState({
+          activeItem: name,
+          items: data
+        })
+      })
   } // END FETCHING
-
-  // UPDATE DAY
-
 
   handleChangeDropdown = (e, { value }) => this.setState({ value })
 
@@ -101,47 +144,37 @@ class ItineraryList extends React.Component {
     })
   } // END UPDATING
 
-  handleDayIdChange = () => {
-    this.setState({
-      dayId: this.props.items[0].day_id
-    })
-  }
 
-  handleSubmitAddPlan = event => {
-    event.preventDefault()
-    fetch('http://localhost:3000/new_item', {
-      method: "POST",
-      headers: {
-        'Authorization': localStorage.getItem("token"),
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-          item: {
-            place: this.state.place,
-            memo: this.state.memo,
-            day_id: this.state.value
-          }
-        })
-    })
-    .then(resp => resp.json())
-    .then(data => {
-      console.log('added this plan:', data)
-      this.props.addItem(data)
-    })
+  // handleSubmitAddPlan = event => {
+  //   event.preventDefault()
+  //   fetch('http://localhost:3000/new_item', {
+  //     method: "POST",
+  //     headers: {
+  //       'Authorization': localStorage.getItem("token"),
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json'
+  //     },
+  //     body: JSON.stringify({
+  //         item: {
+  //           place: this.state.place,
+  //           memo: this.state.memo,
+  //           day_id: this.state.value
+  //         }
+  //       })
+  //   })
+  //   .then(resp => resp.json())
+  //   .then(data => {
+  //     console.log('added this plan:', data)
+  //     this.props.addItem(data)
+  //   })
     //   alert("New Trip is Successfully Added!"))
     // window.location.replace(`http://localhost:3001/itinerary`)
-  }
+  // }
 
   render(){
     console.log('Itinerary List State', this.state)
     console.log('Itinerary List Props', this.props)
     const { value } = this.state
-    // const options = [
-    //   { ***REMOVED***: 1, text: 'Day 1', value: this.props.days.id },
-    //   { ***REMOVED***: 2, text: 'Day 2', value: 2 },
-    //   { ***REMOVED***: 3, text: 'Day 3', value: 3 },
-    // ]
 
     const options = this.props.days.map(day => {
       // debugger
@@ -175,7 +208,7 @@ class ItineraryList extends React.Component {
             closeIcon
             size="tiny"
 
-            trigger={<Button positive onClick={this.handleDayIdChange}><Icon name='plus' size='small' />Add</Button>}>
+            trigger={<Button positive ><Icon name='plus' size='small' />Add</Button>}>
               <Modal.Header>Add a Plan</Modal.Header>
               <Modal.Content>
                 <Modal.Description>
@@ -224,7 +257,7 @@ class ItineraryList extends React.Component {
 
             <Grid.Column stretched width={13}>
               <Segment>
-                <Map />
+                <MapContainer items={this.state.items}/>
                 { this.genItems() }
 
               </Segment>
