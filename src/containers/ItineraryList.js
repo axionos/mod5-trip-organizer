@@ -1,12 +1,11 @@
 import React from 'react';
-// import ItemContainer from './ItemContainer'
 import Item from '../components/Item';
-
-// import Moment from 'moment'
+import Map from '../components/Map';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Container, Grid, Menu, Segment, Icon, Modal, Button, Select, Form } from 'semantic-ui-react'
 import { getDays, getItems, addItem } from '../actions/index.js'
+
+import { Container, Grid, Menu, Segment, Icon, Modal, Button, Select, Form } from 'semantic-ui-react'
 
 
 
@@ -225,9 +224,9 @@ class ItineraryList extends React.Component {
 
             <Grid.Column stretched width={13}>
               <Segment>
-
-                <div className="map-container">Render Map</div>
+                <Map />
                 { this.genItems() }
+
               </Segment>
             </Grid.Column>
           </Grid>
