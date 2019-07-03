@@ -40,6 +40,12 @@ export const getItems = items => {
     items
   }
 }
+export const addItem = item => {
+  return {
+    type: 'ADD_ITEM',
+    item
+  }
+}
 
 // export const addStartDate = date => {
 //   return {
