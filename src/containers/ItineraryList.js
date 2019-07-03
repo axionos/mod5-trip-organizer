@@ -1,6 +1,6 @@
 import React from 'react';
 import Item from '../components/Item';
-import Map from '../components/Map';
+import Map from '../components/DoctorsMapContainer';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getDays, getItems, addItem } from '../actions/index.js'
