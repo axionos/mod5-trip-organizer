@@ -199,72 +199,69 @@ class ItineraryList extends React.Component {
           </Container>
         </div>
         <Container className='itinerary page-container'>
-        <Grid>
-          <Grid.Column floated='left' width={5}>
-            <Link to='/'>
-              <Icon name='arrow left' size='small'/>
-              Back
-            </Link>
-          </Grid.Column>
-          <Grid.Column floated='right' width={5}>
-            {/* ADD A PLAN */}
-            <Modal
-            closeIcon
-            size="tiny"
-
-            trigger={<Button positive ><Icon name='plus' size='small' />Add</Button>}>
-              <Modal.Header>Add a Plan</Modal.Header>
-              <Modal.Content>
-                <Modal.Description>
-                  <Form onSubmit={this.handleSubmitAddPlan}>
-
-                    <Form.Field control={Select} label='Day' options={options} placeholder='Select a Day' onChange={this.handleChangeDropdown} />
-
-                    <Form.Field>
-                      <label>Destination</label>
-                      <input
-                        type="text"
-                        name="place"
-                        value={this.state.title}
-                        placeholder="Enter Your Itinerary"
-                        onChange={this.handleChangeInput}/>
-                    </Form.Field>
-                    <Form.Field>
-                      <label>Memo</label>
-                      <Form.TextArea
-                        name='memo'
-                        onChange={this.handleChangeInput}
-                        placeholder='Memo about this Itinerary' />
-                    </Form.Field>
-                    <div className='form-btn-container'>
-                      <Button
-                      type='submit'
-                      positive icon='checkmark'
-                      labelPosition='right'
-                      content='Submit'>
-                      </Button>
-                    </div>
-                  </Form>
-                </Modal.Description>
-              </Modal.Content>
-            </Modal>
-            {/* ENDING ADD A PLAN */}
-
-          </Grid.Column>
-        </Grid>
           <Grid>
+            <Grid.Column floated='left' width={5}>
+              <Link to='/'>
+                <Icon name='arrow left' size='small'/>
+                Back
+              </Link>
+            </Grid.Column>
+            <Grid.Column floated='right' width={5}>
+              {/* ADD A PLAN */}
+              <Modal
+              closeIcon
+              size="tiny"
+
+              trigger={<Button positive ><Icon name='plus' size='small' />Add</Button>}>
+                <Modal.Header>Add a Plan</Modal.Header>
+                <Modal.Content>
+                  <Modal.Description>
+                    <Form onSubmit={this.handleSubmitAddPlan}>
+
+                      <Form.Field control={Select} label='Day' options={options} placeholder='Select a Day' onChange={this.handleChangeDropdown} />
+
+                      <Form.Field>
+                        <label>Destination</label>
+                        <input
+                          type="text"
+                          name="place"
+                          value={this.state.title}
+                          placeholder="Enter Your Itinerary"
+                          onChange={this.handleChangeInput}/>
+                      </Form.Field>
+                      <Form.Field>
+                        <label>Memo</label>
+                        <Form.TextArea
+                          name='memo'
+                          onChange={this.handleChangeInput}
+                          placeholder='Memo about this Itinerary' />
+                      </Form.Field>
+                      <div className='form-btn-container'>
+                        <Button
+                        type='submit'
+                        positive icon='checkmark'
+                        labelPosition='right'
+                        content='Submit'>
+                        </Button>
+                      </div>
+                    </Form>
+                  </Modal.Description>
+                </Modal.Content>
+              </Modal>
+              {/* ENDING ADD A PLAN */}
+
+            </Grid.Column>
+          </Grid>
+          <Grid stackable>
             <Grid.Column width={3}>
               <Menu fluid vertical tabular>
                 { this.genDays() }
               </Menu>
             </Grid.Column>
-
             <Grid.Column stretched width={13}>
-              <Grid>
+              <Grid stackable>
                 <Grid.Column floated='left' width={9}>
-
                     <MapContainer items={this.state.items}/>
-
                 </Grid.Column>
                 <Grid.Column floated='right' width={7}>
                   <Segment>
