@@ -34,6 +34,12 @@ export const getDays = days => {
     days
   }
 }
+// export const getTheDay = day => {
+//   return {
+//     type: 'GET_THE_DAY',
+//     day
+//   }
+// }
 export const getItems = items => {
   return {
     type: 'GET_ITEMS',
@@ -46,17 +52,3 @@ export const addItem = item => {
     item
   }
 }
-
-// export const addStartDate = date => {
-//   return {
-//     type: 'ADD_START_DATE',
-//     payload: date
-//   }
-// }
-//
-// export const addEndDate = date => {
-//   return {
-//     type: 'ADD_END_DATE',
-//     payload: date
-//   }
-// }
