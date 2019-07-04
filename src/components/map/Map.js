@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from 'react-redux'
 import { withScriptjs, withGoogleMap, GoogleMap } from "react-google-maps";
 import Marker from "./Marker";
 
@@ -9,7 +10,7 @@ const Map = withScriptjs(withGoogleMap((props) =>{
                     item={item}
                     location={{lat:parseFloat(item.latitude), lng: parseFloat(item.longitude)}}
                   />);
-  // console.log('Map Props', props);
+  console.log('Map Props', props);
   // debugger
   return (
       <GoogleMap
@@ -22,4 +23,18 @@ const Map = withScriptjs(withGoogleMap((props) =>{
   }
 ))
 
-export default Map;
+const mapDispatchToProps = dispatch => {
+  return {
+    // getTrip: trip => {
+    //   dispatch(getTrip(trip))
+    // }
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    // items: state.items
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);

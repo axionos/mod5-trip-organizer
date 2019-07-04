@@ -2,7 +2,7 @@ import React from 'react';
 import Item from '../components/Item';
 import MapContainer from '../components/map/MapContainer';
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { getDays, getItems, addItem } from '../actions/index.js'
 import { Container, Grid, Menu, Segment, Icon, Modal, Button, Select, Form } from 'semantic-ui-react'
 
@@ -15,7 +15,8 @@ class ItineraryList extends React.Component {
     memo: '',
     // dayId: '',
     latitude:'',
-    longitude: ''
+    longitude: '',
+    submitted: false
   }
 
 
@@ -78,8 +79,9 @@ class ItineraryList extends React.Component {
     .then(data => {
       // console.log('added this plan:', data)
       this.props.addItem(data)
-      this.props.history.push('/itinerary')
-      // window.location.replace(`http://localhost:3001/itinerary`)
+      this.setState({
+        submitted: true
+      })
     })
   } // END SAVING
 
@@ -178,10 +180,18 @@ class ItineraryList extends React.Component {
   render(){
     console.log('Itinerary List State', this.state)
     console.log('Itinerary List Props', this.props)
-    const { value } = this.state
 
+    // WHEN THE FORM IS SUBMITTED, REDIRECT AND RESET THE STATE
+    if (this.state.submitted) {
+      this.setState({
+        submitted: false
+      })
+      return <Redirect to='/itinerary' />
+    }
+    // END RESETTING THE STATE
+
+    const { value } = this.state
     const options = this.props.days.map(day => {
-      // debugger
       return  {***REMOVED***: day.day, text: day.day, value: day.id}
     })
 
@@ -295,7 +305,7 @@ const mapStateToProps = (state) => {
   return {
     theTrip: state.theTrip[0],
     days: state.days,
-    items: state.items,
+    // items: state.items,
     // theDay: state.theDay
   }
 }
