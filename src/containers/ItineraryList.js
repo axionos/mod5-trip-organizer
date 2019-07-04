@@ -78,6 +78,8 @@ class ItineraryList extends React.Component {
     .then(data => {
       // console.log('added this plan:', data)
       this.props.addItem(data)
+      this.props.history.push('/itinerary')
+      // window.location.replace(`http://localhost:3001/itinerary`)
     })
   } // END SAVING
 
@@ -135,7 +137,9 @@ class ItineraryList extends React.Component {
       })
   } // END FETCHING
 
-  handleChangeDropdown = (e, { value }) => this.setState({ value })
+  handleChangeDropdown = (e, { value }) => {
+    this.setState({ value })
+  }
 
   // UPDATE STATE FROM THE FORM INPUT
   handleChangeInput = event => {
@@ -186,7 +190,7 @@ class ItineraryList extends React.Component {
         <div className='itinerary-header'>
           <Container className='flex-container'>
               <div>
-                <h2>{this.props.theTrip.title}</h2>
+                <h2 className="capitalize">{this.props.theTrip.title}</h2>
               </div>
               <div className='itinerary-h-right'>
                 <p>{this.props.theTrip.startDate} ~ {this.props.theTrip.endDate}</p>
@@ -287,7 +291,8 @@ const mapStateToProps = (state) => {
   return {
     theTrip: state.theTrip[0],
     days: state.days,
-    items: state.items
+    items: state.items,
+    // theDay: state.theDay
   }
 }
 

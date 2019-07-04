@@ -8,9 +8,9 @@ const Map = withScriptjs(withGoogleMap((props) =>{
                     ***REMOVED***={item.id}
                     item={item}
                     location={{lat:parseFloat(item.latitude), lng: parseFloat(item.longitude)}}
-                    // location={{lat: item.closestPractice.lat, lng: item.closestPractice.lon}}
                   />);
-  console.log('Map Props', props);
+  // console.log('Map Props', props);
+  // debugger
   return (
       <GoogleMap
         defaultZoom={12}

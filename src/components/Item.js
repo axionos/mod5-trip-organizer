@@ -22,7 +22,7 @@ class Item extends React.Component {
     return(
 
       <div>
-        <h3>{this.props.item.place}</h3>
+        <h3 className="capitalize">{this.props.item.place}</h3>
         <p>{this.props.item.memo}</p>
         <Button onClick={this.handleClickDelete}>
           <Icon
