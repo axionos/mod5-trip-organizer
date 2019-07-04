@@ -260,11 +260,18 @@ class ItineraryList extends React.Component {
             </Grid.Column>
 
             <Grid.Column stretched width={13}>
-              <Segment>
-                <MapContainer items={this.state.items}/>
-                { this.genItems() }
+              <Grid>
+                <Grid.Column floated='left' width={9}>
 
-              </Segment>
+                    <MapContainer items={this.state.items}/>
+
+                </Grid.Column>
+                <Grid.Column floated='right' width={7}>
+                  <Segment>
+                    { this.genItems() }
+                  </Segment>
+                </Grid.Column>
+              </Grid>
             </Grid.Column>
           </Grid>
         </Container>
