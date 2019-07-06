@@ -82,10 +82,12 @@ class ItineraryList extends React.Component {
     })
     .then(resp => resp.json())
     .then(data => {
+      // const currentItems = this.state.items
       const activeItemInt = this.state.value
-      console.log('stringify the active Item', activeItemInt.toString())
-      this.props.addItem(data)
+      // this.props.addItem(data)
+      // this.props.getItems(data)
       this.setState({
+        items: [...this.state.items, data],
         submitted: true,
         activeItem: activeItemInt.toString()
       })
@@ -139,6 +141,7 @@ class ItineraryList extends React.Component {
     })
     .then(res => res.json())
     .then(data => {
+      // this.props.addItem(data)
       this.setState({
         activeItem: name,
         items: data
@@ -157,26 +160,24 @@ class ItineraryList extends React.Component {
     })
   } // END UPDATING
 
-  resetActiveItemAfterDel = () => {
+  resetActiveItemAfterDel = (e) => {
+    console.log('hello??')
     this.setState({
       activeItem: this.state.activeItem
     })
+    return this.props.location.pathname
   }
   render(){
     console.log('Itinerary List State', this.state)
     console.log('Itinerary List Props', this.props)
-    // console.log('react router practicing', this.props.location.pathname)
-
 
     // WHEN THE FORM IS SUBMITTED, REDIRECT AND RESET THE STATE
     if (this.state.submitted) {
       this.setState({
         submitted: false
       })
-      return this.props.location.pathname
-
-      // return <Redirect to='/itinerary' />
-
+      // return this.props.location.pathname
+      return <Redirect to='/itinerary' />
     }
     // END RESETTING THE STATE
 
@@ -295,7 +296,7 @@ const mapStateToProps = (state) => {
   return {
     theTrip: state.theTrip[0],
     days: state.days,
-    // items: state.items,
+    items: state.items
     // theDay: state.theDay
   }
 }
