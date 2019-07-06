@@ -84,6 +84,8 @@ function theItemsReducer(state = [], action) {
 
     case 'ADD_ITEM':
       console.log(action)
+      console.log('add_item state', state)
+      // debugger
       return [...state, action.item]
 
     default:
