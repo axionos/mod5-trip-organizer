@@ -2,7 +2,7 @@ import React from 'react';
 import Item from '../components/Item';
 import MapContainer from '../components/map/MapContainer';
 import { connect } from 'react-redux'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Redirect, withRouter } from 'react-router-dom'
 import { getDays, getItems, addItem } from '../actions/index.js'
 import { Container, Grid, Menu, Segment, Icon, Modal, Button, Select, Form } from 'semantic-ui-react'
 
@@ -48,11 +48,16 @@ class ItineraryList extends React.Component {
     fetch(`${proxyurl}https://maps.googleapis.com/maps/api/place/findplacefromtext/json?***REMOVED***=${***REMOVED***}&input=${place}&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry`)
     .then(res => res.json())
     .then(data => {
-      this.setState({
-        latitude: data.candidates[0].geometry.location.lat,
-        longitude: data.candidates[0].geometry.location.lng
+      // debugger
+      if(data.candidates.length === 0) {
+        return alert('Oops! Please try a different place!')
+      } else {
+        this.setState({
+          latitude: data.candidates[0].geometry.location.lat,
+          longitude: data.candidates[0].geometry.location.lng
         }, () => this.postTheItem()
       )
+      }
     }) // end then
   } // END FINDING THE PLACE
 
@@ -77,10 +82,12 @@ class ItineraryList extends React.Component {
     })
     .then(resp => resp.json())
     .then(data => {
-      // console.log('added this plan:', data)
+      const activeItemInt = this.state.value
+      console.log('stringify the active Item', activeItemInt.toString())
       this.props.addItem(data)
       this.setState({
-        submitted: true
+        submitted: true,
+        activeItem: activeItemInt.toString()
       })
     })
   } // END SAVING
@@ -94,7 +101,7 @@ class ItineraryList extends React.Component {
         <Menu.Item
           name={day.day}
           active={activeItem === day.day}
-          onClick={this.handleItemClick}
+          onClick={this.handleDayClick}
           id={day.id}
           ***REMOVED***={day.id}
           day={day}
@@ -109,13 +116,13 @@ class ItineraryList extends React.Component {
   genItems = () => {
     return this.state.items.map(item => {
       return  <div className="item-container" ***REMOVED***={item.id}>
-                <Item ***REMOVED***={item.id} item={item} />
+                <Item ***REMOVED***={item.id} item={item} rerender={this.resetActiveItemAfterDel}/>
               </div>
     })
   } // END GENERATING ITEMS
 
   // FETCH THE ITEM INFO ON CLICK
-  handleItemClick = (e, { name }) => {
+  handleDayClick = (e, { name }) => {
     console.log(e.target)
     const dayId = e.target.id
 
@@ -131,12 +138,12 @@ class ItineraryList extends React.Component {
       }
     })
     .then(res => res.json())
-    .then(data =>
-      { this.setState({
-          activeItem: name,
-          items: data
-        })
+    .then(data => {
+      this.setState({
+        activeItem: name,
+        items: data
       })
+    })
   } // END FETCHING
 
   handleChangeDropdown = (e, { value }) => {
@@ -150,43 +157,26 @@ class ItineraryList extends React.Component {
     })
   } // END UPDATING
 
-
-  // handleSubmitAddPlan = event => {
-  //   event.preventDefault()
-  //   fetch('http://localhost:3000/new_item', {
-  //     method: "POST",
-  //     headers: {
-  //       'Authorization': localStorage.getItem("token"),
-  //       'Content-Type': 'application/json',
-  //       'Accept': 'application/json'
-  //     },
-  //     body: JSON.stringify({
-  //         item: {
-  //           place: this.state.place,
-  //           memo: this.state.memo,
-  //           day_id: this.state.value
-  //         }
-  //       })
-  //   })
-  //   .then(resp => resp.json())
-  //   .then(data => {
-  //     console.log('added this plan:', data)
-  //     this.props.addItem(data)
-  //   })
-    //   alert("New Trip is Successfully Added!"))
-    // window.location.replace(`http://localhost:3001/itinerary`)
-  // }
-
+  resetActiveItemAfterDel = () => {
+    this.setState({
+      activeItem: this.state.activeItem
+    })
+  }
   render(){
     console.log('Itinerary List State', this.state)
     console.log('Itinerary List Props', this.props)
+    // console.log('react router practicing', this.props.location.pathname)
+
 
     // WHEN THE FORM IS SUBMITTED, REDIRECT AND RESET THE STATE
     if (this.state.submitted) {
       this.setState({
         submitted: false
       })
-      return <Redirect to='/itinerary' />
+      return this.props.location.pathname
+
+      // return <Redirect to='/itinerary' />
+
     }
     // END RESETTING THE STATE
 
@@ -310,7 +300,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ItineraryList)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ItineraryList))
 
 // // CALCULATE HOW MANY DAYS THERE ARE IN BETWEEN TWO DATES
 // const startDate = Moment(this.props.theTrip.startDate, "YYYY-MM-DD")

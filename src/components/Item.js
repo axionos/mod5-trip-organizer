@@ -12,12 +12,13 @@ class Item extends React.Component {
     fetch(`http://localhost:3000/items/${itemId}`, {
       method: "DELETE"
     })
+    .then(this.props.rerender())
 
   }
 
   render(){
-    // console.log('Item State', this.state)
-    // console.log('Item Props', this.props)
+    console.log('Item State', this.state)
+    console.log('Item Props', this.props)
 
     return(
 

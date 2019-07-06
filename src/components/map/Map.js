@@ -10,7 +10,7 @@ const Map = withScriptjs(withGoogleMap((props) =>{
                     item={item}
                     location={{lat:parseFloat(item.latitude), lng: parseFloat(item.longitude)}}
                   />);
-  console.log('Map Props', props);
+  // console.log('Map Props', props);
   // debugger
   return (
       <GoogleMap
