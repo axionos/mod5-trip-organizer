@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import { Icon, Button } from 'semantic-ui-react'
 
 // import Moment from 'moment'
@@ -13,7 +14,7 @@ class Item extends React.Component {
       method: "DELETE"
     })
     .then(this.props.rerender())
-
+    
   }
 
   render(){
@@ -49,4 +50,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Item)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Item))
