@@ -15,13 +15,7 @@ class Item extends React.Component {
     fetch(`http://localhost:3000/items/${itemId}`, {
       method: "DELETE"
     })
-    .then(
-      // console.log('this is from delete')
-      this.props.deleteItem(this.props.item)
-    )
-    // .then(this.props.rerender())
-
-
+    .then(this.props.deleteItem(this.props.item))
   }
 
   render(){
@@ -32,7 +26,9 @@ class Item extends React.Component {
 
       <div>
         <h3 className="capitalize">{this.props.item.place}</h3>
-        <p>{this.props.item.memo}</p>
+        <p>{this.props.item.address}</p>
+        <p>{this.props.item.open_now ? 'Now Open' : 'Closed for Today'}</p>
+        <p>Rating: {this.props.item.rating} / 5.0</p>
         <Button onClick={this.handleClickDelete}>
           <Icon
             name='trash alternate outline'
