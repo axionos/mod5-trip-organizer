@@ -60,7 +60,7 @@ class ItineraryList extends React.Component {
     }) // end then
   } // END FINDING THE PLACE
 
-  // SAVING ITEM IN THE BACKEND
+  // POST ITEM IN THE BACKEND
   postTheItem = () => {
     fetch('http://localhost:3000/new_item', {
       method: "POST",
@@ -81,15 +81,10 @@ class ItineraryList extends React.Component {
     })
     .then(resp => resp.json())
     .then(data => {
-
-      // this.props.addItem(data)
-      // this.props.getItems(data)
-      this.setState({
-        submitted: true,
-        activeItem: this.state.value
-      })
+      this.props.addItem(data)
+      this.updateDayToDisplay()
     })
-  } // END SAVING
+  } // END POSTING
 
 
   // GENERATE DAYS
@@ -127,12 +122,9 @@ class ItineraryList extends React.Component {
     console.log(e.target)
     const dayId = e.target.id
 
-    // don't need update day because i'm using 'key' as day_id
-    // 'key' is set in the 'add form' dropdown
-    // // UPDATE DAY
-    // this.setState({
-    //   dayId: dayId
-    // })
+    // don't need update day because i'm using 'dropdownId' as day_id
+    // 'dropdownId' is set from the 'add form' dropdown
+
     fetch(`http://localhost:3000/items/${dayId}`, {
       headers: {
         'Authorization': localStorage.getItem("token")
@@ -146,6 +138,23 @@ class ItineraryList extends React.Component {
       })
     })
   } // END FETCHING
+
+  updateDayToDisplay = (e) => {
+    const dayId = this.state.dropdownId
+    fetch(`http://localhost:3000/items/${dayId}`, {
+      headers: {
+        'Authorization': localStorage.getItem("token")
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      this.props.getItems(data)
+      this.setState({
+        activeItem: this.state.value,
+        submitted: true
+      })
+    })
+  }
 
   handleChangeDropdown = (e, {value}) => {
     this.setState({ value })
