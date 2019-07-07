@@ -5,7 +5,7 @@ import Map from "./Map";
 export default class MapContainer extends React.Component {
 
 	render() {
-    // console.log('Map Container Props', this.props)
+    console.log('Map Container Props', this.props)
 		return (
 			<Map
 				items={this.props.items}

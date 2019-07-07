@@ -5,12 +5,24 @@ import Marker from "./Marker";
 
 const Map = withScriptjs(withGoogleMap((props) =>{
 
-  const markers = props.items.map( item => <Marker
-                    key={item.id}
-                    item={item}
-                    location={{lat:parseFloat(item.latitude), lng: parseFloat(item.longitude)}}
-                  />);
-  // console.log('Map Props', props);
+  const markers = props.items.map( item => {
+    // return item.map(theItem => {
+    //   return <Marker
+    //           key={theItem.id}
+    //           item={theItem}
+    //           location={{lat:parseFloat(theItem.latitude), lng: parseFloat(theItem.longitude)}}
+    //         />
+    // })
+
+      return <Marker
+              key={item.id}
+              item={item}
+              location={{lat:parseFloat(item.latitude), lng: parseFloat(item.longitude)}}
+            />
+
+  });
+
+  console.log('Map Props', props);
   // debugger
   return (
       <GoogleMap
