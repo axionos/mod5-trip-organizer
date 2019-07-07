@@ -64,17 +64,6 @@ function theDaysReducer(state = [], action) {
       return state
   }
 }
-//
-// function theDayReducer(state = [], action) {
-//   switch(action.type){
-//     case "GET_THE_DAY":
-//       console.log(action)
-//       return action
-//
-//     default:
-//       return state
-//   }
-// }
 
 function theItemsReducer(state = [], action) {
   switch(action.type){
@@ -84,9 +73,11 @@ function theItemsReducer(state = [], action) {
 
     case 'ADD_ITEM':
       console.log(action)
-      console.log('add_item state', state)
-      // debugger
       return [...state, action.item]
+
+    case 'DELETE_ITEM':
+      console.log(action)
+      return state.filter(item => item.id !== action.item.id)
 
     default:
       return state
