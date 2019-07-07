@@ -10,11 +10,15 @@ class ItineraryList extends React.Component {
   state = {
     activeItem: "1",
     place: '',
-    memo: '',
     latitude:'',
     longitude: '',
     submitted: false,
-    dropdownId: "1"
+    dropdownId: "1",
+    name:'',
+    openNow: false,
+    rating: 0,
+    photoRef:'',
+    address: ''
   }
 
   // SETTING INITIAL STATE
@@ -30,7 +34,6 @@ class ItineraryList extends React.Component {
       console.log('returning data', data)
       this.props.getDays(data.days)
       this.props.getItems(data.items)
-      // this.initializeDayToDisplay()
     })
   } // END SETTING
 
@@ -49,8 +52,14 @@ class ItineraryList extends React.Component {
         return alert('Oops! Please try a different place!')
       } else {
         this.setState({
+          name: data.candidates[0].name,
           latitude: data.candidates[0].geometry.location.lat,
-          longitude: data.candidates[0].geometry.location.lng
+          longitude: data.candidates[0].geometry.location.lng,
+          address: data.candidates[0].formatted_address,
+          rating: data.candidates[0].rating,
+          photoRef: data.candidates[0].photos[0].photo_reference,
+          openNow: data.candidates[0].opening_hours.open_now,
+
         }, () => this.postTheItem()
       )
       }
@@ -68,16 +77,20 @@ class ItineraryList extends React.Component {
       },
       body: JSON.stringify({
         item: {
-          place: this.state.place,
-          memo: this.state.memo,
+          place: this.state.name,
+          address: this.state.address,
           latitude: this.state.latitude,
           longitude: this.state.longitude,
+          open_now: this.state.openNow,
+          rating: this.state.rating,
+          photo: this.state.photoRef,
           day_id: this.state.dropdownId
         }
       })
     })
     .then(resp => resp.json())
     .then(data => {
+      // debugger
       this.props.addItem(data)
       this.updateDayToDisplay()
     })
@@ -106,7 +119,7 @@ class ItineraryList extends React.Component {
   genItems = () => {
     return this.props.items.map(item => {
       return  <div className="item-container" key={item.id}>
-                <Item key={item.id} item={item} rerender={this.resetActiveItemAfterDel}/>
+                <Item key={item.id} item={item} />
               </div>
     })
   } // END GENERATING ITEMS
@@ -165,30 +178,7 @@ class ItineraryList extends React.Component {
     })
   } // END UPDATING
 
-  resetActiveItemAfterDel = (e) => {
-    // console.log('hello??')
-    // const dayId = this.state.dropdownId
-    const theDay = this.props.days.find(day => {
-      return day.day === this.state.activeItem
-    })
-    // debugger
-    fetch(`http://localhost:3000/items/${theDay.id}`, {
-      headers: {
-        'Authorization': localStorage.getItem("token")
-      }
-    })
-    .then(res => res.json())
-    .then(data => {
-      this.props.getItems(data)
-      this.setState({
-        activeItem: this.state.activeItem
-      })
-    })
-    console.log('it is from rerender')
-    // debugger
-    // return this.props.history.pathname
-    return <Redirect to='/itinerary' />
-  }
+
   render(){
     console.log('Itinerary List State', this.state)
     console.log('Itinerary List Props', this.props)
@@ -251,13 +241,7 @@ class ItineraryList extends React.Component {
                           placeholder="Enter Your Itinerary"
                           onChange={this.handleChangeInput}/>
                       </Form.Field>
-                      <Form.Field>
-                        <label>Memo</label>
-                        <Form.TextArea
-                          name='memo'
-                          onChange={this.handleChangeInput}
-                          placeholder='Memo about this Itinerary' />
-                      </Form.Field>
+
                       <div className='form-btn-container'>
                         <Button
                         type='submit'
