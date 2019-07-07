@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Icon, Button } from 'semantic-ui-react'
-import { getDays, getItems, addItem } from '../actions/index.js'
+import { deleteItem } from '../actions/index.js'
 
 
 // import Moment from 'moment'
@@ -15,9 +15,12 @@ class Item extends React.Component {
     fetch(`http://localhost:3000/items/${itemId}`, {
       method: "DELETE"
     })
-    .then(this.props.history.location.pathname)
-    .then(this.props.rerender())
+    .then(
+      // console.log('this is from delete')
+      this.props.deleteItem(this.props.item)
+    )
     // .then(this.props.rerender())
+
 
   }
 
@@ -42,9 +45,9 @@ class Item extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    // getTrip: trip => {
-    //   dispatch(getTrip(trip))
-    // }
+    deleteItem: item => {
+      dispatch(deleteItem(item))
+    }
   }
 }
 
