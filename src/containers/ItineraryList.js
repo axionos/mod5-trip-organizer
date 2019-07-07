@@ -10,13 +10,14 @@ import { Container, Grid, Menu, Segment, Icon, Modal, Button, Select, Form } fro
 class ItineraryList extends React.Component {
   state = {
     activeItem: "1",
-    items: [],
+    // items: [],
     place: '',
     memo: '',
     // dayId: '',
     latitude:'',
     longitude: '',
-    submitted: false
+    submitted: false,
+    dropdownId: ''
   }
 
 
@@ -33,9 +34,7 @@ class ItineraryList extends React.Component {
       console.log('returning data', data)
       this.props.getDays(data.days)
       this.props.getItems(data.items)
-      this.setState({
-        items: data.items[0]
-      })
+
     })
   } // END SETTING
 
@@ -76,20 +75,18 @@ class ItineraryList extends React.Component {
           memo: this.state.memo,
           latitude: this.state.latitude,
           longitude: this.state.longitude,
-          day_id: this.state.value
+          day_id: this.state.dropdownId
         }
       })
     })
     .then(resp => resp.json())
     .then(data => {
-      // const currentItems = this.state.items
-      const activeItemInt = this.state.value
+
       // this.props.addItem(data)
       // this.props.getItems(data)
       this.setState({
-        items: [...this.state.items, data],
         submitted: true,
-        activeItem: activeItemInt.toString()
+        activeItem: this.state.value
       })
     })
   } // END SAVING
@@ -116,10 +113,12 @@ class ItineraryList extends React.Component {
 
   // GENERATE ITEMS
   genItems = () => {
-    return this.state.items.map(item => {
+
+    return this.props.items.map(item => {
       return  <div className="item-container" ***REMOVED***={item.id}>
-                <Item ***REMOVED***={item.id} item={item} rerender={this.resetActiveItemAfterDel}/>
-              </div>
+      <Item ***REMOVED***={item.id} item={item} rerender={this.resetActiveItemAfterDel}/>
+        </div>
+
     })
   } // END GENERATING ITEMS
 
@@ -128,8 +127,8 @@ class ItineraryList extends React.Component {
     console.log(e.target)
     const dayId = e.target.id
 
-    // don't need update day because i'm using 'value' as day_id
-    // 'value' is set in the 'add form' dropdown
+    // don't need update day because i'm using '***REMOVED***' as day_id
+    // '***REMOVED***' is set in the 'add form' dropdown
     // // UPDATE DAY
     // this.setState({
     //   dayId: dayId
@@ -141,16 +140,19 @@ class ItineraryList extends React.Component {
     })
     .then(res => res.json())
     .then(data => {
-      // this.props.addItem(data)
+      this.props.getItems(data)
       this.setState({
         activeItem: name,
-        items: data
       })
     })
   } // END FETCHING
 
-  handleChangeDropdown = (e, { value }) => {
+  handleChangeDropdown = (e, {value}) => {
     this.setState({ value })
+    this.setState({
+      dropdownId: e.target.id
+    })
+    console.log(e.target)
   }
 
   // UPDATE STATE FROM THE FORM INPUT
@@ -165,7 +167,9 @@ class ItineraryList extends React.Component {
     this.setState({
       activeItem: this.state.activeItem
     })
-    return this.props.location.pathname
+    debugger
+    // return this.props.history.pathname
+    return <Redirect to='/itinerary' />
   }
   render(){
     console.log('Itinerary List State', this.state)
@@ -183,7 +187,7 @@ class ItineraryList extends React.Component {
 
     const { value } = this.state
     const options = this.props.days.map(day => {
-      return  {***REMOVED***: day.day, text: day.day, value: day.id}
+      return  {***REMOVED***: day.id, id: day.id, text: day.day, value: day.day}
     })
 
     return(
@@ -262,7 +266,7 @@ class ItineraryList extends React.Component {
             <Grid.Column stretched width={13}>
               <Grid stackable>
                 <Grid.Column floated='left' width={9}>
-                    <MapContainer items={this.state.items}/>
+                    <MapContainer items={this.props.items}/>
                 </Grid.Column>
                 <Grid.Column floated='right' width={7}>
                   <Segment>
