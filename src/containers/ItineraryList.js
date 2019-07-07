@@ -34,7 +34,7 @@ class ItineraryList extends React.Component {
     })
   } // END SETTING
 
-  
+
   // FIND THE PLACE INFO FROM API WHEN FORM SUBMITTED
   handleSubmitAddPlan = event => {
     event.preventDefault()
@@ -166,11 +166,26 @@ class ItineraryList extends React.Component {
   } // END UPDATING
 
   resetActiveItemAfterDel = (e) => {
-    console.log('hello??')
-    this.setState({
-      activeItem: this.state.activeItem
+    // console.log('hello??')
+    // const dayId = this.state.dropdownId
+    const theDay = this.props.days.find(day => {
+      return day.day === this.state.activeItem
     })
-    debugger
+    // debugger
+    fetch(`http://localhost:3000/items/${theDay.id}`, {
+      headers: {
+        'Authorization': localStorage.getItem("token")
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      this.props.getItems(data)
+      this.setState({
+        activeItem: this.state.activeItem
+      })
+    })
+    console.log('it is from rerender')
+    // debugger
     // return this.props.history.pathname
     return <Redirect to='/itinerary' />
   }
