@@ -6,20 +6,16 @@ import { Link, Redirect, withRouter } from 'react-router-dom'
 import { getDays, getItems, addItem } from '../actions/index.js'
 import { Container, Grid, Menu, Segment, Icon, Modal, Button, Select, Form } from 'semantic-ui-react'
 
-
 class ItineraryList extends React.Component {
   state = {
     activeItem: "1",
-    // items: [],
     place: '',
     memo: '',
-    // dayId: '',
     latitude:'',
     longitude: '',
     submitted: false,
-    dropdownId: ''
+    dropdownId: "1"
   }
-
 
   // SETTING INITIAL STATE
   componentDidMount(){
@@ -34,10 +30,11 @@ class ItineraryList extends React.Component {
       console.log('returning data', data)
       this.props.getDays(data.days)
       this.props.getItems(data.items)
-
+      // this.initializeDayToDisplay()
     })
   } // END SETTING
 
+  
   // FIND THE PLACE INFO FROM API WHEN FORM SUBMITTED
   handleSubmitAddPlan = event => {
     event.preventDefault()
@@ -86,7 +83,6 @@ class ItineraryList extends React.Component {
     })
   } // END POSTING
 
-
   // GENERATE DAYS
   genDays = () => {
     return this.props.days.map(day => {
@@ -108,23 +104,19 @@ class ItineraryList extends React.Component {
 
   // GENERATE ITEMS
   genItems = () => {
-
     return this.props.items.map(item => {
       return  <div className="item-container" ***REMOVED***={item.id}>
-      <Item ***REMOVED***={item.id} item={item} rerender={this.resetActiveItemAfterDel}/>
-        </div>
-
+                <Item ***REMOVED***={item.id} item={item} rerender={this.resetActiveItemAfterDel}/>
+              </div>
     })
   } // END GENERATING ITEMS
 
   // FETCH THE ITEM INFO ON CLICK
   handleDayClick = (e, { name }) => {
-    console.log(e.target)
-    const dayId = e.target.id
-
     // don't need update day because i'm using 'dropdownId' as day_id
     // 'dropdownId' is set from the 'add form' dropdown
 
+    const dayId = e.target.id
     fetch(`http://localhost:3000/items/${dayId}`, {
       headers: {
         'Authorization': localStorage.getItem("token")
@@ -139,6 +131,7 @@ class ItineraryList extends React.Component {
     })
   } // END FETCHING
 
+  // SHOW THE UPDATED DAY TAB AFTER NEW ITEM IS ADDED
   updateDayToDisplay = (e) => {
     const dayId = this.state.dropdownId
     fetch(`http://localhost:3000/items/${dayId}`, {
@@ -154,17 +147,18 @@ class ItineraryList extends React.Component {
         submitted: true
       })
     })
-  }
+  } // END SHOWING
 
+  // UPDATE VALUE AND DROPDOWN ID
   handleChangeDropdown = (e, {value}) => {
     this.setState({ value })
     this.setState({
       dropdownId: e.target.id
     })
     console.log(e.target)
-  }
+  } // END UPDATING
 
-  // UPDATE STATE FROM THE FORM INPUT
+  // UPDATE STATE FROM THE FORM PLACE INPUT
   handleChangeInput = event => {
     this.setState({
       [event.target.name]: event.target.value
@@ -189,7 +183,6 @@ class ItineraryList extends React.Component {
       this.setState({
         submitted: false
       })
-      // return this.props.location.pathname
       return <Redirect to='/itinerary' />
     }
     // END RESETTING THE STATE
