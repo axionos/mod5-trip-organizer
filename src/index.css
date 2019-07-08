@@ -91,6 +91,12 @@
   float: left;
 }
 
-.item-container {
-  /* float: left; */
+.photo-holder {
+  max-width: 150px;
+  height: 100px;
+}
+
+.photo-holder img {
+  width: 100%;
+  height: 100%;
 }
