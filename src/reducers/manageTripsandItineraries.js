@@ -5,6 +5,7 @@ const rootReducer = combineReducers({
   trips: tripReducer,
   theTrip: theTripReducer,
   days: theDaysReducer,
+  // theDay: theDayReducer,
   items: theItemsReducer
 })
 
@@ -72,7 +73,11 @@ function theItemsReducer(state = [], action) {
 
     case 'ADD_ITEM':
       console.log(action)
-      return [...state, action.trip]
+      return [...state, action.item]
+
+    case 'DELETE_ITEM':
+      console.log(action)
+      return state.filter(item => item.id !== action.item.id)
 
     default:
       return state
