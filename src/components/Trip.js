@@ -197,7 +197,7 @@ class Trip extends React.Component {
               className=""
               size='tiny'
             >
-              <Icon name='edit' size='small' />
+              <Icon name='trash alternate outline' size='small' />
               Delete
             </Button>
             </div>
