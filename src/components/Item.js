@@ -18,13 +18,22 @@ class Item extends React.Component {
     .then(this.props.deleteItem(this.props.item))
   }
 
+  renderPhoto = () => {
+    const ***REMOVED*** = 'AIzaSyBaGD-h-zdNd5SLcDto3jevpeaHXCNRpz4'
+    const photoRef = this.props.item.photo
+    const photo = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&***REMOVED***=${***REMOVED***}`
+    return photo
+  }
   render(){
-    console.log('Item State', this.state)
+    // console.log('Item State', this.state)
     console.log('Item Props', this.props)
 
     return(
 
       <div>
+        <div className='photo-holder'>
+          { this.props.item.photo === 'Not Available' ? <img src='https://unlimitedpassion.co.uk/wp-content/uploads/2016/06/placeholder4.png' alt='placeholder' /> : <img src={this.renderPhoto()} alt={this.props.item.place}/> }
+        </div>
         <h3 className="capitalize">{this.props.item.place}</h3>
         <p>{this.props.item.address}</p>
         <p>{this.props.item.open_now ? 'Now Open' : 'Closed for Today'}</p>
