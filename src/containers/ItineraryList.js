@@ -15,8 +15,8 @@ class ItineraryList extends React.Component {
     submitted: false,
     dropdownId: "1",
     name:'',
-    openNow: false,
-    rating: 0,
+    openNow: '',
+    rating:'',
     photoRef:'',
     address: ''
   }
@@ -51,15 +51,40 @@ class ItineraryList extends React.Component {
       if(data.candidates.length === 0) {
         return alert('Oops! Please try a different place!')
       } else {
+
+        if (data.candidates[0].opening_hours) {
+          this.setState({
+            openNow: data.candidates[0].opening_hours.open_now,
+          })
+        } else {
+          this.setState({
+            openNow: true
+          })
+        }
+
+        if (data.candidates[0].rating) {
+          this.setState({
+            rating: data.candidates[0].rating
+          })
+        } else {
+          this.setState({
+            rating: 'Not Available'
+          })
+        }
+
+        if (data.candidates[0].photos) {
+          this.setState({
+            photoRef: data.candidates[0].photos[0].photo_reference
+          })
+        } else {
+          this.setState({photoRef: 'Not Available'})
+        }
+
         this.setState({
           name: data.candidates[0].name,
           latitude: data.candidates[0].geometry.location.lat,
           longitude: data.candidates[0].geometry.location.lng,
           address: data.candidates[0].formatted_address,
-          rating: data.candidates[0].rating,
-          photoRef: data.candidates[0].photos[0].photo_reference,
-          openNow: data.candidates[0].opening_hours.open_now,
-
         }, () => this.postTheItem()
       )
       }
@@ -266,10 +291,10 @@ class ItineraryList extends React.Component {
             </Grid.Column>
             <Grid.Column stretched width={13}>
               <Grid stackable>
-                <Grid.Column floated='left' width={9}>
+                <Grid.Column floated='left' width={8}>
                     <MapContainer items={this.props.items}/>
                 </Grid.Column>
-                <Grid.Column floated='right' width={7}>
+                <Grid.Column floated='right' width={8}>
                   <Segment>
                     { this.genItems() }
                   </Segment>
