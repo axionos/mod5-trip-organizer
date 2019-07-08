@@ -13,21 +13,28 @@ const Map = withScriptjs(withGoogleMap((props) =>{
           />
   });
 
-  console.log('Map Props', props.items);
+  // console.log('Map Props', props.items);
   return (
-      <React.Fragment>
-
-      { props.items.length === 0 ? null :
+    <React.Fragment>
+      { props.items.length === 0 ? (
+        <GoogleMap
+          defaultZoom={12}
+          center={{ lat:  40.734697, lng: -73.992741 }}
+        >
+          { markers }
+        </GoogleMap>
+        ) : (
         <GoogleMap
           defaultZoom={12}
           center={{ lat:  parseFloat(props.items[0].latitude), lng: parseFloat(props.items[0].longitude) }}
         >
           { markers }
         </GoogleMap>
+        )
       }
-</React.Fragment>
-    );
-  }
+    </React.Fragment>
+  );
+}
 ))
 
 const mapDispatchToProps = dispatch => {

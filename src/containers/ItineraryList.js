@@ -31,7 +31,7 @@ class ItineraryList extends React.Component {
     })
     .then(res => res.json())
     .then(data => {
-      console.log('returning data', data)
+      // console.log('returning data', data)
       this.props.getDays(data.days)
       this.props.getItems(data.items)
     })
@@ -205,8 +205,8 @@ class ItineraryList extends React.Component {
 
 
   render(){
-    console.log('Itinerary List State', this.state)
-    console.log('Itinerary List Props', this.props)
+    // console.log('Itinerary List State', this.state)
+    // console.log('Itinerary List Props', this.props)
 
     // WHEN THE FORM IS SUBMITTED, REDIRECT AND RESET THE STATE
     if (this.state.submitted) {
