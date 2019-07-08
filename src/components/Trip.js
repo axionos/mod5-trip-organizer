@@ -58,6 +58,7 @@ class Trip extends React.Component {
     })
   }
 
+  // PATCH FETCH EDIT TRIP
   handleSubmitEditTrip = event => {
     event.preventDefault()
     const tripId = this.props.trip.id
@@ -83,7 +84,7 @@ class Trip extends React.Component {
     .then(data =>
       alert("The Trip is Successfully Edited!"))
     window.location.replace(`http://localhost:3001/`)
-  }
+  } // END FETCHING
 
   // CALL DISPATCH TO PROPS ON CLICK
   handleClickEdit = (e) => {
