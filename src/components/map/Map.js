@@ -17,18 +17,14 @@ const Map = withScriptjs(withGoogleMap((props) =>{
   return (
       <React.Fragment>
 
-      {props.items.length === 0 ? null :
-
-      <GoogleMap
-        defaultZoom={12}
-        center={{ lat:  parseFloat(props.items[0].latitude), lng: parseFloat(props.items[0].longitude) }}
-      >
-        { markers }
-      </GoogleMap>
-
-
-
-    }
+      { props.items.length === 0 ? null :
+        <GoogleMap
+          defaultZoom={12}
+          center={{ lat:  parseFloat(props.items[0].latitude), lng: parseFloat(props.items[0].longitude) }}
+        >
+          { markers }
+        </GoogleMap>
+      }
 </React.Fragment>
     );
   }
