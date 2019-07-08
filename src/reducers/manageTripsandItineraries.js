@@ -5,7 +5,6 @@ const rootReducer = combineReducers({
   trips: tripReducer,
   theTrip: theTripReducer,
   days: theDaysReducer,
-  // theDay: theDayReducer,
   items: theItemsReducer
 })
 

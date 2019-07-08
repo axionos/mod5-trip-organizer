@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Icon, Button } from 'semantic-ui-react'
+import { Icon, Button, Grid, Container } from 'semantic-ui-react'
 import { deleteItem } from '../actions/index.js'
 
 
@@ -30,19 +30,29 @@ class Item extends React.Component {
 
     return(
 
-      <div>
-        <div className='photo-holder'>
-          { this.props.item.photo === 'Not Available' ? <img src='https://unlimitedpassion.co.uk/wp-content/uploads/2016/06/placeholder4.png' alt='placeholder' /> : <img src={this.renderPhoto()} alt={this.props.item.place}/> }
-        </div>
-        <h3 className="capitalize">{this.props.item.place}</h3>
-        <p>{this.props.item.address}</p>
-        <p>{this.props.item.open_now ? 'Now Open' : 'Closed for Today'}</p>
-        <p>Rating: {this.props.item.rating} / 5.0</p>
-        <Button onClick={this.handleClickDelete}>
-          <Icon
-            name='trash alternate outline'
-            size='small' />
-        </Button>
+      <div className='itinerary-wrapper'>
+
+          <div className='photo-holder'>
+            { this.props.item.photo === 'Not Available' ? <img src='https://unlimitedpassion.co.uk/wp-content/uploads/2016/06/placeholder4.png' alt='placeholder' /> : <img src={this.renderPhoto()} alt={this.props.item.place}/> }
+          </div>
+
+          <div className='item-header-container'>
+            <div className='item-header-conts'>
+              <h3 className="capitalize">{this.props.item.place}</h3>
+              <Icon link
+                onClick={this.handleClickDelete}
+                className='item-delete-btn'
+                name='x'
+                size='small'
+              />
+            </div>
+            <div className='item-conts-container'>
+              <p>{this.props.item.address}</p>
+              <p>Rating: {this.props.item.rating} / 5</p>
+              { this.props.item.open_now ? <p className='open'> Open </p>: <p className='closed'>Closed</p> }
+            </div>
+          </div>
+
       </div>
     )
   }

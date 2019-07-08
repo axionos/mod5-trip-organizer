@@ -1,5 +1,6 @@
 .capitalize {
   text-transform: capitalize;
+  margin-bottom: 5px;
 }
 
 .page-container {
@@ -97,12 +98,57 @@
   float: left;
 }
 
+.itinerary-wrapper {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}
+
 .photo-holder {
-  max-width: 150px;
+  width: 150px;
   height: 100px;
+  /* margin: 10px 20px 10px 10px; */
+  overflow: hidden
 }
 
 .photo-holder img {
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
 }
+
+.item-header-container {
+  width: 280px;
+  padding: 10px 0 10px 20px;
+}
+
+.item-conts-container p {
+  margin-bottom: 3px;
+}
+
+.item-header-conts {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+i.icon:hover {
+  color: blue;
+}
+
+.capitalize span {
+  text-align: right;
+  width: 100%;
+}
+
+.open {color: green;}
+
+.closed {color: red;}
+
+
+/* .item-delete-btn {
+  text-align: right;
+} */
