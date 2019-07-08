@@ -284,19 +284,20 @@ class ItineraryList extends React.Component {
             </Grid.Column>
           </Grid>
           <Grid stackable>
-            <Grid.Column width={3}>
+            <Grid.Column width={2}>
               <Menu fluid vertical tabular>
                 { this.genDays() }
               </Menu>
             </Grid.Column>
-            <Grid.Column stretched width={13}>
+            <Grid.Column stretched width={14}>
               <Grid stackable>
                 <Grid.Column floated='left' width={8}>
                     <MapContainer items={this.props.items}/>
                 </Grid.Column>
                 <Grid.Column floated='right' width={8}>
                   <Segment>
-                    { this.genItems() }
+                    { this.props.items.length === 0 ? <p className='no-plan'>There's no plan for this day, yet. Please add one!</p> : this.genItems() }
+                    { /*this.genItems() */ null}
                   </Segment>
                 </Grid.Column>
               </Grid>
