@@ -1,24 +1,25 @@
 import React from 'react';
 import Item from '../components/Item';
-import Map from '../components/Map';
+import MapContainer from '../components/map/MapContainer';
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, Redirect, withRouter } from 'react-router-dom'
 import { getDays, getItems, addItem } from '../actions/index.js'
-
 import { Container, Grid, Menu, Segment, Icon, Modal, Button, Select, Form } from 'semantic-ui-react'
-
-
-
 
 class ItineraryList extends React.Component {
   state = {
     activeItem: "1",
-    items: [],
     place: '',
-    memo: '',
-    dayId: ''
+    latitude:'',
+    longitude: '',
+    submitted: false,
+    dropdownId: "1",
+    name:'',
+    openNow: '',
+    rating:'',
+    photoRef:'',
+    address: ''
   }
-
 
   // SETTING INITIAL STATE
   componentDidMount(){
@@ -33,11 +34,92 @@ class ItineraryList extends React.Component {
       console.log('returning data', data)
       this.props.getDays(data.days)
       this.props.getItems(data.items)
-      this.setState({
-        items: data.items[0]
-      })
     })
   } // END SETTING
+
+
+  // FIND THE PLACE INFO FROM API WHEN FORM SUBMITTED
+  handleSubmitAddPlan = event => {
+    event.preventDefault()
+    const ***REMOVED*** = 'AIzaSyBaGD-h-zdNd5SLcDto3jevpeaHXCNRpz4'
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    const place = this.state.place
+    fetch(`${proxyurl}https://maps.googleapis.com/maps/api/place/findplacefromtext/json?***REMOVED***=${***REMOVED***}&input=${place}&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry`)
+    .then(res => res.json())
+    .then(data => {
+      // debugger
+      if(data.candidates.length === 0) {
+        return alert('Oops! Please try a different place!')
+      } else {
+
+        if (data.candidates[0].opening_hours) {
+          this.setState({
+            openNow: data.candidates[0].opening_hours.open_now,
+          })
+        } else {
+          this.setState({
+            openNow: true
+          })
+        }
+
+        if (data.candidates[0].rating) {
+          this.setState({
+            rating: data.candidates[0].rating
+          })
+        } else {
+          this.setState({
+            rating: 'Not Available'
+          })
+        }
+
+        if (data.candidates[0].photos) {
+          this.setState({
+            photoRef: data.candidates[0].photos[0].photo_reference
+          })
+        } else {
+          this.setState({photoRef: 'Not Available'})
+        }
+
+        this.setState({
+          name: data.candidates[0].name,
+          latitude: data.candidates[0].geometry.location.lat,
+          longitude: data.candidates[0].geometry.location.lng,
+          address: data.candidates[0].formatted_address,
+        }, () => this.postTheItem()
+      )
+      }
+    }) // end then
+  } // END FINDING THE PLACE
+
+  // POST ITEM IN THE BACKEND
+  postTheItem = () => {
+    fetch('http://localhost:3000/new_item', {
+      method: "POST",
+      headers: {
+        'Authorization': localStorage.getItem("token"),
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        item: {
+          place: this.state.name,
+          address: this.state.address,
+          latitude: this.state.latitude,
+          longitude: this.state.longitude,
+          open_now: this.state.openNow,
+          rating: this.state.rating,
+          photo: this.state.photoRef,
+          day_id: this.state.dropdownId
+        }
+      })
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      // debugger
+      this.props.addItem(data)
+      this.updateDayToDisplay()
+    })
+  } // END POSTING
 
   // GENERATE DAYS
   genDays = () => {
@@ -47,7 +129,7 @@ class ItineraryList extends React.Component {
         <Menu.Item
           name={day.day}
           active={activeItem === day.day}
-          onClick={this.handleItemClick}
+          onClick={this.handleDayClick}
           id={day.id}
           ***REMOVED***={day.id}
           day={day}
@@ -60,7 +142,7 @@ class ItineraryList extends React.Component {
 
   // GENERATE ITEMS
   genItems = () => {
-    return this.state.items.map(item => {
+    return this.props.items.map(item => {
       return  <div className="item-container" ***REMOVED***={item.id}>
                 <Item ***REMOVED***={item.id} item={item} />
               </div>
@@ -68,8 +150,10 @@ class ItineraryList extends React.Component {
   } // END GENERATING ITEMS
 
   // FETCH THE ITEM INFO ON CLICK
-  handleItemClick = (e, { name }) => {
-    console.log(e.target)
+  handleDayClick = (e, { name }) => {
+    // don't need update day because i'm using 'dropdownId' as day_id
+    // 'dropdownId' is set from the 'add form' dropdown
+
     const dayId = e.target.id
     fetch(`http://localhost:3000/items/${dayId}`, {
       headers: {
@@ -77,75 +161,65 @@ class ItineraryList extends React.Component {
       }
     })
     .then(res => res.json())
-    .then(data =>
-      {
-      // console.log('getting this data', data)
+    .then(data => {
+      this.props.getItems(data)
       this.setState({
-        // dayId: this.state.items[0].day_id,
         activeItem: name,
-        items: data
-      }
-    )
+      })
     })
   } // END FETCHING
 
-  // UPDATE DAY
+  // SHOW THE UPDATED DAY TAB AFTER NEW ITEM IS ADDED
+  updateDayToDisplay = (e) => {
+    const dayId = this.state.dropdownId
+    fetch(`http://localhost:3000/items/${dayId}`, {
+      headers: {
+        'Authorization': localStorage.getItem("token")
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      this.props.getItems(data)
+      this.setState({
+        activeItem: this.state.value,
+        submitted: true
+      })
+    })
+  } // END SHOWING
 
+  // UPDATE VALUE AND DROPDOWN ID
+  handleChangeDropdown = (e, {value}) => {
+    this.setState({ value })
+    this.setState({
+      dropdownId: e.target.id
+    })
+    console.log(e.target)
+  } // END UPDATING
 
-  handleChangeDropdown = (e, { value }) => this.setState({ value })
-
-  // UPDATE STATE FROM THE FORM INPUT
+  // UPDATE STATE FROM THE FORM PLACE INPUT
   handleChangeInput = event => {
     this.setState({
       [event.target.name]: event.target.value
     })
   } // END UPDATING
 
-  handleDayIdChange = () => {
-    this.setState({
-      dayId: this.props.items[0].day_id
-    })
-  }
-
-  handleSubmitAddPlan = event => {
-    event.preventDefault()
-    fetch('http://localhost:3000/new_item', {
-      method: "POST",
-      headers: {
-        'Authorization': localStorage.getItem("token"),
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-          item: {
-            place: this.state.place,
-            memo: this.state.memo,
-            day_id: this.state.value
-          }
-        })
-    })
-    .then(resp => resp.json())
-    .then(data => {
-      console.log('added this plan:', data)
-      this.props.addItem(data)
-    })
-    //   alert("New Trip is Successfully Added!"))
-    // window.location.replace(`http://localhost:3001/itinerary`)
-  }
 
   render(){
     console.log('Itinerary List State', this.state)
     console.log('Itinerary List Props', this.props)
-    const { value } = this.state
-    // const options = [
-    //   { ***REMOVED***: 1, text: 'Day 1', value: this.props.days.id },
-    //   { ***REMOVED***: 2, text: 'Day 2', value: 2 },
-    //   { ***REMOVED***: 3, text: 'Day 3', value: 3 },
-    // ]
 
+    // WHEN THE FORM IS SUBMITTED, REDIRECT AND RESET THE STATE
+    if (this.state.submitted) {
+      this.setState({
+        submitted: false
+      })
+      return <Redirect to='/itinerary' />
+    }
+    // END RESETTING THE STATE
+
+    const { value } = this.state
     const options = this.props.days.map(day => {
-      // debugger
-      return  {***REMOVED***: day.day, text: day.day, value: day.id}
+      return  {***REMOVED***: day.id, id: day.id, text: day.day, value: day.day}
     })
 
     return(
@@ -153,7 +227,7 @@ class ItineraryList extends React.Component {
         <div className='itinerary-header'>
           <Container className='flex-container'>
               <div>
-                <h2>{this.props.theTrip.title}</h2>
+                <h2 className="capitalize">{this.props.theTrip.title}</h2>
               </div>
               <div className='itinerary-h-right'>
                 <p>{this.props.theTrip.startDate} ~ {this.props.theTrip.endDate}</p>
@@ -162,72 +236,70 @@ class ItineraryList extends React.Component {
           </Container>
         </div>
         <Container className='itinerary page-container'>
-        <Grid>
-          <Grid.Column floated='left' width={5}>
-            <Link to='/'>
-              <Icon name='arrow left' size='small'/>
-              Back
-            </Link>
-          </Grid.Column>
-          <Grid.Column floated='right' width={5}>
-            {/* ADD A PLAN */}
-            <Modal
-            closeIcon
-            size="tiny"
-
-            trigger={<Button positive onClick={this.handleDayIdChange}><Icon name='plus' size='small' />Add</Button>}>
-              <Modal.Header>Add a Plan</Modal.Header>
-              <Modal.Content>
-                <Modal.Description>
-                  <Form onSubmit={this.handleSubmitAddPlan}>
-
-                    <Form.Field control={Select} label='Day' options={options} placeholder='Select a Day' onChange={this.handleChangeDropdown} />
-
-                    <Form.Field>
-                      <label>Destination</label>
-                      <input
-                        type="text"
-                        name="place"
-                        value={this.state.title}
-                        placeholder="Enter Your Itinerary"
-                        onChange={this.handleChangeInput}/>
-                    </Form.Field>
-                    <Form.Field>
-                      <label>Memo</label>
-                      <Form.TextArea
-                        name='memo'
-                        onChange={this.handleChangeInput}
-                        placeholder='Memo about this Itinerary' />
-                    </Form.Field>
-                    <div className='form-btn-container'>
-                      <Button
-                      type='submit'
-                      positive icon='checkmark'
-                      labelPosition='right'
-                      content='Submit'>
-                      </Button>
-                    </div>
-                  </Form>
-                </Modal.Description>
-              </Modal.Content>
-            </Modal>
-            {/* ENDING ADD A PLAN */}
-
-          </Grid.Column>
-        </Grid>
           <Grid>
+            <Grid.Column floated='left' width={5}>
+              <Link to='/'>
+                <Icon name='arrow left' size='small'/>
+                Back
+              </Link>
+            </Grid.Column>
+            <Grid.Column floated='right' width={5}>
+              {/* ADD A PLAN */}
+              <Modal
+              closeIcon
+              size="tiny"
+
+              trigger={<Button positive ><Icon name='plus' size='small' />Add</Button>}>
+                <Modal.Header>Add a Plan</Modal.Header>
+                <Modal.Content>
+                  <Modal.Description>
+                    <Form onSubmit={this.handleSubmitAddPlan}>
+
+                      <Form.Field control={Select} label='Day' options={options} placeholder='Select a Day' onChange={this.handleChangeDropdown} />
+
+                      <Form.Field>
+                        <label>Destination</label>
+                        <input
+                          type="text"
+                          name="place"
+                          value={this.state.title}
+                          placeholder="Enter Your Itinerary"
+                          onChange={this.handleChangeInput}/>
+                      </Form.Field>
+
+                      <div className='form-btn-container'>
+                        <Button
+                        type='submit'
+                        positive icon='checkmark'
+                        labelPosition='right'
+                        content='Submit'>
+                        </Button>
+                      </div>
+                    </Form>
+                  </Modal.Description>
+                </Modal.Content>
+              </Modal>
+              {/* ENDING ADD A PLAN */}
+
+            </Grid.Column>
+          </Grid>
+          <Grid stackable>
             <Grid.Column width={3}>
               <Menu fluid vertical tabular>
                 { this.genDays() }
               </Menu>
             </Grid.Column>
-
             <Grid.Column stretched width={13}>
-              <Segment>
-                <Map />
-                { this.genItems() }
-
-              </Segment>
+              <Grid stackable>
+                <Grid.Column floated='left' width={8}>
+                    <MapContainer items={this.props.items}/>
+                </Grid.Column>
+                <Grid.Column floated='right' width={8}>
+                  <Segment>
+                    { this.genItems() }
+                  </Segment>
+                </Grid.Column>
+              </Grid>
             </Grid.Column>
           </Grid>
         </Container>
@@ -255,10 +327,11 @@ const mapStateToProps = (state) => {
     theTrip: state.theTrip[0],
     days: state.days,
     items: state.items
+    // theDay: state.theDay
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ItineraryList)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ItineraryList))
 
 // // CALCULATE HOW MANY DAYS THERE ARE IN BETWEEN TWO DATES
 // const startDate = Moment(this.props.theTrip.startDate, "YYYY-MM-DD")

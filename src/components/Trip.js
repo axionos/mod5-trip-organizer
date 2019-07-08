@@ -123,9 +123,9 @@ class Trip extends React.Component {
               to='/itinerary'
               onClick={this.handleClickTripDiv}
             >
-              <h3 className="trip-title">{this.props.trip.title}</h3>
+              <h3 className="trip-title capitalize">{this.props.trip.title}</h3>
               <p className="trip-period">{this.props.trip.startDate} ~ {this.props.trip.endDate}</p>
-              <p className="trip-destination">{this.props.trip.destination}</p>
+              <p className="trip-destination capitalize">{this.props.trip.destination}</p>
             </Link>
           <div className="btn-container ">
 
