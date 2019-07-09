@@ -6,7 +6,7 @@ IRISES 007849
 EVENING 262228 */
 
 .ui.inverted.top.fixed.menu {
-  background-color: #262228;
+  background-color: #0375B4;
 }
 
 
@@ -14,7 +14,7 @@ EVENING 262228 */
   text-transform: capitalize;
   margin-bottom: 5px;
   color: #fff;
-  font-size: 26px;
+  font-size: 30px;
 }
 
 .page-container {
@@ -48,8 +48,23 @@ EVENING 262228 */
   border: 0 none;
 } */
 
-.my-trip {
-  font-size: 30px;
+.my-trip-wrapper{
+  position: relative;
+  padding: 0 5px
+}
+
+.my-trip-bg {
+  /* border-bottom: 5px solid #FFCE00; */
+  width: 100%;
+  height: 25px;
+  background-color: #FFCE00;
+  position: absolute;
+  bottom: 0;
+}
+.my-trips {
+  font-size: 38px;
+  position: relative;
+  z-index: 10;
 }
 
 .trip-list {
@@ -90,8 +105,16 @@ EVENING 262228 */
   padding: 5px 0;
 }
 
+.trip-destination {
+  text-transform: capitalize;
+}
+
 .btn-container {
   /* padding: 20px 0 5px 0; */
+}
+
+.ui.tiny.button.trip-del-btn {
+  background-color: #d8d8d8;
 }
 
 /*/// TRIP FORM ///*/
@@ -115,8 +138,8 @@ EVENING 262228 */
 .itinerary-header-wrapper {
   background-color: pink;
   top: 44px;
-  padding: 50px 0;
-  background: url('https://images.pexels.com/photos/1961289/pexels-photo-1961289.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260') no-repeat center;
+  padding: 60px 0;
+  background: url('https://images.pexels.com/photos/8394/flight-sky-clouds-fly.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260') no-repeat center;
   background-size: cover;
   position: relative;
 }
@@ -127,9 +150,19 @@ EVENING 262228 */
   position: absolute;
   left: 0;
   top: 0;
-  background: rgba(0,0,0,.5);
+  background: rgba(0,0,0,0.15);
+  /* background: rgba(299,299,299,.1); */
   z-index: 0;
 }
+
+.flex-container {
+  padding-bottom: 30px;
+}
+
+.flex-container h1 {
+  margin: 0 ;
+}
+
 .ui.container.flex-container{
   display: -webkit-flex;
   display: -ms-flex;
@@ -141,8 +174,9 @@ EVENING 262228 */
 
 .ui.container.flex-container p {
   color: #fff;
-  font-size: 16px;
+  font-size: 17px;
 }
+
 .right.floated.five.wide.column, .itinerary-h-right {
   text-align: right;
 }
