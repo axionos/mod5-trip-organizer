@@ -169,7 +169,7 @@ class Trip extends React.Component {
             <p className="trip-period">{this.props.trip.startDate} ~ {this.props.trip.endDate}</p>
           </Card.Meta>
           <Card.Description>
-            <p className="trip-destination capitalize">{this.props.trip.destination}</p>
+            <p className="trip-destination">{this.props.trip.destination}</p>
           </Card.Description>
         </Card.Content>
       </Link>
@@ -180,9 +180,8 @@ class Trip extends React.Component {
               size="tiny"
               trigger={
                 <Button
-                  class='trip-edit-btn'
+                  className='trip-edit-btn'
                   size='tiny'
-                  className=''
                   id={this.props.trip.id}
                   onClick={this.props.handleClickEditBtn}
                 >
