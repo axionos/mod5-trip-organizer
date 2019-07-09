@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { getTheTrip, deleteTheTrip } from '../actions'
 import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { Icon, Button, Modal, Form } from 'semantic-ui-react'
+import { Icon, Button, Modal, Form, Card, Grid } from 'semantic-ui-react'
 import Select from 'react-select'
 import { countryOptions } from '../data';
 import DatePicker from "react-datepicker";
@@ -121,17 +121,24 @@ class Trip extends React.Component {
   getPhoto = () => {
     console.log("get photo firing")
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    const ***REMOVED*** = ***REMOVED***
+    const ***REMOVED*** = ''
+    // const ***REMOVED*** = ***REMOVED***
     let place = this.state.destination
 
     fetch(`${proxyurl}https://maps.googleapis.com/maps/api/place/findplacefromtext/json?***REMOVED***=${***REMOVED***}&input=${place}&inputtype=textquery&fields=photos`)
     .then(res => res.json())
     .then(data => {
-      const photo = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${data.candidates[0].photos[0].photo_reference}&***REMOVED***=${***REMOVED***}`
-
-      this.setState({
-        photoSrc: photo
-      })
+      if (***REMOVED***.length === 0) {
+        const photo = <img src='https://wolper.com.au/wp-content/uploads/2017/10/image-placeholder.jpg' alt='placeholder' />
+        this.setState({
+          photoSrc: photo
+        })
+      } else {
+        const photo = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${data.candidates[0].photos[0].photo_reference}&***REMOVED***=${***REMOVED***}`
+        this.setState({
+          photoSrc: photo
+        })
+      }
     })
   } // END RENDERING PHOTO
 
@@ -142,102 +149,106 @@ class Trip extends React.Component {
     const {isSearchable} = this.state;
 
     return(
-      <div className="trip-container">
-          <div className="trip-conts">
+      <Grid.Column>
+      <Card className="trip-container">
+      <Link
+        to='/itinerary'
+        onClick={this.handleClickTripDiv}
+      >
 
-            <Link
-              to='/itinerary'
-              onClick={this.handleClickTripDiv}
-            >
-        {/*????*/}
+        <div className='trip-img-holder'>
+          <img src={this.state.photoSrc} alt={this.props.destination}>
+          </img>
+        </div>
 
-            <div className='trip-img-holder'>
-              <img src={this.state.photoSrc} alt={this.props.destination}>
-              </img>
-            </div>
+        <Card.Content className="trip-conts">
+          <Card.Header>
+            <h3 className="trip-title capitalize">{this.props.trip.title}</h3>
+          </Card.Header>
+          <Card.Meta>
+            <p className="trip-period">{this.props.trip.startDate} ~ {this.props.trip.endDate}</p>
+          </Card.Meta>
+          <Card.Description>
+            <p className="trip-destination capitalize">{this.props.trip.destination}</p>
+          </Card.Description>
+        </Card.Content>
+      </Link>
+        <Card.Content extra>
+          <div className='ui two buttons'>
+            <Modal
+              closeIcon
+              size="tiny"
+              trigger={
+                <Button primary
+                  size='tiny'
+                  className=''
+                  id={this.props.trip.id}
+                  onClick={this.props.handleClickEditBtn}
+                >
+                  <Icon name='edit' size='small' />Edit
+                </Button>
+              }>
+              <Modal.Header>Edit a Trip</Modal.Header>
+              <Modal.Content>
+                <Modal.Description>
 
-        {/*????*/}
+                  <Form
+                    onSubmit={this.handleSubmitEditTrip}
+                    className=''>
+                    <Form.Field className=''>
+                      <label>Title</label>
+                      <input type="text" name="title" defaultValue={this.props.trip.title}
+                      placeholder="Enter a Trip Title" onChange={this.handleChangeTitle}
+                      className=''/>
+                    </Form.Field>
+                    <Form.Field className="start-date ">
+                      <label>Start Date</label>
+                      <DatePicker className='' selected={this.state.startDate}
+                      onChange={this.handleChangeStartDate} />
+                    </Form.Field>
+                    <Form.Field className="end-date ">
+                      <label>End Date</label>
+                      <DatePicker className='' selected={this.state.endDate}
+                      onChange={this.handleChangeEndDate} />
+                    </Form.Field>
+                    <Form.Field>
+                      <label>Destination</label>
 
-              <h3 className="trip-title capitalize">{this.props.trip.title}</h3>
-              <p className="trip-period">{this.props.trip.startDate} ~ {this.props.trip.endDate}</p>
-              <p className="trip-destination capitalize">{this.props.trip.destination}</p>
-            </Link>
-          <div className="btn-container ">
-
-          <Modal
-            closeIcon
-            size="tiny"
-            trigger={
-              <Button
-                primary size='tiny'
-                className=''
-                id={this.props.trip.id}
-                onClick={this.props.handleClickEditBtn}
-              >
-                <Icon name='edit' size='small' />Edit
-              </Button>
-            }>
-            <Modal.Header>Edit a Trip</Modal.Header>
-            <Modal.Content>
-              <Modal.Description>
-
-                <Form
-                  onSubmit={this.handleSubmitEditTrip}
-                  className=''>
-                  <Form.Field className=''>
-                    <label>Title</label>
-                    <input type="text" name="title" defaultValue={this.props.trip.title}
-                    placeholder="Enter a Trip Title" onChange={this.handleChangeTitle}
-                    className=''/>
-                  </Form.Field>
-                  <Form.Field className="start-date ">
-                    <label>Start Date</label>
-                    <DatePicker className='' selected={this.state.startDate}
-                    onChange={this.handleChangeStartDate} />
-                  </Form.Field>
-                  <Form.Field className="end-date ">
-                    <label>End Date</label>
-                    <DatePicker className='' selected={this.state.endDate}
-                    onChange={this.handleChangeEndDate} />
-                  </Form.Field>
-                  <Form.Field>
-                    <label>Destination</label>
-
-                    <Select
-                      className="basic-single "
-                      classNamePrefix="select"
-                      isSearchable={isSearchable}
-                      name="color"
-                      options={countryOptions}
-                      onChange={this.handleDestinationSelector}
-                      defaultValue={this.converter(this.state.destination)}
-                    />
-                  </Form.Field>
-                  <div className='form-btn-container'>
-                    <Button
-                      type='submit'
-                      positive icon='checkmark'
-                      labelPosition='right'
-                      content='Submit'
-                    >
-                    </Button>
-                  </div>
-                </Form>
-              </Modal.Description>
-            </Modal.Content>
-          </Modal>
-
+                      <Select
+                        className="basic-single "
+                        classNamePrefix="select"
+                        isSearchable={isSearchable}
+                        name="color"
+                        options={countryOptions}
+                        onChange={this.handleDestinationSelector}
+                        defaultValue={this.converter(this.state.destination)}
+                      />
+                    </Form.Field>
+                    <div className='form-btn-container'>
+                      <Button
+                        type='submit'
+                        positive icon='checkmark'
+                        labelPosition='right'
+                        content='Submit'
+                      >
+                      </Button>
+                    </div>
+                  </Form>
+                </Modal.Description>
+              </Modal.Content>
+            </Modal>
             <Button negative
               onClick={this.handleClickDelete}
-              className=""
               size='tiny'
             >
               <Icon name='trash alternate outline' size='small' />
               Delete
             </Button>
-            </div>
           </div>
-      </div>
+        </Card.Content>
+
+        </Card>
+        </Grid.Column>
     )
   }
 }
