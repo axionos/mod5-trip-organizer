@@ -115,12 +115,21 @@ class TripList extends React.Component {
       <React.Fragment>
         <Container className="page-container">
           <div className="flex-container">
-            { this.props.trips.length > 1 ? <h1>My Trips</h1> : <h1 className="my-trip">My Trip</h1> }
+            { this.props.trips.length > 1 ? (
+              <div className='my-trip-wrapper'>
+                <div className='my-trip-bg'></div>
+                <h1 className='my-trips'>My Trips</h1>
+              </div>) : (
+              <div className='my-trip-wrapper'>
+                <div className='my-trip-bg'></div>
+                <h1 className="my-trips">My Trip</h1>
+              </div>)
+            }
 
             <Modal
             closeIcon
             size="tiny"
-            trigger={<Button basic color='green'><Icon name='plus' size='small' />Add a Trip</Button>}>
+            trigger={<Button color='yellow'><Icon name='plus' size='small' />Add a Trip</Button>}>
             <Modal.Header>Add a Trip</Modal.Header>
             <Modal.Content>
               <Modal.Description>
