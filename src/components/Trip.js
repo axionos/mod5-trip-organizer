@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { getTheTrip, deleteTheTrip } from '../actions'
 import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { Icon, Button, Modal, Form, Card, Grid } from 'semantic-ui-react'
+import { Icon, Modal, Form, Card, Grid, Button } from 'semantic-ui-react'
 import Select from 'react-select'
 import { countryOptions } from '../data';
 import DatePicker from "react-datepicker";
@@ -143,7 +143,7 @@ class Trip extends React.Component {
   } // END RENDERING PHOTO
 
   render(){
-    // console.log('Trip Props', this.props)
+    console.log('Trip Props', this.props)
     // console.log('Trip State', this.state)
 
     const {isSearchable} = this.state;
@@ -179,13 +179,15 @@ class Trip extends React.Component {
               closeIcon
               size="tiny"
               trigger={
-                <Button primary
+                <Button
+                  class='trip-edit-btn'
                   size='tiny'
                   className=''
                   id={this.props.trip.id}
                   onClick={this.props.handleClickEditBtn}
                 >
-                  <Icon name='edit' size='small' />Edit
+                  <Icon name='edit' size='small'id={this.props.trip.id}
+                  onClick={this.props.handleClickEditBtn}/>
                 </Button>
               }>
               <Modal.Header>Edit a Trip</Modal.Header>
@@ -193,8 +195,7 @@ class Trip extends React.Component {
                 <Modal.Description>
 
                   <Form
-                    onSubmit={this.handleSubmitEditTrip}
-                    className=''>
+                    onSubmit={this.handleSubmitEditTrip}>
                     <Form.Field className=''>
                       <label>Title</label>
                       <input type="text" name="title" defaultValue={this.props.trip.title}
@@ -237,12 +238,13 @@ class Trip extends React.Component {
                 </Modal.Description>
               </Modal.Content>
             </Modal>
-            <Button negative
+            <Button
+              className='trip-del-btn'
               onClick={this.handleClickDelete}
               size='tiny'
             >
-              <Icon name='trash alternate outline' size='small' />
-              Delete
+              <Icon name='trash alternate outline' size='small'/>
+
             </Button>
           </div>
         </Card.Content>
