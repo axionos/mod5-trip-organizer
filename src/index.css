@@ -18,14 +18,41 @@ EVENING 262228 */
 }
 
 
-/*/// LOGIN ///*/
+/*/// LOGIN and SIGNUP ///*/
 .login-wrapper {
   background: url('http://www.travelspecial.us/wp-content/uploads/2018/07/Explore-the-Authentic-Culture-of-the-Sea-Island.jpg') no-repeat center;
   background-size: cover;
 }
 
+.signup-wrapper {
+  background: url('https://saywhat.news/wp-content/uploads/2018/08/img2-1.jpg') no-repeat center;
+  background-size: cover;
+  position: relative;
+}
+
+.cover {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  background: rgba(255,255,255,.2);
+}
+
+.ui.center.aligned.middle.aligned.grid {
+  position: relative;
+  z-index: 10;
+}
+
 .ui.large.error.form.attached.fluid.segment {
-  padding: 30px 20px
+  padding: 30px 20px;
+  background-color: (255,255,255,0.5);
+}
+
+.ui.large.form.attached.fluid.segment {
+  padding: 30px 20px;
+  background-color: (199,199,199,0.5);
 }
 
 .paper.plane.icon.login-plane {

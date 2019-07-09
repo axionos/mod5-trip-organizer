@@ -49,13 +49,14 @@ class SignupPage extends React.Component {
   render(){
     return(
 
-      <div>
-        <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+      <div className='signup-wrapper'>
+        <div className='cover' />
+        <Grid textAlign='center' class='signup-conts' style={{ height: '100vh' }} verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as='h2' color='teal' textAlign='center'>
-              <Image src='/logo.png' / > Sign Up
-            </Header>
             <Form size='large' onSubmit={this.handleSignUp} className='attached fluid segment'>
+            <Header as='h2' className='login-header' textAlign='center'>
+              <Icon name='paper plane' className='login-plane'/> Sign Up
+            </Header>
               {
                 this.state.error ? <Message negative>
                   <p>Username and password cannot be left blank</p>
@@ -79,7 +80,7 @@ class SignupPage extends React.Component {
                   onChange={this.handleChange}
                 />
 
-                <Button color='teal' fluid size='large'>
+                <Button className='login-btn' fluid size='large'>
                   Sign Up
                 </Button>
 
