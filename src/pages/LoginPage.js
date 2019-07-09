@@ -69,7 +69,9 @@ class LoginPage extends React.Component {
           <Grid.Column style={{ maxWidth: 450 }}>
             <Form error size='large' onSubmit={this.handleLogin} className='attached fluid segment'>
               <Header as='h2' textAlign='center' className='login-header'>
-                <Icon name='paper plane' className='login-plane'/>
+
+                  <Icon name='paper plane' className='login-plane'/>
+
                   Login to your account
               </Header>
               { this.state.error ? <Message
