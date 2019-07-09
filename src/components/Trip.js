@@ -21,8 +21,13 @@ class Trip extends React.Component {
       title: this.props.trip.title,
       startDate: startDate._d,
       endDate: endDate._d,
-      destination: this.props.trip.destination
+      destination: this.props.trip.destination,
+      photoSrc: ''
     };
+  }
+
+  componentDidMount() {
+    this.getPhoto()
   }
 
   // CONVERTS COUNTRY NAME STRING TO AN OBJECT
@@ -112,18 +117,47 @@ class Trip extends React.Component {
     this.props.getTheTrip(this.props.trip)
   } // END SENDING
 
+  // GET PHOTO AND RENDER
+  getPhoto = () => {
+    console.log("get photo firing")
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    const ***REMOVED*** = ***REMOVED***
+    let place = this.state.destination
+
+    fetch(`${proxyurl}https://maps.googleapis.com/maps/api/place/findplacefromtext/json?***REMOVED***=${***REMOVED***}&input=${place}&inputtype=textquery&fields=photos`)
+    .then(res => res.json())
+    .then(data => {
+      const photo = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${data.candidates[0].photos[0].photo_reference}&***REMOVED***=${***REMOVED***}`
+
+      this.setState({
+        photoSrc: photo
+      })
+    })
+  } // END RENDERING PHOTO
 
   render(){
     // console.log('Trip Props', this.props)
     // console.log('Trip State', this.state)
+
     const {isSearchable} = this.state;
+
     return(
       <div className="trip-container">
           <div className="trip-conts">
+
             <Link
               to='/itinerary'
               onClick={this.handleClickTripDiv}
             >
+        {/*????*/}
+
+            <div className='trip-img-holder'>
+              <img src={this.state.photoSrc} alt={this.props.destination}>
+              </img>
+            </div>
+
+        {/*????*/}
+
               <h3 className="trip-title capitalize">{this.props.trip.title}</h3>
               <p className="trip-period">{this.props.trip.startDate} ~ {this.props.trip.endDate}</p>
               <p className="trip-destination capitalize">{this.props.trip.destination}</p>
