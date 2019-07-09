@@ -224,16 +224,18 @@ class ItineraryList extends React.Component {
 
     return(
       <React.Fragment>
-        <div className='itinerary-header'>
+        <div className='itinerary-header-wrapper'>
+
           <Container className='flex-container'>
               <div>
                 <h2 className="capitalize">{this.props.theTrip.title}</h2>
               </div>
               <div className='itinerary-h-right'>
-                <p>{this.props.theTrip.startDate} ~ {this.props.theTrip.endDate}</p>
+                <p className='period'>{this.props.theTrip.startDate} ~ {this.props.theTrip.endDate}</p>
                 <p>{this.props.theTrip.destination}</p>
               </div>
           </Container>
+          <div className='black'></div>
         </div>
         <Container className='itinerary page-container'>
           <Grid>
@@ -249,7 +251,7 @@ class ItineraryList extends React.Component {
               closeIcon
               size="tiny"
 
-              trigger={<Button positive ><Icon name='plus' size='small' />Add</Button>}>
+              trigger={<Button positive ><Icon name='plus' size='small' />Add a Plan</Button>}>
                 <Modal.Header>Add a Plan</Modal.Header>
                 <Modal.Content>
                   <Modal.Description>
@@ -292,7 +294,9 @@ class ItineraryList extends React.Component {
             <Grid.Column stretched width={14}>
               <Grid stackable>
                 <Grid.Column floated='left' width={8}>
+
                     <MapContainer items={this.props.items}/>
+
                 </Grid.Column>
                 <Grid.Column floated='right' width={8}>
                   <Segment>

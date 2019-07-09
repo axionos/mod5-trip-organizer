@@ -2,7 +2,7 @@ import React from 'react';
 import Trip from '../components/Trip'
 import { connect } from 'react-redux'
 import { getTrip, addTrip } from '../actions'
-import { Container, Icon, Button, Modal, Form, Grid, Segment } from 'semantic-ui-react'
+import { Container, Button, Icon, Modal, Form, Grid } from 'semantic-ui-react'
 // BELOW ARE FOR THE ADD TRIP FORM
 import Select from 'react-select'
 import { countryOptions } from '../data';
@@ -22,7 +22,7 @@ class TripList extends React.Component {
 
   // SEND A GET REQUEST TO THE TRIP PAGE WITH THE TOKEN
   componentDidMount(){
-    console.log("component did mount firing")
+    // console.log("component did mount firing")
     if (!localStorage.getItem("token")) {
       window.location.replace("http://localhost:3001/login")
     }
@@ -109,8 +109,7 @@ class TripList extends React.Component {
   } // END GENERATING
 
   render() {
-    // console.log('Trip List Props', this.props)
-    // console.log('number of trips: ', this.props.trips.length);
+    console.log('Trip List Props', this.props)
     const {isSearchable} = this.state;
     return (
       <React.Fragment>
@@ -121,7 +120,7 @@ class TripList extends React.Component {
             <Modal
             closeIcon
             size="tiny"
-            trigger={<Button positive><Icon name='plus' size='small' />Add a Trip</Button>}>
+            trigger={<Button basic color='green'><Icon name='plus' size='small' />Add a Trip</Button>}>
             <Modal.Header>Add a Trip</Modal.Header>
             <Modal.Content>
               <Modal.Description>
@@ -201,5 +200,5 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, mapDispatchToProps)(TripList)
 
 // <Link to="/add" className="add-trip">
-//   <Button primary><Icon name='plus' size='small' />Add a Trip</Button>
+//   <button primary><Icon name='plus' size='small' />Add a Trip</button>
 // </Link>
