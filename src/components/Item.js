@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Icon, Button, Grid, Container } from 'semantic-ui-react'
+import { Icon } from 'semantic-ui-react'
 import { deleteItem } from '../actions/index.js'
 
 

@@ -32,6 +32,11 @@
   background-color: #eee;
 }
 
+.trip-img-holder {
+  width: 400px;
+  height: 400px;
+}
+
 .trip-conts {
   padding: 20px;
 }
