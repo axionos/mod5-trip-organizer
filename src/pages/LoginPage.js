@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Icon, Message, Segment } from 'semantic-ui-react'
 
 class LoginPage extends React.Component {
   state = {
@@ -63,19 +63,20 @@ class LoginPage extends React.Component {
     // console.log('Login Page Props', this.props)
 
     return(
-      <div>
+      <div className='login-wrapper'>
         <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as='h2' color='teal' textAlign='center'>
-              <Image src='/logo.png' / > Log-in to your account
-            </Header>
             <Form error size='large' onSubmit={this.handleLogin} className='attached fluid segment'>
-
+              <Header as='h2' textAlign='center' className='login-header'>
+                <Icon name='paper plane' className='login-plane'/>
+                  Login to your account
+              </Header>
               { this.state.error ? <Message
-              error
-              header='Something went wrong!'
-              content='Please check your username and password.'
-              /> : null }
+                error
+                header='Something went wrong!'
+                content='Please check your username and password.'
+                /> : null
+              }
 
               <Segment stacked>
                 <Form.Input
@@ -95,7 +96,7 @@ class LoginPage extends React.Component {
                   onChange={this.handleChange}
                 />
 
-                <Button color='teal' fluid size='large'>
+                <Button className='login-btn' fluid size='large'>
                   Login
                 </Button>
               </Segment>
