@@ -227,7 +227,8 @@ class ItineraryList extends React.Component {
         <div className='itinerary-header-wrapper'>
 
           <Container className='flex-container'>
-              <div>
+              <div className='i-header-container'>
+                <div className='i-header-bg' />
                 <h2 className="capitalize">{this.props.theTrip.title}</h2>
               </div>
               <div className='itinerary-h-right'>
@@ -251,7 +252,7 @@ class ItineraryList extends React.Component {
               closeIcon
               size="tiny"
 
-              trigger={<Button positive ><Icon name='plus' size='small' />Add a Plan</Button>}>
+              trigger={<Button positive className='add-plan-btn'><Icon name='plus' size='small' />Add a Plan</Button>}>
                 <Modal.Header>Add a Plan</Modal.Header>
                 <Modal.Content>
                   <Modal.Description>
