@@ -64,6 +64,7 @@ class LoginPage extends React.Component {
 
     return(
       <div className='login-wrapper'>
+        <div className='cover' />
         <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 450 }}>
             <Form error size='large' onSubmit={this.handleLogin} className='attached fluid segment'>
