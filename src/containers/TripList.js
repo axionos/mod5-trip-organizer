@@ -2,7 +2,7 @@ import React from 'react';
 import Trip from '../components/Trip'
 import { connect } from 'react-redux'
 import { getTrip, addTrip } from '../actions'
-import { Container, Icon, Button, Modal, Form } from 'semantic-ui-react'
+import { Container, Icon, Button, Modal, Form, Grid, Segment } from 'semantic-ui-react'
 // BELOW ARE FOR THE ADD TRIP FORM
 import Select from 'react-select'
 import { countryOptions } from '../data';
@@ -170,7 +170,13 @@ class TripList extends React.Component {
           </div>
         </Container>
         <Container>
-          {this.props.trips ? this.genTrip() : null}
+          <Grid stackable columns={4}>
+
+
+              {this.props.trips ? this.genTrip() : null}
+
+
+          </Grid>
         </Container>
       </React.Fragment>
     )
