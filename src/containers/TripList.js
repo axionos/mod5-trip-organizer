@@ -22,6 +22,7 @@ class TripList extends React.Component {
 
   // SEND A GET REQUEST TO THE TRIP PAGE WITH THE TOKEN
   componentDidMount(){
+    console.log("component did mount firing")
     if (!localStorage.getItem("token")) {
       window.location.replace("http://localhost:3001/login")
     }
@@ -97,6 +98,7 @@ class TripList extends React.Component {
 
   // GENERATE TRIPS
   genTrip = () => {
+    console.log("genTrip firing")
     return this.props.trips.map(trip => {
       return <Trip
         ***REMOVED***={trip.id}
