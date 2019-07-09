@@ -38,12 +38,12 @@ class Item extends React.Component {
 
           <div className='item-header-container'>
             <div className='item-header-conts'>
-              <h3 className="capitalize">{this.props.item.place}</h3>
+              <h3 className="item-place">{this.props.item.place}</h3>
               <Icon link
                 onClick={this.handleClickDelete}
                 className='item-delete-btn'
                 name='x'
-                size='small'
+                
               />
             </div>
             <div className='item-conts-container'>
