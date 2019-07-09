@@ -17,7 +17,13 @@ EVENING 262228 */
   background-color: #007fc4;
 }
 
+.paper.plane.icon.nav-plane {
+  margin-right: 30px;
+}
 
+.header.item {
+  font-size: 16px;
+}
 /*/// LOGIN and SIGNUP ///*/
 .login-wrapper {
   background: url('http://www.travelspecial.us/wp-content/uploads/2018/07/Explore-the-Authentic-Culture-of-the-Sea-Island.jpg') no-repeat center;
@@ -186,7 +192,7 @@ EVENING 262228 */
 }
 
 .trip-period {
-  padding: 5px 0;
+  padding: 8px 0;
 }
 
 .trip-destination {
