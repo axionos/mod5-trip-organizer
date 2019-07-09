@@ -33,8 +33,15 @@
 }
 
 .trip-img-holder {
-  width: 400px;
-  height: 400px;
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+}
+
+.trip-img-holder img {
+  width: 100%;
+  height: 100%;
+  /* overflow: hidden; */
 }
 
 .trip-conts {
@@ -46,7 +53,7 @@
 }
 
 .btn-container {
-  padding: 20px 0 5px 0;
+  /* padding: 20px 0 5px 0; */
 }
 
 /*/// TRIP FORM ///*/
