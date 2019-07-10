@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Container, Menu, Icon } from 'semantic-ui-react'
+import { Container, Menu, Icon, Input } from 'semantic-ui-react'
 
 class Navbar extends React.Component {
   // CONDITIONALLY RENDER MY TRIP
@@ -36,7 +36,7 @@ class Navbar extends React.Component {
     // console.log('Navbar props', this.props);
     return(
       <div className="navbar">
-        <Menu fixed='top' inverted>
+        <Menu borderless fixed='top' inverted>
           <Container>
             <Menu.Item as='a' header>
               <Icon name='paper plane' className='nav-plane'/>
@@ -44,6 +44,9 @@ class Navbar extends React.Component {
 
             </Menu.Item>
             <Menu.Menu position='right'>
+              <div className='search-container'>
+                <Input icon={{ name: 'search', circular: true, link: true }} placeholder='Search...' />
+              </div>
               {this.myTrip()}
               {this.signOut()}
             </Menu.Menu>
