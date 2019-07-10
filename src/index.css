@@ -96,17 +96,16 @@ EVENING 262228 */
 
 .capitalize {
   text-transform: capitalize;
-  /* margin-bottom: 5px; */
   color: #000;
   font-size: 40px;
   position: relative;
   z-index: 10;
   font-family: 'Roboto', sans-serif;
-
+  font-style: italic;
 }
 
 .page-container {
-  padding-top: 80px;
+  padding-top: 70px;
   min-height: 100px;
 }
 
@@ -154,7 +153,7 @@ EVENING 262228 */
   position: relative;
   z-index: 10;
   font-family: 'Roboto', sans-serif;
-
+  font-style: italic;
 }
 
 .trip-list {
@@ -178,7 +177,12 @@ EVENING 262228 */
 .trip-img-holder img {
   width: 100%;
   height: 100%;
+  transition: transform .3s;
   /* overflow: hidden; */
+}
+
+.trip-img-holder img:hover {
+  transform: scale(1.2)
 }
 
 .trip-conts {
@@ -188,7 +192,9 @@ EVENING 262228 */
 .trip-title {
   font-size: 22px;
   color: #444;
-  /* padding-bottom: 5px; */
+  text-transform: capitalize;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
 }
 
 .trip-period {
@@ -227,8 +233,8 @@ EVENING 262228 */
 
 .itinerary-header-wrapper {
   background-color: pink;
-  top: 44px;
-  padding: 60px 0;
+  top: 26px;
+  padding: 45px 0;
   background: url('https://images.pexels.com/photos/8394/flight-sky-clouds-fly.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260') no-repeat center;
   background-size: cover;
   position: relative;
@@ -240,7 +246,7 @@ EVENING 262228 */
   position: absolute;
   left: 0;
   top: 0;
-  background: rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.1);
   /* background: rgba(299,299,299,.1); */
   z-index: 0;
 }
@@ -285,7 +291,7 @@ EVENING 262228 */
 }
 
 .page-container.itinerary {
-  padding-top: 80px;
+  padding-top: 55px;
 }
 
 .no-plan  {
