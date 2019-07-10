@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Container, Menu, Icon, Search } from 'semantic-ui-react'
+import { Container, Menu, Icon, Search, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { getTheTrip } from '../actions'
 import _ from 'lodash'
@@ -56,6 +56,9 @@ class Navbar extends React.Component {
     this.props.getTheTrip(theTrips)
   }
 
+
+
+
   render(){
     // console.log('Navbar props', this.props);
     // console.log('Navbar state', this.state);
@@ -78,6 +81,13 @@ class Navbar extends React.Component {
               <div className='theMenu'>
                 {this.myTrip()}
                 {this.signOut()}
+
+                  <Button onClick={this.props.toggleSidebar}>
+                    Show sidebar
+                  </Button>
+
+
+
               </div>
 
             </Menu.Menu>
