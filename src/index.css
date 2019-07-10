@@ -30,6 +30,12 @@ EVENING 262228 */
 .header.item {
   font-size: 16px;
 }
+
+.theMenu {
+  /* display: -webkit-flex;
+  display: -ms-flex;
+  display: flex; */
+}
 /*/// LOGIN and SIGNUP ///*/
 .login-wrapper {
   background: url('http://www.travelspecial.us/wp-content/uploads/2018/07/Explore-the-Authentic-Culture-of-the-Sea-Island.jpg') no-repeat center;
@@ -365,11 +371,21 @@ i.icon:hover {
   text-transform: capitalize;
   margin-bottom: 5px;
 }
-/* .item-place span {
-  text-align: right;
-  width: 100%;
-} */
 
 .open {color: green;}
 
 .closed {color: red;}
+
+/*/// Media Query /// */
+
+@media only screen and (min-width: 600px) {
+  .theMenu {
+    display: flex;
+  }
+}
+
+@media only screen and (min-width: 0px) and ( max-width: 599px) {
+  .theMenu {
+    display: none;
+  }
+}
