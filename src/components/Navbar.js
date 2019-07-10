@@ -87,13 +87,13 @@ class Navbar extends React.Component {
               <div className='theMenu'>
                 {this.myTrip()}
                 {this.signOut()}
-
-                  <Button onClick={this.props.toggleSidebar}>
-                    Show sidebar
-                  </Button>
-
-
-
+              </div>
+              <div className='sidebar-btn-container'>
+                <Icon
+                name='bars'
+                size='large'
+                className='side-bar-btn'
+                onClick={this.props.toggleSidebar} />
               </div>
 
             </Menu.Menu>
