@@ -57,8 +57,8 @@ class Navbar extends React.Component {
   }
 
   render(){
-    console.log('Navbar props', this.props);
-    console.log('Navbar state', this.state);
+    // console.log('Navbar props', this.props);
+    // console.log('Navbar state', this.state);
     return(
       <div className="navbar">
         <Menu borderless fixed='top' inverted>
@@ -70,10 +70,10 @@ class Navbar extends React.Component {
             <Menu.Menu position='right'>
               <div className='search-container'>
                 <Search
-                  icon={{ name: 'search', circular: true, link: true }}
+                  icon={{ name: 'search', circular: true}}
                   placeholder='Search your trip...'
-
-                  onSearchChange={_.debounce(this.handleChangeSearch, 500)} />
+                  onSearchChange={_.debounce(this.handleChangeSearch, 500)}>
+                </Search>
               </div>
               {this.myTrip()}
               {this.signOut()}
