@@ -1,6 +1,6 @@
 import React from "react";
 import { Marker } from "react-google-maps";
-import WatermelonIcon from "../../img/watermelon.png";
+import WatermelonIcon from "../../img/location.png";
 
 export default class DoctorMarker extends React.Component {
 
