@@ -75,8 +75,11 @@ class Navbar extends React.Component {
                   onSearchChange={_.debounce(this.handleChangeSearch, 500)}>
                 </Search>
               </div>
-              {this.myTrip()}
-              {this.signOut()}
+              <div className='theMenu'>
+                {this.myTrip()}
+                {this.signOut()}
+              </div>
+
             </Menu.Menu>
           </Container>
         </Menu>
