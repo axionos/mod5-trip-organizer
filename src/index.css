@@ -16,6 +16,7 @@ body {
   border-radius: 0;
   height: 100%;
 }
+
 /*/// NAVBAR /// */
 /* font-family: 'Roboto', sans-serif; */
 
@@ -24,8 +25,12 @@ STARRY NIGHT 0375B4
 IRISES 007fc4
 EVENING 262228 */
 
-.ui.inverted.top.fixed.menu {
+.ui.borderless.inverted.top.fixed.menu {
   background-color: #007fc4;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 10
 }
 
 .paper.plane.icon.nav-plane {
