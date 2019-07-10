@@ -16,7 +16,8 @@ class TripList extends React.Component {
       title: "",
       startDate: "",
       endDate: "",
-      destination: ""
+      destination: "",
+      searchResult: []
     };
   }
 
@@ -98,7 +99,7 @@ class TripList extends React.Component {
 
   // GENERATE TRIPS
   genTrip = () => {
-    console.log("genTrip firing")
+    // debugger
     return this.props.trips.map(trip => {
       return <Trip
         ***REMOVED***={trip.id}
@@ -107,6 +108,30 @@ class TripList extends React.Component {
       />
     })
   } // END GENERATING
+
+  // GENERATE SEARCH RESULT TRIPS
+  genTrip_search = () => {
+    return this.props.theTrip[0].map(trip => {
+      return <Trip
+        ***REMOVED***={trip.id}
+        trip={trip}
+        handleClickEditBtn={this.handleClickEditBtn}
+      />
+    })
+  } // END GENERATING
+
+  // CONDITIONALLY RENDER THE CONTENTS
+  conditionToRender = () => {
+    if (this.props.trips) {
+      if (this.props.theTrip.length === 0) {
+        return this.genTrip()
+      } else {
+        return this.genTrip_search()
+      }
+    } else {
+      return <p className='pls-add-trip'>Please Add a Trip!</p>
+    }
+  } // END RENDERING
 
   render() {
     console.log('Trip List Props', this.props)
@@ -180,8 +205,11 @@ class TripList extends React.Component {
         <Container>
           <Grid stackable columns={4}>
 
+            { /*this.props.theTrip.length === 0 ? this.genTrip() : this.genTrip_search() */}
 
-              {this.props.trips ? this.genTrip() : null}
+            { /*this.props.trips ? this.genTrip() : <p className='pls-add-trip'>Please Add a Trip!</p>*/ }
+
+            { this.conditionToRender() }
 
 
           </Grid>
@@ -203,7 +231,10 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => {
-  return { trips: state.trips }
+  return {
+    trips: state.trips,
+    theTrip: state.theTrip
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TripList)
