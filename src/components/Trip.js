@@ -121,8 +121,8 @@ class Trip extends React.Component {
   getPhoto = () => {
     console.log("get photo firing")
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    // const ***REMOVED*** = ''
-    ***REMOVED***
+    const ***REMOVED*** = ''
+    // ***REMOVED***
     let place = this.state.destination
 
     fetch(`${proxyurl}https://maps.googleapis.com/maps/api/place/findplacefromtext/json?***REMOVED***=${***REMOVED***}&input=${place}&inputtype=textquery&fields=photos`)
