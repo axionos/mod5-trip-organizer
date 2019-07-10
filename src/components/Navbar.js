@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Container, Menu, Icon, Search, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { getTheTrip } from '../actions'
+import { getTheTrip, deleteTheTrips } from '../actions'
 import _ from 'lodash'
 
 
@@ -10,12 +10,18 @@ class Navbar extends React.Component {
   state = {
     search: ''
   }
+
+  handleClickHome = () => {
+    this.props.deleteTheTrips()
+  }
   // CONDITIONALLY RENDER MY TRIP
   myTrip = () => {
     if (localStorage.getItem('token')){
       // return <NavLink to="/" exact>My Trips</NavLink>
       return <Menu.Item as='a'>
-              <NavLink to="/" exact>My Trips</NavLink>
+              <NavLink to="/" exact
+                onClick={this.handleClickHome}
+              >My Trips</NavLink>
             </Menu.Item>
     } else {
       return
@@ -60,7 +66,7 @@ class Navbar extends React.Component {
 
 
   render(){
-    // console.log('Navbar props', this.props);
+    console.log('Navbar props', this.props);
     // console.log('Navbar state', this.state);
     return(
       <div className="navbar">
@@ -102,6 +108,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getTheTrip: trip => {
       dispatch(getTheTrip(trip))
+    },
+    deleteTheTrips: () => {
+      dispatch(deleteTheTrips())
     }
   }
 }
