@@ -24,7 +24,7 @@ EVENING 262228 */
 .search-container {
   height: 45px;
   margin-top: 6px;
-  margin-right: 20px;  
+  margin-right: 20px;
 }
 
 .header.item {
@@ -199,8 +199,6 @@ EVENING 262228 */
   font-size: 22px;
   color: #444;
   text-transform: capitalize;
-  font-weight: bold;
-  font-family: 'Roboto', sans-serif;
 }
 
 .trip-period {

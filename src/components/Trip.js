@@ -143,7 +143,7 @@ class Trip extends React.Component {
   } // END RENDERING PHOTO
 
   render(){
-    console.log('Trip Props', this.props)
+    // console.log('Trip Props', this.props)
     // console.log('Trip State', this.state)
 
     const {isSearchable} = this.state;
