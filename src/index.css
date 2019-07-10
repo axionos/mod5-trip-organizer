@@ -3,7 +3,18 @@ html, body {
 }
 
 body {
-  margin-top: 20px;
+
+}
+
+#root, .root-wrapper {
+  height: 100%;
+}
+.ui.segment.pushable{
+  margin: 0 ;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  height: 100%;
 }
 /*/// NAVBAR /// */
 /* font-family: 'Roboto', sans-serif; */
