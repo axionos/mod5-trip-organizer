@@ -16,6 +16,11 @@ export const getTheTrip = trip => {
     trip
   }
 }
+export const deleteTheTrips = () => {
+  return {
+    type: 'DELETE_THE_TRIPS'
+  }
+}
 export const deleteTheTrip = tripId => {
   return {
     type: 'DELETE_THE_TRIP',
