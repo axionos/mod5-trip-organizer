@@ -50,7 +50,7 @@ class Navbar extends React.Component {
     // console.log(this.state.search)
     // console.log(this.props.trips);
     let theTrips = this.props.trips.filter(trip => {
-      return trip.destination.toLowerCase().includes(this.state.search)
+      return trip.destination.toLowerCase().includes(this.state.search) || trip.title.toLowerCase().includes(this.state.search)
     })
     // debugger
     this.props.getTheTrip(theTrips)
