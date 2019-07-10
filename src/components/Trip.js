@@ -121,8 +121,8 @@ class Trip extends React.Component {
   getPhoto = () => {
     console.log("get photo firing")
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    ***REMOVED***
     // ***REMOVED***
+    ***REMOVED***
     let place = this.state.destination
 
     fetch(`${proxyurl}https://maps.googleapis.com/maps/api/place/findplacefromtext/json?***REMOVED***=${***REMOVED***}&input=${place}&inputtype=textquery&fields=photos`)
@@ -163,7 +163,7 @@ class Trip extends React.Component {
 
         <Card.Content className="trip-conts">
           <Card.Header>
-            <h3 className="trip-title capitalize">{this.props.trip.title}</h3>
+            <h3 className="trip-title ">{this.props.trip.title}</h3>
           </Card.Header>
           <Card.Meta>
             <p className="trip-period">{this.props.trip.startDate} ~ {this.props.trip.endDate}</p>
