@@ -3,8 +3,22 @@ html, body {
 }
 
 body {
-  margin-top: 20px;
+
 }
+
+
+.ui.segment.pushable{
+  margin: 0 ;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  height: 100%;
+}
+
+.pusher {
+  height: 100%;
+}
+
 /*/// NAVBAR /// */
 /* font-family: 'Roboto', sans-serif; */
 
@@ -13,8 +27,12 @@ STARRY NIGHT 0375B4
 IRISES 007fc4
 EVENING 262228 */
 
-.ui.inverted.top.fixed.menu {
+.ui.borderless.inverted.top.fixed.menu {
   background-color: #007fc4;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 10
 }
 
 .paper.plane.icon.nav-plane {
@@ -31,21 +49,32 @@ EVENING 262228 */
   font-size: 16px;
 }
 
-.theMenu {
-  /* display: -webkit-flex;
+.sidebar-btn-container {
+  width: 100px;
+  display: -webkit-flex;
   display: -ms-flex;
-  display: flex; */
+  display: flex;
+  align-items: center
 }
+
+i.large.icon, i.large.icons{
+  font-size: 2.3em;
+  color: #fff;
+}
+
 /*/// LOGIN and SIGNUP ///*/
 .login-wrapper {
   background: url('http://www.travelspecial.us/wp-content/uploads/2018/07/Explore-the-Authentic-Culture-of-the-Sea-Island.jpg') no-repeat center;
   background-size: cover;
+  height: 100%;
+  padding-top: 20px;
 }
 
 .signup-wrapper {
   background: url('https://saywhat.news/wp-content/uploads/2018/08/img2-1.jpg') no-repeat center;
   background-size: cover;
   position: relative;
+  padding-top: 20px;
 }
 
 .cover {
@@ -61,6 +90,8 @@ EVENING 262228 */
 .ui.center.aligned.middle.aligned.grid {
   position: relative;
   z-index: 10;
+  margin-top: 10px;
+  height: 100%;
 }
 
 .ui.large.error.form.attached.fluid.segment {
@@ -93,16 +124,17 @@ EVENING 262228 */
 
 .i-header-container {
   position: relative;
+  top: -10px;
   padding: 0 15px 0 0 ;
 }
 
 .i-header-bg {
   width: 100%;
-  height: 42px;
+  height: 40px;
   background: #FFCE00;
   position: absolute;
   left: 0px;
-  bottom: -6px;
+  bottom: 0px;
   z-index: 5;
 }
 
@@ -117,7 +149,7 @@ EVENING 262228 */
 }
 
 .page-container {
-  padding-top: 70px;
+  padding-top: 80px;
   min-height: 100px;
 }
 
@@ -133,19 +165,12 @@ EVENING 262228 */
 
 /* /// TRIP LIST ///*/
 
+.ui.container {
+  /* overflow: scroll */
+}
 .add-trip-btn {
   background-color: #F4A261;
 }
-
-/* .ui.primary.button  {
-  background-color: #0375B4;
-
-} */
-
-/* .trip-del-btn {
-  background-color: #fff;
-  border: 0 none;
-} */
 
 .my-trip-wrapper{
   position: relative;
@@ -166,6 +191,10 @@ EVENING 262228 */
   z-index: 10;
   font-family: 'Roboto', sans-serif;
   font-style: italic;
+}
+
+.pls-add-trip {
+  width: 100%;
 }
 
 .trip-list {
@@ -190,7 +219,6 @@ EVENING 262228 */
   width: 100%;
   height: 100%;
   transition: transform .3s;
-  /* overflow: hidden; */
 }
 
 .trip-img-holder img:hover {
@@ -215,9 +243,6 @@ EVENING 262228 */
   text-transform: capitalize;
 }
 
-.btn-container {
-  /* padding: 20px 0 5px 0; */
-}
 
 .ui.tiny.button.trip-del-btn {
   background-color: #d8d8d8;
@@ -243,11 +268,18 @@ EVENING 262228 */
 
 .itinerary-header-wrapper {
   background-color: pink;
-  top: 26px;
-  padding: 45px 0;
+  top: 51px;
+  padding: 60px 0;
   background: url('https://images.pexels.com/photos/8394/flight-sky-clouds-fly.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260') no-repeat center;
   background-size: cover;
   position: relative;
+}
+
+.ui.container.i-header-wrapper {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  justify-content: space-between;
 }
 
 .black  {
@@ -257,7 +289,6 @@ EVENING 262228 */
   left: 0;
   top: 0;
   background: rgba(0,0,0,0.1);
-  /* background: rgba(299,299,299,.1); */
   z-index: 0;
 }
 
@@ -286,14 +317,15 @@ EVENING 262228 */
   position: relative;
 }
 
-.ui.container.flex-container p {
-  color: #fff;
-  font-size: 18px;
+
+.i-header-container .capitalize {
+  margin: 0;
 }
 
 .right.floated.five.wide.column, .itinerary-h-right {
-  padding-top: 15px;
   text-align: right;
+  font-size: 18px;
+  color: #fff;
 }
 
 .period {
@@ -301,7 +333,7 @@ EVENING 262228 */
 }
 
 .page-container.itinerary {
-  padding-top: 55px;
+  padding-top: 80px;
 }
 
 .no-plan  {
@@ -339,13 +371,11 @@ EVENING 262228 */
 .photo-holder {
   width: 150px;
   height: 100px;
-  /* margin: 10px 20px 10px 10px; */
-  overflow: hidden
+  overflow: hidden;
 }
 
 .photo-holder img {
   width: 100%;
-  /* height: 100%; */
 }
 
 .item-header-container {
@@ -382,10 +412,18 @@ i.icon:hover {
   .theMenu {
     display: flex;
   }
+  .sidebar-btn-container {
+    display: none;
+  }
 }
 
 @media only screen and (min-width: 0px) and ( max-width: 599px) {
   .theMenu {
     display: none;
+  }
+  .sidebar-btn-container {
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
   }
 }
