@@ -119,7 +119,7 @@ class Trip extends React.Component {
 
   // GET PHOTO AND RENDER
   getPhoto = () => {
-    console.log("get photo firing")
+    // console.log("get photo firing")
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     ***REMOVED***
     // ***REMOVED***

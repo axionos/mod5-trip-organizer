@@ -47,7 +47,7 @@ class App extends React.Component {
   render(){
     const { visible } = this.state
     // console.log('App Props', this.props)
-    console.log('App state', this.state)
+    // console.log('App state', this.state)
 
     return(
       <div className='root-wrapper'>
