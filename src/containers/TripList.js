@@ -2,7 +2,7 @@ import React from 'react';
 import Trip from '../components/Trip'
 import { connect } from 'react-redux'
 import { getTrip, addTrip } from '../actions'
-import { Container, Button, Icon, Modal, Form, Grid } from 'semantic-ui-react'
+import { Container, Button, Icon, Modal, Form, Grid, Message } from 'semantic-ui-react'
 // BELOW ARE FOR THE ADD TRIP FORM
 import Select from 'react-select'
 import { countryOptions } from '../data';
@@ -94,7 +94,6 @@ class TripList extends React.Component {
       alert("New Trip is Successfully Added!"))
     window.location.replace(`http://localhost:3001/`)
    // END FIRST FETCH
-
  }
 
   // GENERATE TRIPS
@@ -122,14 +121,19 @@ class TripList extends React.Component {
 
   // CONDITIONALLY RENDER THE CONTENTS
   conditionToRender = () => {
-    if (this.props.trips) {
+    if (this.props.trips.length !== 0) {
       if (this.props.theTrip.length === 0) {
         return this.genTrip()
       } else {
         return this.genTrip_search()
       }
     } else {
-      return <p className='pls-add-trip'>Please Add a Trip!</p>
+      return (
+        <Message warning className='pls-add-trip'>
+          <Message.Header>No Trip Found</Message.Header>
+          <p>Please add a trip and start planning!</p>
+        </Message>
+      )
     }
   } // END RENDERING
 
