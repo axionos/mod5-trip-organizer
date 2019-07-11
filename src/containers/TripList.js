@@ -2,7 +2,7 @@ import React from 'react';
 import Trip from '../components/Trip'
 import { connect } from 'react-redux'
 import { getTrip, addTrip } from '../actions'
-import { Container, Button, Icon, Modal, Form, Grid } from 'semantic-ui-react'
+import { Container, Button, Icon, Modal, Form, Grid, Message } from 'semantic-ui-react'
 // BELOW ARE FOR THE ADD TRIP FORM
 import Select from 'react-select'
 import { countryOptions } from '../data';
@@ -17,7 +17,8 @@ class TripList extends React.Component {
       startDate: "",
       endDate: "",
       destination: "",
-      searchResult: []
+      searchResult: [],
+      error: false
     };
   }
 
@@ -79,22 +80,30 @@ class TripList extends React.Component {
         'Accept': 'application/json'
       },
       body: JSON.stringify({
-          trip: {
-            title: this.state.title,
-            startDate: this.state.startDate,
-            endDate: this.state.endDate,
-            destination: this.state.destination,
-            user_id: this.props.user.id
-          }
-        // store_id:e.target.id
-        })
+        trip: {
+          title: this.state.title,
+          startDate: this.state.startDate,
+          endDate: this.state.endDate,
+          destination: this.state.destination,
+          user_id: this.props.user.id
+        }
+      })
     })
-    .then(resp => resp.json())
-    .then(data =>
-      alert("New Trip is Successfully Added!"))
-    window.location.replace(`http://localhost:3001/`)
-   // END FIRST FETCH
+    .then(resp => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        this.setState({ error: true })
+        throw new Error('Trip title cannot be duplicate');
+      }
+    })
+    .then(data => {
+      alert("New Trip is Successfully Added!")
+      // return this.props.history.location.pathname
+      window.location.replace(`http://localhost:3001/`)
+    })
 
+   // END FIRST FETCH
  }
 
   // GENERATE TRIPS
@@ -122,19 +131,25 @@ class TripList extends React.Component {
 
   // CONDITIONALLY RENDER THE CONTENTS
   conditionToRender = () => {
-    if (this.props.trips) {
+    if (this.props.trips.length !== 0) {
       if (this.props.theTrip.length === 0) {
         return this.genTrip()
       } else {
         return this.genTrip_search()
       }
     } else {
-      return <p className='pls-add-trip'>Please Add a Trip!</p>
+      return (
+        <Message warning className='pls-add-trip'>
+          <Message.Header>No Trip Found</Message.Header>
+          <p>Please add a trip and start planning!</p>
+        </Message>
+      )
     }
   } // END RENDERING
 
   render() {
-    console.log('Trip List Props', this.props)
+    console.log('Trip List state', this.state)
+    // console.log('Trip List Props', this.props)
     const {isSearchable} = this.state;
     return (
       <React.Fragment>
@@ -204,10 +219,6 @@ class TripList extends React.Component {
         </Container>
         <Container>
           <Grid stackable columns={4}>
-
-            { /*this.props.theTrip.length === 0 ? this.genTrip() : this.genTrip_search() */}
-
-            { /*this.props.trips ? this.genTrip() : <p className='pls-add-trip'>Please Add a Trip!</p>*/ }
 
             { this.conditionToRender() }
 
