@@ -211,7 +211,7 @@ class ItineraryList extends React.Component {
 
   render(){
     // console.log('Itinerary List State', this.state)
-    console.log('Itinerary List Props', this.props)
+    // console.log('Itinerary List Props', this.props)
 
     // WHEN THE FORM IS SUBMITTED, REDIRECT AND RESET THE STATE
     if (this.state.submitted) {
@@ -257,7 +257,7 @@ class ItineraryList extends React.Component {
               closeIcon
               size="tiny"
 
-              trigger={<Button positive className='add-plan-btn'><Icon name='plus' size='small' />Add a Plan</Button>}>
+              trigger={<Button positive className='add-plan-btn'><Icon name='plus' size='small' />Add an Itinerary</Button>}>
                 <Modal.Header>Add a Plan</Modal.Header>
                 <Modal.Content>
                   <Modal.Description>
