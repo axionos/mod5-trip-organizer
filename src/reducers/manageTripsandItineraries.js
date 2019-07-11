@@ -48,6 +48,10 @@ function theTripReducer(state = [], action) {
       console.log(action)
       return [action.trip]
 
+    case "DELETE_THE_TRIPS":
+      console.log(action)
+      return []
+
     default:
       return state
   }
