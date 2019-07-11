@@ -3,7 +3,7 @@ import Item from '../components/Item';
 import MapContainer from '../components/map/MapContainer';
 import { connect } from 'react-redux'
 import { Link, Redirect, withRouter } from 'react-router-dom'
-import { getDays, getItems, addItem } from '../actions/index.js'
+import { getDays, getItems, addItem, deleteTheTrips } from '../actions/index.js'
 import { Container, Grid, Menu, Segment, Icon, Modal, Button, Select, Form } from 'semantic-ui-react'
 
 class ItineraryList extends React.Component {
@@ -203,6 +203,11 @@ class ItineraryList extends React.Component {
     })
   } // END UPDATING
 
+  // RESET THE TRIP ARRAY
+  handleClickHome = () => {
+    this.props.deleteTheTrips()
+  }
+  // END RESETTING
 
   render(){
     // console.log('Itinerary List State', this.state)
@@ -226,22 +231,22 @@ class ItineraryList extends React.Component {
       <React.Fragment>
         <div className='itinerary-header-wrapper'>
 
-          <Container className='flex-container'>
-              <div className='i-header-container'>
-                <div className='i-header-bg' />
-                <h2 className="capitalize">{this.props.theTrip.title}</h2>
-              </div>
-              <div className='itinerary-h-right'>
-                <p className='period'>{this.props.theTrip.startDate} ~ {this.props.theTrip.endDate}</p>
-                <p>{this.props.theTrip.destination}</p>
-              </div>
+          <Container className='i-header-wrapper'>
+            <div className='i-header-container'>
+              <div className='i-header-bg' />
+              <h2 className="capitalize">{this.props.theTrip.title}</h2>
+            </div>
+            <div className='itinerary-h-right'>
+              <p className='period'>{this.props.theTrip.startDate} ~ {this.props.theTrip.endDate}</p>
+              <p>{this.props.theTrip.destination}</p>
+            </div>
           </Container>
           <div className='black'></div>
         </div>
         <Container className='itinerary page-container'>
           <Grid>
             <Grid.Column floated='left' width={5}>
-              <Link to='/'>
+              <Link to='/' onClick={this.handleClickHome}>
                 <Icon name='arrow left' size='small'/>
                 Back
               </Link>
@@ -324,6 +329,9 @@ const mapDispatchToProps = dispatch => {
     },
     addItem: item => {
       dispatch(addItem(item))
+    },
+    deleteTheTrips: () => {
+      dispatch(deleteTheTrips())
     }
   }
 }
