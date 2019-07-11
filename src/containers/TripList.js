@@ -86,13 +86,14 @@ class TripList extends React.Component {
             destination: this.state.destination,
             user_id: this.props.user.id
           }
-        // store_id:e.target.id
         })
     })
     .then(resp => resp.json())
-    .then(data =>
-      alert("New Trip is Successfully Added!"))
-    window.location.replace(`http://localhost:3001/`)
+    .then(data => {
+      alert("New Trip is Successfully Added!")
+      // return this.props.history.location.pathname
+      window.location.replace(`http://localhost:3001/`)
+    })
    // END FIRST FETCH
  }
 
@@ -138,7 +139,7 @@ class TripList extends React.Component {
   } // END RENDERING
 
   render() {
-    console.log('Trip List Props', this.props)
+    // console.log('Trip List Props', this.props)
     const {isSearchable} = this.state;
     return (
       <React.Fragment>
@@ -208,10 +209,6 @@ class TripList extends React.Component {
         </Container>
         <Container>
           <Grid stackable columns={4}>
-
-            { /*this.props.theTrip.length === 0 ? this.genTrip() : this.genTrip_search() */}
-
-            { /*this.props.trips ? this.genTrip() : <p className='pls-add-trip'>Please Add a Trip!</p>*/ }
 
             { this.conditionToRender() }
 
