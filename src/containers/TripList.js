@@ -17,7 +17,8 @@ class TripList extends React.Component {
       startDate: "",
       endDate: "",
       destination: "",
-      searchResult: []
+      searchResult: [],
+      error: false
     };
   }
 
@@ -79,21 +80,29 @@ class TripList extends React.Component {
         'Accept': 'application/json'
       },
       body: JSON.stringify({
-          trip: {
-            title: this.state.title,
-            startDate: this.state.startDate,
-            endDate: this.state.endDate,
-            destination: this.state.destination,
-            user_id: this.props.user.id
-          }
-        })
+        trip: {
+          title: this.state.title,
+          startDate: this.state.startDate,
+          endDate: this.state.endDate,
+          destination: this.state.destination,
+          user_id: this.props.user.id
+        }
+      })
     })
-    .then(resp => resp.json())
+    .then(resp => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        this.setState({ error: true })
+        throw new Error('Trip title cannot be duplicate');
+      }
+    })
     .then(data => {
       alert("New Trip is Successfully Added!")
       // return this.props.history.location.pathname
       window.location.replace(`http://localhost:3001/`)
     })
+
    // END FIRST FETCH
  }
 
@@ -139,6 +148,7 @@ class TripList extends React.Component {
   } // END RENDERING
 
   render() {
+    console.log('Trip List state', this.state)
     // console.log('Trip List Props', this.props)
     const {isSearchable} = this.state;
     return (
