@@ -89,14 +89,7 @@ class TripList extends React.Component {
         }
       })
     })
-    .then(resp => {
-      if (resp.ok) {
-        return resp.json();
-      } else {
-        this.setState({ error: true })
-        throw new Error('Trip title cannot be duplicate');
-      }
-    })
+    .then(resp => resp.json())
     .then(data => {
       alert("New Trip is Successfully Added!")
       // return this.props.history.location.pathname
@@ -148,7 +141,7 @@ class TripList extends React.Component {
   } // END RENDERING
 
   render() {
-    console.log('Trip List state', this.state)
+    // console.log('Trip List state', this.state)
     // console.log('Trip List Props', this.props)
     const {isSearchable} = this.state;
     return (
