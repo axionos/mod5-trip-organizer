@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Container, Menu, Icon, Search, Button } from 'semantic-ui-react'
+import { Container, Menu, Icon, Search } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { getTheTrip, deleteTheTrips } from '../actions'
 import _ from 'lodash'
@@ -11,9 +11,12 @@ class Navbar extends React.Component {
     search: ''
   }
 
+  // RESET THE TRIP ARRAY
   handleClickHome = () => {
     this.props.deleteTheTrips()
   }
+  // END RESETTING
+
   // CONDITIONALLY RENDER MY TRIP
   myTrip = () => {
     if (localStorage.getItem('token')){
