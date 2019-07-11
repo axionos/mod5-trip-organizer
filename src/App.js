@@ -7,13 +7,16 @@ import ItineraryList from './containers/ItineraryList'
 import { getUser } from './actions'
 import NoMatch from './NoMatch'
 import { connect } from 'react-redux'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, NavLink } from 'react-router-dom'
+import { Menu, Icon, Segment, Sidebar } from 'semantic-ui-react'
+import { deleteTheTrips } from './actions/index.js'
 
 
 class App extends React.Component {
-  // state = {
-  //   user: {}
-  // }
+  state = {
+    user: {},
+    visible: false
+  }
 
   // FETCHING USER INFO
   componentDidMount(){
@@ -32,24 +35,65 @@ class App extends React.Component {
     }
   } // END FETCHING
 
+
+  handleShowClick = () => this.setState({ visible: !this.state.visible })
+
+  handleClickHome = () => {
+    this.props.deleteTheTrips()
+  }
+
+  handleSidebarHide = () => this.setState({ visible: false })
+
   render(){
+    const { visible } = this.state
     // console.log('App Props', this.props)
     // console.log('App state', this.state)
 
     return(
-      <div>
-        <Navbar user={this.props.user}/>
-        <Switch>
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/signup" component={SignupPage} />
-          <Route exact path="/itinerary" component={ItineraryList}/>
-          <Route exect
-            path="/"
-            render={props => <TripList {...props}
-              user={this.props.user} />}
-          />
-          <Route component={NoMatch} />
-        </Switch>
+      <div className='root-wrapper'>
+
+        <Sidebar.Pushable as={Segment}>
+          <Sidebar.Pusher>
+            <Sidebar
+              as={Menu}
+              animation='overlay'
+              direction='right'
+              icon='labeled'
+              inverted
+              onHide={this.handleSidebarHide}
+              vertical
+              visible={visible}
+              width='thin'
+            >
+              <NavLink to="/" exact onClick={this.handleClickHome}>
+                <Menu.Item as='a'>
+                  <Icon name='paper plane' />
+                  My Trips
+                </Menu.Item>
+              </NavLink>
+              <Menu.Item as='a'>
+                <Icon name='sign out' />
+                Sign Out
+              </Menu.Item>
+            </Sidebar>
+            <Navbar
+            user={this.props.user}
+            toggleSidebar={this.handleShowClick}
+            />
+            <Switch>
+              <Route exact path="/login" component={LoginPage} />
+              <Route exact path="/signup" component={SignupPage} />
+              <Route exact path="/itinerary" component={ItineraryList}/>
+              <Route exect
+                path="/"
+                render={props => <TripList {...props}
+                  user={this.props.user} />}
+              />
+              <Route component={NoMatch} />
+            </Switch>
+
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
       </div>
     )
   }
@@ -59,6 +103,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getUser: user => {
       dispatch(getUser(user))
+    },
+    deleteTheTrips: () => {
+      dispatch(deleteTheTrips())
     }
   }
 }
