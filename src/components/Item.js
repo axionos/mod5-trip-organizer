@@ -19,8 +19,8 @@ class Item extends React.Component {
   }
 
   renderPhoto = () => {
-    ***REMOVED***
     // ***REMOVED***
+    ***REMOVED***
     const photoRef = this.props.item.photo
     const photo = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&***REMOVED***=${***REMOVED***}`
     return photo
