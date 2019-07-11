@@ -5,6 +5,14 @@ html, body {
 body {
 
 }
+/*
+#root {
+  min-height: 1000px;
+}
+
+.root-wrapper{
+  min-height: 1000px;
+} */
 
 
 .ui.segment.pushable{
@@ -12,11 +20,11 @@ body {
   box-shadow: none;
   border: none;
   border-radius: 0;
-  height: 100%;
+  min-height: 1000px;
 }
 
-.pusher {
-  height: 100%;
+.ui.segment.pushable .pusher {
+  min-height: 1000px;
 }
 
 /*/// NAVBAR /// */
@@ -408,7 +416,7 @@ i.icon:hover {
 
 /*/// Media Query /// */
 
-@media only screen and (min-width: 441px) {
+@media only screen and (min-width: 501px) {
   .theMenu {
     display: flex;
   }
@@ -418,7 +426,7 @@ i.icon:hover {
 
 }
 
-@media only screen and (min-width: 0px) and ( max-width: 440px) {
+@media only screen and (min-width: 0px) and ( max-width: 500px) {
   .theMenu {
     display: none;
   }
