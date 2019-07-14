@@ -44,7 +44,7 @@ class ItineraryList extends React.Component {
     ***REMOVED***
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     const place = this.state.place
-    fetch(`${proxyurl}https://maps.googleapis.com/maps/api/place/findplacefromtext/json?***REMOVED***=${***REMOVED***}&input=${place}&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry`)
+    fetch(`${proxyurl}https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=${apiKey}&input=${place}&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry`)
     .then(res => res.json())
     .then(data => {
       // debugger
@@ -131,7 +131,7 @@ class ItineraryList extends React.Component {
           active={activeItem === day.day}
           onClick={this.handleDayClick}
           id={day.id}
-          ***REMOVED***={day.id}
+          key={day.id}
           day={day}
         >
           Day {day.day}
@@ -143,8 +143,8 @@ class ItineraryList extends React.Component {
   // GENERATE ITEMS
   genItems = () => {
     return this.props.items.map(item => {
-      return  <div className="item-container" ***REMOVED***={item.id}>
-                <Item ***REMOVED***={item.id} item={item} />
+      return  <div className="item-container" key={item.id}>
+                <Item key={item.id} item={item} />
               </div>
     })
   } // END GENERATING ITEMS
@@ -224,7 +224,7 @@ class ItineraryList extends React.Component {
 
     const { value } = this.state
     const options = this.props.days.map(day => {
-      return  {***REMOVED***: day.id, id: day.id, text: day.day, value: day.day}
+      return  {key: day.id, id: day.id, text: day.day, value: day.day}
     })
 
     return(
