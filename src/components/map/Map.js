@@ -7,7 +7,7 @@ const Map = withScriptjs(withGoogleMap((props) =>{
 
   const markers = props.items.map( item => {
     return <Marker
-            ***REMOVED***={item.id}
+            key={item.id}
             item={item}
             location={{lat:parseFloat(item.latitude), lng: parseFloat(item.longitude)}}
           />
