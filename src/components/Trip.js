@@ -121,20 +121,19 @@ class Trip extends React.Component {
   getPhoto = () => {
     // console.log("get photo firing")
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    // ***REMOVED***
-    ***REMOVED***
+    const key = `${process.env.REACT_APP_GOOGLE_API_KEY}`
     let place = this.state.destination
 
-    fetch(`${proxyurl}https://maps.googleapis.com/maps/api/place/findplacefromtext/json?***REMOVED***=${***REMOVED***}&input=${place}&inputtype=textquery&fields=photos`)
+    fetch(`${proxyurl}https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=${key}&input=${place}&inputtype=textquery&fields=photos`)
     .then(res => res.json())
     .then(data => {
-      if (***REMOVED***.length === 0) {
+      if (key.length === 0) {
         const photo = <img src='https://wolper.com.au/wp-content/uploads/2017/10/image-placeholder.jpg' alt='placeholder' />
         this.setState({
           photoSrc: photo
         })
       } else {
-        const photo = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${data.candidates[0].photos[0].photo_reference}&***REMOVED***=${***REMOVED***}`
+        const photo = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${data.candidates[0].photos[0].photo_reference}&key=${key}`
         this.setState({
           photoSrc: photo
         })

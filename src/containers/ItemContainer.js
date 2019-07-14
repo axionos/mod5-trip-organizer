@@ -7,7 +7,7 @@ class ItemContainer extends React.Component {
   // genItem = () => {
   //   // debugger
   //   return this.props.item.map(theItem => {
-  //     return <Item ***REMOVED***={theItem.id} theItem={theItem} />
+  //     return <Item key={theItem.id} theItem={theItem} />
   //   })
   // }
 
