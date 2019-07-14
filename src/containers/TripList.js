@@ -104,7 +104,7 @@ class TripList extends React.Component {
     // debugger
     return this.props.trips.map(trip => {
       return <Trip
-        ***REMOVED***={trip.id}
+        key={trip.id}
         trip={trip}
         handleClickEditBtn={this.handleClickEditBtn}
       />
@@ -115,7 +115,7 @@ class TripList extends React.Component {
   genTrip_search = () => {
     return this.props.theTrip[0].map(trip => {
       return <Trip
-        ***REMOVED***={trip.id}
+        key={trip.id}
         trip={trip}
         handleClickEditBtn={this.handleClickEditBtn}
       />
