@@ -28,7 +28,7 @@ class Day extends React.Component {
 
   genItem = () => {
     return this.state.items.map(item => {
-        return <Item ***REMOVED***={this.state.id} item={item}/>
+        return <Item key={this.state.id} item={item}/>
       }
     )
   }
