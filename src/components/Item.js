@@ -19,10 +19,9 @@ class Item extends React.Component {
   }
 
   renderPhoto = () => {
-    // ***REMOVED***
-    ***REMOVED***
+    const key = `${process.env.REACT_APP_GOOGLE_API_KEY}`
     const photoRef = this.props.item.photo
-    const photo = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&***REMOVED***=${***REMOVED***}`
+    const photo = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&key=${key}`
     return photo
   }
   render(){
