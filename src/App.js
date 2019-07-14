@@ -11,7 +11,6 @@ import { Switch, Route, NavLink } from 'react-router-dom'
 import { Menu, Icon, Segment, Sidebar } from 'semantic-ui-react'
 import { deleteTheTrips } from './actions/index.js'
 
-
 class App extends React.Component {
   state = {
     user: {},
