@@ -64,7 +64,7 @@ class Navbar extends React.Component {
 
 
   render(){
-    // console.log('Navbar props', this.props);
+    console.log('Navbar props', this.props);
     // console.log('Navbar state', this.state);
     return(
       <div className="navbar">
