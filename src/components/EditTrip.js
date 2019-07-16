@@ -70,7 +70,6 @@ class EditTrip extends React.Component {
             destination: this.state.destination,
             user_id: this.props.user.id
           }
-        // store_id:e.target.id
         })
     })
     .then(resp => resp.json())
@@ -130,14 +129,6 @@ class EditTrip extends React.Component {
     )
   }
 }
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     addTrip: trip => {
-//       dispatch(addTrip(trip))
-//     }
-//   }
-// }
 
 const mapStateToProps = state => {
   return {

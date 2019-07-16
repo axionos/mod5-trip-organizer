@@ -5,9 +5,6 @@ import { Icon } from 'semantic-ui-react'
 import { deleteItem } from '../actions/index.js'
 
 
-// import Moment from 'moment'
-
-
 class Item extends React.Component {
 
   handleClickDelete = () => {

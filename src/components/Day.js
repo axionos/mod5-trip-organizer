@@ -1,8 +1,6 @@
 import React from 'react';
-// import ItemContainer from '../containers/Item';
 import Item from './Item';
 import { connect } from 'react-redux'
-// import Moment from 'moment'
 
 
 class Day extends React.Component {
@@ -42,20 +40,11 @@ class Day extends React.Component {
       <div>
         <h3>Day {this.props.day.day}</h3>
         {this.genItem()}
-
-
       </div>
     )
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    // getTrip: trip => {
-    //   dispatch(getTrip(trip))
-    // }
-  }
-}
 
 const mapStateToProps = state => {
   return {
@@ -64,4 +53,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Day)
+export default connect(mapStateToProps)(Day)

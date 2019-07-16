@@ -93,7 +93,6 @@ class Trip extends React.Component {
 
   // CALL DISPATCH TO PROPS ON CLICK
   handleClickEdit = (e) => {
-    // console.log(this.props.trip.id);
     // selected trip info will be saved in the store on click
     this.props.getTheTrip(this.props.trip)
   } // END CALLING
