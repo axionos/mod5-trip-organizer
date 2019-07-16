@@ -41,7 +41,7 @@ class ItineraryList extends React.Component {
   // FIND THE PLACE INFO FROM API WHEN FORM SUBMITTED
   handleSubmitAddPlan = event => {
     event.preventDefault()
-    ***REMOVED***
+    const apiKey = 'AIzaSyBaGD-h-zdNd5SLcDto3jevpeaHXCNRpz4'
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     const place = this.state.place
     fetch(`${proxyurl}https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=${apiKey}&input=${place}&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry`)

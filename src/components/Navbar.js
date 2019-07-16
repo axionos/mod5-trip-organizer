@@ -20,11 +20,10 @@ class Navbar extends React.Component {
   // CONDITIONALLY RENDER MY TRIP
   myTrip = () => {
     if (localStorage.getItem('token')){
-      // return <NavLink to="/" exact>My Trips</NavLink>
       return <Menu.Item as='a'>
-              <NavLink to="/" exact
-                onClick={this.handleClickHome}
-              >My Trips</NavLink>
+                <NavLink to="/" exact
+                  onClick={this.handleClickHome}
+                >My Trips</NavLink>
             </Menu.Item>
     } else {
       return
@@ -48,24 +47,20 @@ class Navbar extends React.Component {
     window.location.replace('http://localhost:3001/')
   } // END LOG OUT
 
+  // UPDATE THE STATE
   handleChangeSearch = (e, {value}) => {
     this.setState({
       search: value
     }, () => {this.searchTrip()})
-  }
+  } // END UPDATING
 
-  // let theTrips = trip.title.includes(this.state.search.toLowerCase() || trip.destination.includes(this.state.search.toLowerCase()))
+  // SEARCH FOR THE RESULT
   searchTrip = () => {
-    // console.log(this.state.search)
-    // console.log(this.props.trips);
     let theTrips = this.props.trips.filter(trip => {
       return trip.destination.toLowerCase().includes(this.state.search) || trip.title.toLowerCase().includes(this.state.search)
     })
-    // debugger
     this.props.getTheTrip(theTrips)
-  }
-
-
+  } // END SEARCHING
 
 
   render(){
@@ -84,8 +79,9 @@ class Navbar extends React.Component {
                 <Search
                   icon={{ name: 'search', circular: true}}
                   placeholder='Search your trip...'
-                  onSearchChange={_.debounce(this.handleChangeSearch, 500)}>
-                </Search>
+                  onSearchChange={_.debounce(this.handleChangeSearch, 500)}
+                  showNoResults={false}
+                />
               </div>
               <div className='theMenu'>
                 {this.myTrip()}
