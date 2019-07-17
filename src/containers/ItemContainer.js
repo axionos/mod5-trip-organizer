@@ -4,12 +4,7 @@ import { connect } from 'react-redux'
 
 
 class ItemContainer extends React.Component {
-  // genItem = () => {
-  //   // debugger
-  //   return this.props.item.map(theItem => {
-  //     return <Item key={theItem.id} theItem={theItem} />
-  //   })
-  // }
+
 
   render(){
     // console.log('ItemContainer State', this.state)
