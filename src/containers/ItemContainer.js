@@ -7,8 +7,6 @@ class ItemContainer extends React.Component {
 
 
   render(){
-    // console.log('ItemContainer State', this.state)
-    // console.log('ItemContainer Props', this.props)
 
     return(
 
